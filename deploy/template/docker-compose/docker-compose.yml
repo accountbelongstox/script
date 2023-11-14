@@ -1,0 +1,223 @@
+version: '3'
+services:
+  portainer:
+    image: portainer/portainer-ce
+    container_name: portainer
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - "${DOCKER_DIR}/data/portainer:/data"
+
+  nginx:
+    image: nginx
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d
+      - ./certs:/etc/nginx/certs
+      - ./html:/var/www/html
+      - ./log/nginx:/var/log/nginx
+
+  php:
+    image: php:fpm
+    container_name: php
+    restart: always
+    volumes:
+      - ./html:/var/www/html
+
+  php74:
+    image: php:7.4.33-fpm
+    container_name: php74
+    restart: always
+    volumes:
+      - ./html:/var/www/html
+
+  redis:
+    image: redis
+    container_name: redis
+    restart: always
+    volumes:
+      - ./redis:/data
+
+  ztncui:
+    image: keynetworks/ztncui
+    container_name: ztncui
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "18001:3443"
+      - "18002:3000"
+      - "9993:9993"
+    environment:
+      NODE_ENV: production
+      HTTPS_PORT: 3443
+      HTTP_PORT: 3000
+      ZTNCUI_PASSWD: "${ZTNCUI_PASSWD}"
+      MYDOMAIN: "${ZEROTIER_DOMIAN}"
+      MYADDR: "${MAIN_IP}"
+    volumes:
+      - "${DOCKER_DIR}/data/ztncui:/opt/key-networks/ztncui/etc"
+      - "${DOCKER_DIR}/data/ztncui/zt1:/var/lib/zerotier-one"
+
+  baota:
+    image: btpanel/baota:lnmp
+    container_name: baota
+    restart: unless-stopped
+    net: host
+    volumes:
+      - "${DOCKER_DIR}/wwwroot:/www/wwwroot"
+      - "${DOCKER_DIR}/data/baota/server/data:/www/server/data"
+      - "${DOCKER_DIR}/data/baota/server/panel/vhost:/www/server/panel/vhost"
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "18003:80"
+    networks:
+      - docker_local_net
+    volumes:
+      - "${DOCKER_DIR}/data/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: unless-stopped
+    ports:
+      - "27019:27019"
+    volumes:
+      - "${DOCKER_DIR}/data/mongo:/etc/mongo"
+      - "${DOCKER_DIR}/data/mongo/data:/data/db"
+
+  mysql:
+    image: mysql
+    container_name: mysql
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    volumes:
+      - "${DOCKER_DIR}/data/mysql8/conf.d:/etc/mysql/conf.d"
+      - "${DOCKER_DIR}/data/mysql8/data:/var/lib/mysql"
+    networks:
+      - docker_local_net
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_USER}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx-proxy-manager
+    restart: "no"
+    ports:
+      - "80:80"
+      - "81:81"
+      - "443:443"
+    volumes:
+      - "${DOCKER_DIR}/data/nginx_proxy_manager/data:/data"
+      - "${DOCKER_DIR}/data/nginx_proxy_manager/letsencrypt:/etc/letsencrypt"
+
+  gogs:
+    image: gogs/gogs
+    container_name: gogs
+    restart: unless-stopped
+    ports:
+      - "10022:22"
+      - "10880:3000"
+    volumes:
+      - "${DOCKER_DIR}/data/git_gogs:/data"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  mediawiki:
+    image: mediawiki
+    container_name: mediawiki
+    restart: unless-stopped
+    ports:
+      - "18004:80"
+    volumes:
+      - "${DOCKER_DIR}/data/mediawiki/html/images:/var/www/html/images"
+      - "${DOCKER_DIR}/data/mediawiki/html/LocalSettings.php:/var/www/html/LocalSettings.php"
+    links:
+      - mysql:mediawiki
+
+  mautic:
+    image: mautic/mautic:latest
+    container_name: mautic
+    restart: unless-stopped
+    ports:
+      - "18005:80"
+    environment:
+      MAUTIC_DB_HOST: host.docker.internal
+      MAUTIC_DB_USER: "${MYSQL_USER}"
+      MAUTIC_DB_PASSWORD: "${MYSQL_PASSWORD}"
+      MAUTIC_DB_NAME: "${MAUTIC_DB_NAME}"
+      MAUTIC_RUN_CRON_JOBS: 'true'
+    networks:
+      - docker_local_net
+    volumes:
+      - "${DOCKER_DIR}/data/mautic:/var/www/html"
+
+  confluence:
+    image: atlassian/confluence
+    container_name: confluence
+    restart: unless-stopped
+    ports:
+      - "18006:8090"
+      - "18007:8091"
+    volumes:
+      - "${DOCKER_DIR}/data/confluence:/var/atlassian/application-data/confluence"
+
+  nextcloud:
+    image: nextcloud
+    container_name: nextcloud
+    restart: unless-stopped
+    ports:
+      - "18008:80"
+    volumes:
+      - "${DOCKER_DIR}/data/nextcloud/html:/var/www/html"
+      - "${DOCKER_DIR}/data/nextcloud/custom_apps:/var/www/html/custom_apps"
+      - "${DOCKER_DIR}/data/nextcloud/config:/var/www/html/config"
+      - "${DOCKER_DIR}/data/nextcloud/data:/var/www/html/data"
+      - "${DOCKER_DIR}/data/nextcloud/themes:/var/www/html/themes"
+  bookstack:
+    image: solidnerd/bookstack:22.04
+    container_name: bookstack
+    restart: unless-stopped
+    environment:
+      DB_HOST: host.docker.internal:3306
+      DB_DATABASE: "${BOOKSTACK_DB_NAME}"
+      DB_USERNAME: "${MYSQL_USER}"
+      DB_PASSWORD: "${MYSQL_PASSWORD}"
+      MAUTIC_RUN_CRON_JOBS: 'true'
+    ports:
+      - "18009:8080"
+    volumes:
+      - "${DOCKER_DIR}/data/nextcloud/html:/var/www/html"
+      - "${DOCKER_DIR}/data/nextcloud/custom_apps:/var/www/html/custom_apps"
+      - "${DOCKER_DIR}/data/nextcloud/config:/var/www/html/config"
+      - "${DOCKER_DIR}/data/nextcloud/data:/var/www/html/data"
+      - "${DOCKER_DIR}/data/nextcloud/themes:/var/www/html/themes"
+
+  ddnsgo:
+    image: jeessy/ddns-go
+    container_name: ddnsgo
+    restart: unless-stopped
+    ports:
+      - "18010:9876"
+
+configs:
+  my_other_config:
+    external: true
+
+networks:
+  docker_local_net:

@@ -1,0 +1,28 @@
+# 忽略所有以点(.)开头的文件和文件夹
+
+# 忽略 node_modules 目录
+node_modules/
+source/
+
+# 忽略日志文件
+*.log
+
+# 忽略编译产生的文件
+*.o
+*.obj
+*.exe
+*.dll
+*.class
+*.pyc
+*.so
+
+# 忽略打包和发布的文件
+dist/
+build/
+out/
+
+.env
+*.swp
+*~
+.vscode/
+.idea/

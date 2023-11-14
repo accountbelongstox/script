@@ -1,0 +1,9 @@
+BUG
+CPU启动报错
+创建虚拟机时 CPU型号修改为 lvm_64
+
+卡 "Booting from Hard Disk.."
+硬盘选项的 Async IO : 从using_io 修改为 threads
+
+ls -l /dev/disk/by-id/
+qm set 100 --sata1 /dev/disk/by-id/ata-ST4000NM0033-9ZM170_Z1Z93KP3

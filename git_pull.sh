@@ -1,0 +1,2 @@
+#!/bin/bash
+sudo git stash &&sudo git fetch --all && sudo git reset --hard origin/main && sudo git pull --force && sudo chmod +x ./deploy/install.sh && sudo chmod +x ./git_pull.sh && sudo chmod +x ./deploy/yml_test.sh
