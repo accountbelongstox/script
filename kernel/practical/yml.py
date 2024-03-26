@@ -1,6 +1,6 @@
 import yaml
 import os
-from pycore.utils_prune import file
+from pycore.utils_linux import file
 from pycore.base import Base
 # import shutil
 

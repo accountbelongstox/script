@@ -4,7 +4,7 @@ from apps.deploy.py_script.operations.env_init import env_init
 from apps.deploy.py_script.provider.deployenv import env, main_dir, wwwroot_dir
 from apps.deploy.py_script.system.user_tools import user_tools
 from apps.deploy.py_script.operations.samba import samba
-from pycore.utils_prune import file
+from pycore.utils_linux import file
 from pycore.base import Base
 
 class installLocalChoice(Base):

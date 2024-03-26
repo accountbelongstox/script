@@ -1,5 +1,5 @@
 import os
-from pycore.practicals_prune import env as _env
+from pycore.practicals_linux import env as _env
 from pycore.utils import file
 
 _project_dir = os.path.dirname(os.path.dirname(__file__))

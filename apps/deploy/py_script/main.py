@@ -1,5 +1,5 @@
-from pycore.utils_prune import file, sysarg
-from pycore.practicals_prune import yml
+from pycore.utils_linux import file, sysarg
+from pycore.practicals_linux import yml
 from apps.deploy.py_script.install.install_choice import install_choice
 from apps.deploy.py_script.install.install_local_choice import install_local_choice
 from apps.deploy.py_script.provider.deployenv import env, compose_env, deploy_dir

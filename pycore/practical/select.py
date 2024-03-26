@@ -1,5 +1,5 @@
 import curses
-from pycore.utils_prune import strtool
+from pycore.utils_linux import strtool
 from pycore.base import Base
 
 

@@ -1,6 +1,6 @@
 # import os
-from pycore.utils_prune import strtool, ip
-from pycore.practicals_prune import select
+from pycore.utils_linux import strtool, ip
+from pycore.practicals_linux import select
 from apps.deploy.py_script.tools.server_info import server_info
 from apps.deploy.py_script.tools.disk import disk
 from apps.deploy.py_script.tools.docker import docker

@@ -1,5 +1,5 @@
 import os
-from pycore.practicals_prune import env as _env
+from pycore.practicals_linux import env as _env
 
 _deploy_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 _env.set_root_dir(_deploy_dir)

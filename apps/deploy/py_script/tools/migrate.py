@@ -1,5 +1,5 @@
 from pycore.base import Base
-from pycore.utils_prune import file
+from pycore.utils_linux import file
 from apps.deploy.py_script.provider.deployenv import deploy_dir, env
 from apps.deploy.py_script.tools.nginx import nginx
 from apps.deploy.py_script.provider.docker_info import docker_info

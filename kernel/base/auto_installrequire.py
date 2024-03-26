@@ -45,9 +45,9 @@ class AutoInstallRequire():
 
     def get_require_file(self):
         if self.server_role == "server":
-            file_name = 'requirements_prune.txt'
+            file_name = '.requirements_linux.txt'
         else:
-            file_name = 'requirements.txt'
+            file_name = '..requirements-.txt'
         return file_name
 
     def get_installed_requirements(self):

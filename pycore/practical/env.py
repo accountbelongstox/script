@@ -1,5 +1,5 @@
 import os
-from pycore.utils_prune import file, arr, sysarg
+from pycore.utils_linux import file, arr, sysarg
 from pycore.base import Base
 
 class Env(Base):

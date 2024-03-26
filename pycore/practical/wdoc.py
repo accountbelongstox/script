@@ -1,5 +1,5 @@
 from pycore._base import *
-from pycore.utils_prune import strtool,arr
+from pycore.utils_linux import strtool,arr
 import re
 class Wdoc(Base):
     nltk_english_words = None

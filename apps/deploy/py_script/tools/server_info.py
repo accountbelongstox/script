@@ -1,6 +1,6 @@
 import subprocess
 from pycore.base import Base
-from pycore.utils_prune import plattools
+from pycore.utils_linux import plattools
 import json
 
 class ServerInfo(Base):

@@ -1,5 +1,5 @@
 import subprocess
-from pycore.utils_prune import plattools
+from pycore.utils_linux import plattools
 from pycore.base import Base
 
 class Ssh(Base):

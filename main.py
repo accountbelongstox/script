@@ -9,7 +9,7 @@ def get_arg( name):
 
 if __name__ == "__main__":
     auto_install.install()
-    from pycore.utils_prune import sysarg
+    from pycore.utils_linux import sysarg
     run_as = sysarg.get_arg(0)
     if run_as == "deploy":
         from apps.deploy.py_script.main import deploy
