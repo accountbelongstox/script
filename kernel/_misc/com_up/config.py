@@ -1,8 +1,8 @@
-from pycore.base import *
+from pycore.base.base import *
 import configparser
 import os
 import re
-from pycore._base.config_manager import ConfigManager
+from pycore.base.config_manager import ConfigManager
 
 class Config(Base):
     __merge_config = None

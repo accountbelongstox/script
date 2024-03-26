@@ -1,5 +1,5 @@
 import subprocess
-from pycore.base import Base
+from pycore.base.base import Base
 from pycore.utils_linux import plattools
 import json
 

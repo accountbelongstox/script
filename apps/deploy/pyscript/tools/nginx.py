@@ -1,4 +1,4 @@
-from pycore.base import Base
+from pycore.base.base import Base
 from pycore.utils_linux import file, arr, strtool
 # from pycore.practicals_prune import yml
 from apps.deploy.pyscript.provider.deployenv import env  # , deploy_dir, base_dir

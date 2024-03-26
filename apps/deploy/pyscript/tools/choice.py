@@ -1,7 +1,7 @@
 # import os
 from pycore.utils_linux import strtool
 from apps.deploy.pyscript.provider.deployenv import env, compose_env,main_dir,wwwroot_dir
-from pycore.base import Base
+from pycore.base.base import Base
 
 class Choice(Base):
     relative_settings = {}

@@ -1,7 +1,7 @@
 import os
 from apps.deploy.pyscript.system.user_tools import user_tools
 from pycore.utils_linux import file, plattools, arr
-from pycore.base import Base
+from pycore.base.base import Base
 import subprocess
 
 class Samba(Base):

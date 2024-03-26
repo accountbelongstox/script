@@ -5,7 +5,7 @@ from apps.deploy.pyscript.provider.deployenv import env, main_dir, wwwroot_dir
 from apps.deploy.pyscript.system.user_tools import user_tools
 from apps.deploy.pyscript.operations.samba import samba
 from pycore.utils_linux import file
-from pycore.base import Base
+from pycore.base.base import Base
 
 class installLocalChoice(Base):
     relative_settings = {}

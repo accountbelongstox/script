@@ -1,4 +1,4 @@
-from pycore.base import *
+from pycore.base.base import *
 import numpy as np
 
 

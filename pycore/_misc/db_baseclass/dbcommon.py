@@ -1,4 +1,4 @@
-from pycore._base import *
+from pycore.base import *
 from pycore.db_baseclass.dbbase import *
 # from sqlalchemy import create_engine
 # from sqlalchemy.orm import sessionmaker

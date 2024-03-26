@@ -3,7 +3,7 @@ import time
 from pycore.utils import oper,screen
 from pycore.practicals import cv2cognize,ocr
 from pycore.utils import arr
-from pycore.base import Base
+from pycore.base.base import Base
 
 class Operation(Base):
     last_failure_time = 0

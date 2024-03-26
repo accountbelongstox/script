@@ -1,7 +1,7 @@
 # import json
 # import re
 
-from pycore.base import *
+from pycore.base.base import *
 # from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
 # from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf import FlaskForm

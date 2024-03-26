@@ -4,7 +4,7 @@ import spwd
 import grp
 import getpass
 from apps.deploy.pyscript.tools.choice import choice
-from pycore.base import Base
+from pycore.base.base import Base
 
 class UserTools(Base):
     def valid_user_and_pwd(self, username, password):

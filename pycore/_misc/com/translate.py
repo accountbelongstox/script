@@ -4,7 +4,7 @@ import math
 from queue import Queue
 import asyncio
 
-from pycore._base import *
+from pycore.base import *
 import os
 import re
 import json

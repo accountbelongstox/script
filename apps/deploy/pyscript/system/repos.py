@@ -1,7 +1,7 @@
 import random
 import string
 import uuid
-from pycore.base import Base
+from pycore.base.base import Base
 
 class Repos(Base):
     def genepwd(self,length=10):

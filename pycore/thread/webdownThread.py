@@ -1,6 +1,6 @@
 import time
 from queue import Queue
-from pycore._base import *
+from pycore.base import *
 import re
 import threading
 

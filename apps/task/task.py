@@ -3,7 +3,7 @@ import hashlib
 import os
 from time import time
 from datetime import datetime
-from pycore.base import Base
+from pycore.base.base import Base
 from pycore.utils import http, file,strtool
 from pycore.practicals import env
 

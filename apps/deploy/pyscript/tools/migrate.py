@@ -1,4 +1,4 @@
-from pycore.base import Base
+from pycore.base.base import Base
 from pycore.utils_linux import file
 from apps.deploy.pyscript.provider.deployenv import deploy_dir, env
 from apps.deploy.pyscript.tools.nginx import nginx

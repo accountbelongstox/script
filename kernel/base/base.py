@@ -3,7 +3,7 @@ from pprint import pprint
 # from pprint import PrettyPrinter
 # import datetime
 import sys
-from pycore._base.log import Log
+from pycore.base.log import Log
 # from glob import glob
 global_modes = {}
 

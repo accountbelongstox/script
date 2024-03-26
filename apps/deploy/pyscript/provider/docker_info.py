@@ -1,7 +1,7 @@
 import json
 import os
 from pycore.utils_linux import plattools, file, strtool
-from pycore.base import Base
+from pycore.base.base import Base
 from apps.deploy.pyscript.provider.deployenv import env, deploy_dir, compose_env
 from pycore.practicals_linux import yml
 

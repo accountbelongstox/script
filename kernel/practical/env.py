@@ -1,6 +1,6 @@
 import os
 from pycore.utils_linux import file, arr, sysarg
-from pycore.base import Base
+from pycore.base.base import Base
 
 class Env(Base):
     main_env_file = None

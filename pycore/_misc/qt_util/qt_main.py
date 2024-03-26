@@ -1,6 +1,6 @@
 from queue import Queue
 
-from pycore._base import *
+from pycore.base import *
 import sys
 import os
 from PySide6.QtWidgets import QApplication, QMainWindow

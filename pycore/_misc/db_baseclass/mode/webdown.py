@@ -1,4 +1,4 @@
-from pycore._base import *
+from pycore.base import *
 import threading
 from concurrent.futures import ThreadPoolExecutor
 from urllib.parse import urlparse

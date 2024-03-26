@@ -10,7 +10,7 @@ import string
 import sys
 import tempfile
 import time
-from pycore.base import Base
+from pycore.base.base import Base
 
 class File(Base):
     file_codings = [

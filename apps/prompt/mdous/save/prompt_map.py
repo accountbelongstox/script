@@ -1,6 +1,6 @@
 import os.path
 from pycore.utils import arr, file, strtool
-from pycore.base import Base
+from pycore.base.base import Base
 from apps.prompt.mdous.resolve_prompt.create_prompt import create_prompt
 from apps.task.task import task
 from pycore.practicals import wdoc

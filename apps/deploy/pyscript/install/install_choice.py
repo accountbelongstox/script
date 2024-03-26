@@ -8,7 +8,7 @@ from apps.deploy.pyscript.tools.migrate import migrate
 from apps.deploy.pyscript.provider.deployenv import env, compose_env,main_dir,wwwroot_dir
 from apps.deploy.pyscript.provider.docker_info import docker_info
 from apps.deploy.pyscript.operations.ssh import ssh
-from pycore.base import Base
+from pycore.base.base import Base
 
 class installChoice(Base):
     relative_settings = {}

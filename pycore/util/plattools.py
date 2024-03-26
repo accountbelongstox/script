@@ -1,4 +1,5 @@
-from pycore._base import *
+from pycore.base import *
+from pycore.base.base import Base
 import os,re
 import platform
 import subprocess

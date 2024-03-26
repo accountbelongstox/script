@@ -1,4 +1,4 @@
-from pycore._base import *
+from pycore.base import *
 import xml.dom.minidom
 #import xml.etree.ElementTree as etree
 class Xml(Base):

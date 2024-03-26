@@ -1,7 +1,7 @@
 import os.path, threading, re
 import time
 from datetime import timedelta
-from pycore._base import *
+from pycore.base import *
 import flask
 from flask_socketio import SocketIO, emit, send, call
 from flask import Flask as FlaskApp, url_for, request as flask_request, render_template, redirect, session, \

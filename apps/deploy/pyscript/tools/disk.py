@@ -1,6 +1,6 @@
 import os
 from pycore.utils_linux import strtool, plattools, file
-from pycore.base import Base
+from pycore.base.base import Base
 from apps.deploy.pyscript.provider.deployenv import env, compose_env
 import re
 

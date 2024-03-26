@@ -1,6 +1,6 @@
 # from queue import Queue
-from pycore.base import Base
-from pycore._base._config_manager import ConfigManager
+from pycore.base.base import Base
+from pycore.base._config_manager import ConfigManager
 import importlib, importlib.util
 import os
 import json

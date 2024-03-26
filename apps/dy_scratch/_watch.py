@@ -11,7 +11,7 @@ from apps.prompt.config.config import pConfig
 from pycore.utils import arg
 from pycore.utils import file, arr, keyb
 from pycore.threads import ComThread
-from pycore.base import Base
+from pycore.base.base import Base
 
 class promptMain(Base):
     def __init__(self):

@@ -5,7 +5,7 @@ import time
 from apps.dy_scratch.flask_router.auto_flask_conf import config
 from apps.dy_scratch.flask_router.router import Router
 from apps.dy_scratch.oper.down import down
-from pycore.base import Base
+from pycore.base.base import Base
 from pycore.threads import FlaskThread
 from pycore.utils import file
 

@@ -2,7 +2,7 @@ import time
 from apps.automation.lib.oper.cv2cognize import Cv2cognize, screen
 from pycore.utils import oper
 from pycore.utils import arr
-from pycore.base import Base
+from pycore.base.base import Base
 from pycore.practicals import ocr
 
 cv2cognize = Cv2cognize()
