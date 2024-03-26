@@ -1,5 +1,5 @@
 import os
-from apps.deploy.py_script.system.user_tools import user_tools
+from apps.deploy.pyscript.system.user_tools import user_tools
 from pycore.utils_linux import file, plattools, arr
 from pycore.base import Base
 import subprocess

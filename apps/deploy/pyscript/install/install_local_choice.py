@@ -1,9 +1,9 @@
 # import os
-from apps.deploy.py_script.tools.choice import choice
-from apps.deploy.py_script.operations.env_init import env_init
-from apps.deploy.py_script.provider.deployenv import env, main_dir, wwwroot_dir
-from apps.deploy.py_script.system.user_tools import user_tools
-from apps.deploy.py_script.operations.samba import samba
+from apps.deploy.pyscript.tools.choice import choice
+from apps.deploy.pyscript.operations.env_init import env_init
+from apps.deploy.pyscript.provider.deployenv import env, main_dir, wwwroot_dir
+from apps.deploy.pyscript.system.user_tools import user_tools
+from apps.deploy.pyscript.operations.samba import samba
 from pycore.utils_linux import file
 from pycore.base import Base
 

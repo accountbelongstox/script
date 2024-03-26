@@ -1,8 +1,8 @@
 from pycore.base import Base
 from pycore.utils_linux import file
-from apps.deploy.py_script.provider.deployenv import deploy_dir, env
-from apps.deploy.py_script.tools.nginx import nginx
-from apps.deploy.py_script.provider.docker_info import docker_info
+from apps.deploy.pyscript.provider.deployenv import deploy_dir, env
+from apps.deploy.pyscript.tools.nginx import nginx
+from apps.deploy.pyscript.provider.docker_info import docker_info
 import os
 # import re
 

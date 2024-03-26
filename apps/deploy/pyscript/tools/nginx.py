@@ -1,8 +1,8 @@
 from pycore.base import Base
 from pycore.utils_linux import file, arr, strtool
 # from pycore.practicals_prune import yml
-from apps.deploy.py_script.provider.deployenv import env  # , deploy_dir, base_dir
-# from apps.deploy.py_script.env.docker_info import docker_info
+from apps.deploy.pyscript.provider.deployenv import env  # , deploy_dir, base_dir
+# from apps.deploy.pyscript.env.docker_info import docker_info
 # import os
 import re
 

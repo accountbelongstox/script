@@ -1,13 +1,13 @@
 # import os
 from pycore.utils_linux import strtool, ip
 from pycore.practicals_linux import select
-from apps.deploy.py_script.tools.server_info import server_info
-from apps.deploy.py_script.tools.disk import disk
-from apps.deploy.py_script.tools.docker import docker
-from apps.deploy.py_script.tools.migrate import migrate
-from apps.deploy.py_script.provider.deployenv import env, compose_env,main_dir,wwwroot_dir
-from apps.deploy.py_script.provider.docker_info import docker_info
-from apps.deploy.py_script.operations.ssh import ssh
+from apps.deploy.pyscript.tools.server_info import server_info
+from apps.deploy.pyscript.tools.disk import disk
+from apps.deploy.pyscript.tools.docker import docker
+from apps.deploy.pyscript.tools.migrate import migrate
+from apps.deploy.pyscript.provider.deployenv import env, compose_env,main_dir,wwwroot_dir
+from apps.deploy.pyscript.provider.docker_info import docker_info
+from apps.deploy.pyscript.operations.ssh import ssh
 from pycore.base import Base
 
 class installChoice(Base):

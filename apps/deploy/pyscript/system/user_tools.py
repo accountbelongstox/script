@@ -3,7 +3,7 @@ import crypt
 import spwd
 import grp
 import getpass
-from apps.deploy.py_script.tools.choice import choice
+from apps.deploy.pyscript.tools.choice import choice
 from pycore.base import Base
 
 class UserTools(Base):

@@ -1,8 +1,8 @@
 import os
 from pycore.utils_linux import plattools, file
 from pycore.base import Base
-from apps.deploy.py_script.provider.docker_info import docker_info
-from apps.deploy.py_script.provider.deployenv import env, deploy_dir, compose_env
+from apps.deploy.pyscript.provider.docker_info import docker_info
+from apps.deploy.pyscript.provider.deployenv import env, deploy_dir, compose_env
 from pycore.practicals_linux import yml
 
 
