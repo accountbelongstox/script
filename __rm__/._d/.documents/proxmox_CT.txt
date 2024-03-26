@@ -1,0 +1,289 @@
+以下是Proxmox VE创建容器（CT）时的各个参数和说明：
+
+下载模板：
+
+bash
+Copy code
+# pveam download local debian-10.0-standard_10.0-1_amd64.tar.gz
+该命令用于下载本地的Debian 10.0标准模板。
+
+查看已下载的模板：
+
+bash
+Copy code
+# pveam list local
+该命令用于列出本地存储中已下载的模板。
+
+创建容器：
+
+bash
+Copy code
+# pct create 999 local:vztmpl/debian-10.0-standard_10.0-1_amd64.tar.gz
+该命令用于创建容器，其中999是容器的唯一标识符，debian-10.0-standard_10.0-1_amd64.tar.gz是模板文件。
+
+删除已下载的模板：
+
+bash
+Copy code
+# pveam remove local:vztmpl/debian-10.0-standard_10.0-1_amd64.tar.gz
+该命令用于删除已下载的本地模板。
+
+容器设置：
+
+Node（节点）： 物理服务器，容器将在其上运行。
+CT ID（容器唯一标识符）： 在Proxmox VE中用于标识容器的唯一编号。
+Hostname（主机名）： 容器的主机名。
+Resource Pool（资源池）： 逻辑容器和虚拟机的分组。
+Password（密码）： 容器的root密码。
+SSH Public Key（SSH公钥）： 用于通过SSH连接到root帐户的公钥。
+Unprivileged container（非特权容器）： 创建时选择是否创建特权或非特权容器。
+CPU：
+
+cores（CPU核心数）： 限制容器内可见的CPU核心数。
+cpulimit（CPU使用限制）： 浮点数，限制容器的CPU时间。
+cpuunits（CPU权重）： 相对权重，用于调整容器的CPU时间。
+内存：
+
+memory（内存限制）： 限制容器的总体内存使用。
+swap（交换空间）： 允许容器使用主机交换空间的附加交换内存。
+挂载点：
+
+rootfs（根挂载点）： 使用指定的卷作为容器的根挂载点。
+mp[n]（附加挂载点）： 配置多达256个附加挂载点。
+网络：
+
+net[n]（网络接口）： 配置容器的最多10个网络接口，包括名称、桥接、防火墙等设置。
+自动启动和关闭：
+
+Start at boot（启动时启动）： 选择是否在主机系统启动时自动启动容器。
+Hookscripts：
+
+bash
+Copy code
+# pct set 100 -hookscript local:snippets/hookscript.pl
+允许将挂钩脚本添加到容器，这些脚本将在容器的生命周期中的各个阶段被调用。
+
+安全注意事项：
+
+AppArmor： 使用AppArmor配置文件限制对可能危险的操作的访问。
+Control Groups (cgroup)： 控制CPU时间、内存、交换限制和设备访问。
+CGroup版本兼容性：
+
+默认使用cgroupv2，版本7.0之后不再支持cgroup v1。
+需要容器的操作系统支持cgroupv2。
+容器存储：
+
+容器可以有多个挂载点，支持不同类型的存储。
+使用Quotas Inside Containers：
+
+允许在容器内设置用户磁盘空间配额。
+使用ACLs Inside Containers：
+
+可以在容器内使用标准Posix访问控制列表。
+容器备份和还原：
+
+使用vzdump工具进行容器备份，通过pct restore还原。
+使用pct管理容器：
+
+pct是Proxmox VE的命令行工具，用于创建、销毁、控制容器执行等操作。
+以上是Proxmox VE创建容器时的主要参数和说明，具体操作可以根据需求选择适当的参数进行配置。
+
+以下是Proxmox VE创建容器（CT）时使用的参数和说明（仅提供中文回答）：
+
+Node（节点）： 物理服务器，容器将在其上运行。
+
+CT ID（容器ID）： Proxmox VE安装中用于标识容器的唯一号码。
+
+Hostname（主机名）： 容器的主机名。
+
+Resource Pool（资源池）： 逻辑容器和虚拟机的组。
+
+Password（密码）： 容器的root密码。
+
+SSH Public Key（SSH公钥）： 用于通过SSH连接到容器root帐户的公钥。
+
+Unprivileged container（非特权容器）： 创建容器时选择是否创建非特权容器。
+
+CPU（处理器）：
+
+cores（核心数）： 限制容器内可见的CPU核心数。
+cpulimit（CPU限制）： 进一步限制分配的CPU时间。
+cpuunits（CPU权重）： 相对于其他运行容器的CPU时间权重。
+Memory（内存）：
+
+memory（内存限制）： 限制整体内存使用。
+swap（交换空间）： 允许容器使用主机交换空间中的附加交换内存。
+Mount Points（挂载点）：
+
+rootfs（根文件系统）： 配置根挂载点，指定容器根文件系统的体积。
+mp[n]（附加挂载点）： 配置附加挂载点，支持存储后备挂载点、绑定挂载点和设备挂载点。
+Network（网络）：
+net[n]（网络接口）： 配置容器的网络接口，包括名称、桥接、默认网关等。
+Automatic Start and Shutdown of Containers（容器的自动启动和关闭）：
+Start at boot（启动时自动启动）： 在Web界面的容器选项中选择此选项或使用命令pct set CTID -onboot 1以在主机启动时自动启动容器。
+Start and Shutdown Order（启动和关闭顺序）： 定义容器的启动和关闭顺序优先级。
+
+Hookscripts（钩子脚本）： 将钩子脚本添加到容器中。
+
+Security Considerations（安全考虑）：
+
+AppArmor（应用防火墙）： 使用AppArmor配置文件限制容器内的可能危险操作。
+Control Groups (cgroup)： 使用cgroup对容器内的资源进行层次化组织和分配。
+CGroup Version Compatibility（CGroup版本兼容性）： 支持cgroupv2，纯cgroupv2环境的默认设置。
+
+Guest Operating System Configuration（客户操作系统配置）： Proxmox VE尝试检测容器内的Linux发行版，并修改一些文件，如主机名、/etc/hosts、网络设置等。
+
+Container Storage（容器存储）： 灵活的存储模型，支持多个挂载点，可以使用Proxmox VE存储库支持的任何存储类型。
+
+FUSE Mounts（FUSE挂载）： 由于Linux内核冷冻子系统的问题，建议不要在容器内使用FUSE挂载。
+
+Using Quotas Inside Containers（在容器内使用磁盘配额）： 启用磁盘配额以限制每个用户在容器内可以使用的磁盘空间。
+
+Using ACLs Inside Containers（在容器内使用ACL）： 支持标准的Posix访问控制列表，允许设置比传统的用户/组/其他模型更详细的文件所有权。
+
+Backup and Restore（备份和恢复）：
+
+Container Backup（容器备份）： 使用vzdump工具进行容器备份。
+Restoring Container Backups（恢复容器备份）： 使用pct restore命令。
+Managing Containers with pct（使用pct管理容器）：
+CLI Usage Examples（CLI使用示例）： 创建、启动、进入容器等操作的命令示例。
+
+arch（架构）：容器的操作系统架构类型，可选值包括amd64、arm64、armhf、i386等，默认为amd64。
+
+cmode（控制台模式）：控制台模式，可选值包括console、shell、tty，默认为tty。设置为console时，尝试连接到/dev/console，而不是默认的tty设备。
+
+console（控制台设备）：是否附加控制台设备（/dev/console）到容器中，默认为1。
+
+cores（CPU核心数）：分配给容器的CPU核心数，范围为1到8192，默认为使用所有可用核心。
+
+cpulimit（CPU使用限制）：CPU使用限制，范围为0到8192，默认为0，表示无限制。
+
+cpuunits（CPU权重）：容器的CPU权重，用于内核公平调度，范围为0到500000，默认为cgroup v1: 1024, cgroup v2: 100。
+
+debug（调试模式）：是否启用调试模式，为1表示启用，默认为0。
+
+description（描述）：容器的描述信息，将显示在Web界面的容器摘要中。
+
+dev[n]（设备传递）：传递给容器的设备配置，包括路径、组ID、访问模式等。
+
+features（高级特性）：允许容器访问高级特性，如挂载文件系统、使用fuse等。
+
+hookscript（钩子脚本）：在容器生命周期的各个阶段执行的脚本。
+
+hostname（主机名）：为容器设置主机名。
+
+lock（锁）：锁定/解锁容器，用于防止并发的迁移、快照和备份操作。
+
+memory（内存）：容器的内存大小，单位为MB，范围为16到N，默认为512。
+
+mp[n]（挂载点）：容器的挂载点配置，包括卷、ACL支持、挂载选项等。
+
+nameserver（DNS服务器）：为容器设置DNS服务器的IP地址。
+
+net[n]（网络接口）：容器的网络接口配置，包括名称、桥接、防火墙规则、网关等。
+
+onboot（启动时是否运行）：指定容器是否在系统启动时运行，默认为0。
+
+ostype（操作系统类型）：容器的操作系统类型，可选值包括alpine、archlinux、centos等。
+
+protection（保护标志）：设置容器的保护标志，防止删除或更新容器或其磁盘。
+
+rootfs（根文件系统）：容器的根文件系统配置，包括卷、ACL支持、挂载选项等。
+
+searchdomain（DNS搜索域）：为容器设置DNS搜索域。
+
+startup（启动和关闭行为）：指定容器的启动和关闭行为，包括启动顺序、延迟等。
+
+swap（交换空间）：容器的交换空间大小，单位为MB，范围为0到N，默认为512。
+
+tags（标签）：容器的标签信息，用于元信息。
+
+template（模板）：启用/禁用模板，为1表示启用，默认为0。
+
+timezone（时区）：在容器中使用的时区，可设置为host匹配主机时区，或从/usr/share/zoneinfo/zone.tab中选择任意时区。
+
+tty（终端数）：指定容器可用的终端数量，范围为0到6，默认为2。
+
+unprivileged（非特权用户运行）：使容器以非特权用户身份运行，为1表示启用，默认为0。
+
+unused[n]（未使用的卷）：内部使用的未使用卷的引用，不应手动修改。
+
+示例创建命令：
+
+
+创建容器的命令示例：
+
+pct create CTID /var/lib/vz/template/cache/debian-10.0-standard_10.0-1_amd64.tar.gz
+pct set CTID -hostname ContainerHostname -password ContainerRootPassword -memory 1024
+pct set CTID -net0 name=eth0,bridge=vmbr0,ip=192.168.1.2/24,gw=192.168.1.1
+# 添加其他配置参数...
+pct start CTID
+
+
+pct create CTID \
+  --arch amd64 \
+  --cmode tty \
+  --console 1 \
+  --cores 1 \
+  --cpulimit 0 \
+  --cpuunits 1024 \
+  --debug 0 \
+  --description "My Container" \
+  --hostname mycontainer \
+  --lock create \
+  --memory 512 \
+  --nameserver 8.8.8.8 \
+  --net0 name=eth0,bridge=vmbr0,gw=192.168.1.1,hwaddr=66:64:66:64:64:36,ip=dhcp \
+  --onboot 0 \
+  --ostype debian \
+  --protection 0 \
+  --rootfs local:107/vm-107-disk-1.raw,size=7G \
+  --searchdomain example.com \
+  --startup order=1,up=60,down=60 \
+  --swap 512 \
+  --tags "web server" \
+  --template 0 \
+  --timezone Europe/Berlin \
+  --tty 2 \
+  --unprivileged 0 \
+  --features fuse=1,keyctl=1,mount=1 \
+  --mp0 volume=hostpath,mp=/www/docker/root_id_niuyqnqmvx,tmpfs=1
+
+pct create 102  \
+    /var/lib/vz/template/cache/centos-9-stream-default_20221109_amd64.tar.xz \
+  --arch amd64 \
+  --cmode tty \
+  --console 1 \
+  --cores 2 \
+  --cpulimit 0 \
+  --cpuunits 1024 \
+  --debug 0 \
+  --description "My Container Titokit" \
+  --hostname mycontainer \
+  --lock create \
+  --memory 2048 \
+  --swap 2048 \
+  --nameserver 192.168.100.1 \
+  --net0 name=eth0,bridge=vmbr0,gw=192.168.100.1,hwaddr=66:64:66:64:64:36,ip=192.168.100.10/24 \
+  --onboot 0 \
+  --ostype centos \
+  --protection 0 \
+  --searchdomain example.com \
+  --startup order=1,up=60,down=60 \
+  --tags "web server" \
+  --template 1 \
+  --timezone Europe/Berlin \
+  --tty 2 \
+  --rootfs local-lvm:16 \
+  --unprivileged 0 \
+  --features fuse=1,keyctl=1,mount=1 
+
+
+pct set 101 -mp1 /dev/disk/by-id/ata-ST4000NM0033-9ZM170_Z1Z93KP3:rw,mp=/www
+
+  --storage local
+
+  
+  --mp1 /dev/disk/by-id/ata-ST4000NM0033-9ZM170_Z1Z93KP3:rw,mp=/www
+
+  --template-storage local:iso/centos-9-stream-default_20221109_amd64.tar.xz

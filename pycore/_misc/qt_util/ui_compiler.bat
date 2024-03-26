@@ -1,0 +1,1 @@
+pyside6-uic -o qt_ui.py qt.ui

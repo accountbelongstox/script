@@ -1,0 +1,20 @@
+{
+  "default_prompts_dir": ".prompts",
+  "gpt": {
+    "codeComments": [],
+    "callList": [],
+    "taskDistribution": [],
+    "currentLanguage": [],
+    "promptWordPreposition": [],
+    "promptWordIsPlacedAfter.": [],
+    "postSecondary": [],
+    "triggeringConditions": [],
+    "stringReplacement": []
+  },
+  "filterFolder": [],
+  "filterExtension": [],
+  "filterFileStartsWith": [],
+  "filterFileRegex": [],
+  "filterFolderStartsWith": [],
+  "filterFolderRegex": []
+}

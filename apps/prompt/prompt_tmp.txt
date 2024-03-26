@@ -1,0 +1,167 @@
+"""
+├── .editorconfig
+├── .eslintrc.json
+├── .gitignore
+├── .prettierrc
+├── api
+│   ├── egg.js
+│   ├── socket.js
+│   └── socketReact.js
+├── API调用类
+├── App.tsx
+├── components
+│   ├── Dropdown.tsx
+│   ├── Highlight.tsx
+│   ├── Layouts
+│   │   ├── BlankLayout.tsx
+│   │   ├── DefaultLayout.tsx
+│   │   ├── Footer.tsx
+│   │   ├── Header.tsx
+│   │   ├── Setting.tsx
+│   │   └── Sidebar.tsx
+│   └── Portals.tsx
+├── ecosystem.config.js
+├── gitput.bat
+├── gitput.sh
+├── NetworkRequest.js
+├── next-env.d.ts
+├── next.config.js
+├── ni18n.config.ts.js
+├── package-lock.json
+├── package.json
+├── pages
+│   ├── analytics copy.tsx
+│   ├── analytics.tsx
+│   ├── apps
+│   │   ├── calendar.tsx
+│   │   ├── chat.tsx
+│   │   ├── contacts.tsx
+│   │   ├── invoice
+│   │   │   ├── add.tsx
+│   │   │   ├── edit.tsx
+│   │   │   ├── list.tsx
+│   │   │   └── preview.tsx
+│   │   ├── mailbox.tsx
+│   │   ├── notes copy.tsx
+│   │   ├── notes.tsx
+│   │   ├── scrumboard.tsx
+│   │   └── todolist.tsx
+│   ├── auth
+│   │   ├── boxed-lockscreen.tsx
+│   │   ├── boxed-password-reset.tsx
+│   │   ├── boxed-signin.tsx
+│   │   ├── boxed-signup.tsx
+│   │   ├── cover-lockscreen.tsx
+│   │   ├── cover-login.tsx
+│   │   ├── cover-password-reset.tsx
+│   │   └── cover-register.tsx
+│   ├── charts.tsx
+│   ├── components
+│   │   ├── accordions.tsx
+│   │   ├── cards.tsx
+│   │   ├── carousel.tsx
+│   │   ├── countdown.tsx
+│   │   ├── counter.tsx
+│   │   ├── lightbox.tsx
+│   │   ├── list-group.tsx
+│   │   ├── media-object.tsx
+│   │   ├── modals.tsx
+│   │   ├── notifications.tsx
+│   │   ├── pricing-table.tsx
+│   │   ├── sweetalert.tsx
+│   │   ├── tabs.tsx
+│   │   └── timeline.tsx
+│   ├── crypto.tsx
+│   ├── datatables
+│   │   ├── advanced.tsx
+│   │   ├── alt-pagination.tsx
+│   │   ├── basic.tsx
+│   │   ├── checkbox.tsx
+│   │   ├── column-chooser.tsx
+│   │   ├── export.tsx
+│   │   ├── multi-column.tsx
+│   │   ├── multiple-tables.tsx
+│   │   ├── order-sorting.tsx
+│   │   ├── range-search.tsx
+│   │   └── skin.tsx
+│   ├── dragndrop.tsx
+│   ├── elements
+│   │   ├── alerts.tsx
+│   │   ├── avatar.tsx
+│   │   ├── badges.tsx
+│   │   ├── breadcrumbs.tsx
+│   │   ├── buttons-group.tsx
+│   │   ├── buttons.tsx
+│   │   ├── color-library.tsx
+│   │   ├── dropdown.tsx
+│   │   ├── infobox.tsx
+│   │   ├── jumbotron.tsx
+│   │   ├── loader.tsx
+│   │   ├── pagination.tsx
+│   │   ├── popovers.tsx
+│   │   ├── progress-bar.tsx
+│   │   ├── search.tsx
+│   │   ├── tooltips.tsx
+│   │   ├── treeview.tsx
+│   │   └── typography.tsx
+│   ├── finance copy.tsx
+│   ├── finance.tsx
+│   ├── font-icons.tsx
+│   ├── forms
+│   │   ├── basic.tsx
+│   │   ├── checkbox-radio.tsx
+│   │   ├── clipboard.tsx
+│   │   ├── date-picker.tsx
+│   │   ├── file-upload.tsx
+│   │   ├── input-group.tsx
+│   │   ├── input-mask.tsx
+│   │   ├── layouts.tsx
+│   │   ├── markdown-editor.tsx
+│   │   ├── quill-editor.tsx
+│   │   ├── select2.tsx
+│   │   ├── switches.tsx
+│   │   ├── touchspin.tsx
+│   │   ├── validation.tsx
+│   │   └── wizards.tsx
+│   ├── index copy.tsx
+│   ├── index.tsx
+│   ├── pages
+│   │   ├── coming-soon.tsx
+│   │   ├── contact-us.tsx
+│   │   ├── error404.tsx
+│   │   ├── error500.tsx
+│   │   ├── error503.tsx
+│   │   ├── faq.tsx
+│   │   ├── knowledge-base.tsx
+│   │   └── maintenence.tsx
+│   ├── tables.tsx
+│   ├── users
+│   │   ├── profile.tsx
+│   │   └── user-account-settings.tsx
+│   ├── widgets.tsx
+│   ├── _app.tsx
+│   └── _document.tsx
+├── postcss.config.js
+├── projectDirectoryPrinting.py
+├── store
+│   ├── index.tsx
+│   └── themeConfigSlice.tsx
+├── tailwind.config.js
+├── theme.config.tsx
+├── tsconfig.json
+├── yarn.lock
+├── 任务推送类
+└── 兼职申请页
+"""
+
+以上是我现在的项目next的文件目录结构，我需要完成以下功能。
+我需要将 "联系人" 页面中的Contacts 下面的元素，移植到另一个页面 "发票->列表" 当中 。
+现在你认为涉及到哪些文件？我需要去修改哪些文件？请将文件列出并用下列json格式输出。
+"
+{
+  "mainFiles": [
+  ],
+  "othersMayInvolveFiles": [
+  ]
+}
+"

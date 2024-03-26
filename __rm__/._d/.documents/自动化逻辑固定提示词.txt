@@ -1,0 +1,59 @@
+[API文档]:
+"
+...绘图AP
+WebGLRenderingContext.bindTexture(target, texture) - 绑定纹理到目标
+WebGLRenderingContext.createTexture() - 创建一个纹理对象
+WebGLRenderingContext.deleteTexture(texture) - 删除指定纹理对象
+WebGLRenderingContext.isTexture(texture) - 判断是否为纹理对象
+WebGLRenderingContext.compressedTexImage2D(target, level, internalformat, width, height, border, ArrayBufferView? pixels) - 压缩纹理图像的部分
+WebGLRenderingContext.compressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, ArrayBufferView? pixels) - 压缩纹理的子图像
+WebGLRenderingContext.copyTexImage2D(target, level, internalformat, x, y, width, height, border) - 从当前帧缓冲区复制像素到纹理图像
+WebGLRenderingContext.copyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height) - 从当前帧缓冲区的指定位置复制像素到纹理的子图像
+WebGLRenderingContext.generateMipmap(target) - 生成纹理的多级渐远纹理
+WebGLRenderingContext.getTexParameter(target, pname) - 获取纹理参数值
+WebGLRenderingContext.texImage2D(target, level, internalformat, format, type, ImageData? pixels) - 定义二维纹理图像
+WebGLRenderingContext.texSubImage2D(target, level, xoffset, yoffset, format, type, ImageData? pixels) - 替换二维纹理的一部分
+WebGLRenderingContext.texParameterf(target, pname, param) - 设置浮点纹理参数值
+WebGLRenderingContext.texParameteri(target, pname, param) - 设置整数纹理参数值
+...认证API
+CredentialsContainer.create(publicKey) - 创建新凭据，用于注册新账号或将新的非对称密钥凭据与已有账号关联
+CredentialsContainer.get(publicKey) - 使用一组现有凭据进行身份验证服务，用于用户登录或双因素验证中的一步
+PublicKeyCredential - 用于登录服务的凭据，使用不易受钓鱼攻击和数据泄露的非对称密钥对替代密码
+AuthenticatorResponse - PublicKeyCredential的一部分，包含来自浏览器的信息（如挑战和来源）以及来自认证器的信息（AuthenticatorAttestationResponse用于新凭据，AuthenticatorAssertionResponse用于验证现有凭据）
+AuthenticatorAttestationResponse - 当使用create()时，包含认证器为新密钥对提供的加密根信任的方式
+AuthenticatorAssertionResponse - 当使用get()时，包含认证器用于证明其拥有密钥对并且认证请求是有效且已批准的方式
+PublicKeyCredentialCreationOptions - 用于通过navigator.credentials.create()创建凭据的选项
+PublicKeyCredentialRequestOptions - 用于通过navigator.credentials.get()使用凭据的选项
+getClientExtensionResults() - 获取客户端扩展的结果
+isConditionalMediationAvailable() - (静态方法) 检查是否支持有条件中介
+isUserVerifyingPlatformAuthenticatorAvailable() - (静态方法) 检查是否支持用户验证的平台认证器
+parseCreationOptionsFromJSON() - (实验性的) 解析JSON字符串以获取创建选项
+parseRequestOptionsFromJSON() - (实验性的) 解析JSON字符串以获取请求选项
+rawId - 凭据的全局唯一证书ID
+response - 凭据的响应数据
+toJSON() - (实验性的) 将对象转换为JSON格式
+
+
+"
+
+[操作元素:]
+"
+<input id="sb_form_q" class="sb_form_q" name="q" type="search" maxlength="1000" autocomplete="off" aria-labelledby="sb_form_c" autofocus="" aria-controls="sw_as" aria-autocomplete="both" aria-owns="sw_as" aria-activedescendant="sa_5003">
+<input id="sb_form_go" type="submit" aria-label="Search" name="search" value="" tabindex="0">
+<label for="sb_form_go" class="search icon tooltip" id="search_icon" aria-label="搜索网页" tabindex="-1"><svg viewBox="0 0 25 25"><path stroke="#007DAA" stroke-width="2.5" stroke-linecap="round" stroke-miterlimit="10" fill="none" d="M23.75 23.75l-9-9"></path><circle stroke="#007DAA" stroke-width="2.5" stroke-linecap="round" stroke-miterlimit="10" cx="9" cy="9" r="7.75" fill="none"></circle><path fill="none" d="M25 25h-25v-25h25z"></path></svg></label>
+"
+
+请使用以上我提供的 "API文档" 和 "操作元素" 帮我完成以下代码逻辑:
+帮我在输入框之后,画一个图形.
+
+async performShipping(product) {
+    const { browser } = product;
+}
+
+
+
+async performShipping(product) {
+   const { browser } = product;
+   await browser.handle.setInputBySelector('#sb_form_q', '输入的字符串');
+   await browser.handle.clickElementBySelector('#sb_form_go');
+}

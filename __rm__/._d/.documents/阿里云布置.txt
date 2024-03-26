@@ -1,0 +1,347 @@
+
+
+centos 7
+sudo systemctl stop firewalld
+sudo systemctl disable firewalld
+sudo yum install firewalld
+
+sudo systemctl stop iptables
+sudo systemctl disable iptables
+sudo yum remove iptables
+
+sudo wget "http://update2.aegis.aliyun.com/download/uninstall.sh" && chmod +x uninstall.sh && ./uninstall.sh
+sudo wget http://update.aegis.aliyun.com/download/quartz_uninstall.sh  && chmod +x quartz_uninstall.sh && ./quartz_uninstall.sh  
+sudo wget http://update.aegis.aliyun.com/download/uninstall.sh  && chmod +x uninstall.sh  && ./uninstall.sh  
+
+Debain 8
+sudo pkill aliyun-service  
+sudo rm -fr /etc/init.d/agentwatch /usr/sbin/aliyun-service  
+sudo rm -rf /usr/local/aegis*  
+systemctl stop aliyun.service
+systemctl disable aliyun.service
+sudo rm -rf /usr/local/share/assist-daemon
+sudo rm -rf /usr/local/share/aliyun-assis
+
+Centos 7
+sudo systemctl stop aegis
+sudo systemctl disable aegis
+sudo pkill aliyun-service
+sudo rm -fr /etc/init.d/agentwatch /usr/sbin/aliyun-service
+sudo rm -rf /usr/local/aegis*
+sudo rm -rf /usr/local/share/assist-daemon
+sudo rm -rf /usr/local/share/aliyun-assis
+
+sudo dd if=/dev/zero of=/swapfile2 bs=1M count=2048
+sudo chmod 600 /swapfile2
+sudo mkswap /swapfile2
+sudo swapon /swapfile2
+echo '/swapfile2   swap    swap    sw  0   0' | sudo tee -a /etc/fstab
+sudo swapon -a
+
+Centos 7
+systemctl list-units --type=service
+sudo systemctl stop cloud-config.target
+sudo systemctl stop cloud-final.target
+sudo systemctl stop cloud-init-local.service
+sudo systemctl stop cloud-init.service
+sudo systemctl stop exim.service
+sudo systemctl stop irqbalance.service
+sudo systemctl stop nfs.service 
+sudo systemctl stop ntpd.service
+sudo systemctl stop rc-local.service
+sudo systemctl stop sysstat.service
+sudo systemctl disable cloud-config.target
+sudo systemctl disable cloud-final.target
+sudo systemctl disable cloud-init-local.service
+sudo systemctl disable cloud-init.service
+sudo systemctl disable exim.service
+sudo systemctl disable irqbalance.service
+sudo systemctl disable nfs.service
+sudo systemctl disable ntpd.service
+sudo systemctl disable rc-local.service
+sudo systemctl disable sysstat.service
+sudo systemctl disable aegis.service
+sudo systemctl disable kdump.service
+sudo systemctl disable postfix.service
+sudo systemctl stop aliyun.service
+sudo systemctl disable aliyun.service
+sudo systemctl stop AssistDaemon.service
+sudo systemctl stop cloud-config.service
+sudo systemctl stop cloud-final.service
+sudo systemctl stop cloud-init-local.service
+sudo systemctl stop cloud-init-upgrade.service
+sudo systemctl stop cloud-init.service
+sudo systemctl stop kdump.service
+sudo systemctl stop postfix.service
+sudo systemctl disable aliyun.service
+sudo systemctl disable aliyun.service
+sudo systemctl disable AssistDaemon.service
+sudo systemctl disable cloud-config.service
+sudo systemctl disable cloud-final.service
+sudo systemctl disable cloud-init-local.service
+sudo systemctl disable cloud-init-upgrade.service
+sudo systemctl disable cloud-init.service
+sudo systemctl disable kdump.service
+sudo systemctl disable postfix.service
+
+
+Debian 8
+systemctl list-units --type=service
+sudo systemctl stop cloud-config.service
+sudo systemctl stop cloud-final.service
+sudo systemctl stop cloud-init-local.service
+sudo systemctl stop cloud-init-upgrade.service
+sudo systemctl stop cloud-init.service
+sudo systemctl stop exim4.service
+sudo systemctl stop irqbalance.service
+sudo systemctl stop nfs-common.service
+sudo systemctl stop ntp.service
+sudo systemctl stop rc-local.service
+sudo systemctl stop sysstat.service
+sudo systemctl stop ntp.service
+
+sudo systemctl disable cloud-config.service
+sudo systemctl disable cloud-final.service
+sudo systemctl disable cloud-init-local.service
+sudo systemctl disable cloud-init-upgrade.service
+sudo systemctl disable cloud-init.service
+sudo systemctl disable exim4.service
+sudo systemctl disable irqbalance.service
+sudo systemctl disable nfs-common.service
+sudo systemctl disable ntp.service
+sudo systemctl disable rc-local.service
+sudo systemctl disable sysstat.service
+sudo systemctl disable ntp.service
+
+sudo grep -rl "http://mirrors.cloud.aliyuncs.com jessie/updates InRelease" / 2>/dev/null
+
+Debain 8
+vi /etc/apt/sources.list
+deb http://mirrors.163.com/debian/ jessie main non-free contrib
+deb http://mirrors.163.com/debian/ jessie-updates main non-free contrib
+deb http://mirrors.163.com/debian/ jessie-backports main non-free contrib
+deb-src http://mirrors.163.com/debian/ jessie main non-free contrib
+deb-src http://mirrors.163.com/debian/ jessie-updates main non-free contrib
+deb-src http://mirrors.163.com/debian/ jessie-backports main non-free contrib
+deb http://mirrors.163.com/debian-security/ jessie/updates main non-free contrib
+deb-src http://mirrors.163.com/debian-security/ jessie/updates main non-free contrib
+
+
+deb http://mirrors.163.com/debian/ jessie main non-free contrib
+deb http://mirrors.163.com/debian-archive/debian/ jessie-backports main non-free contrib
+deb-src http://mirrors.163.com/debian/ jessie main non-free contrib
+deb-src http://mirrors.163.com/debian-archive/debian/ jessie-backports main non-free contrib
+deb http://mirrors.163.com/debian-security/ jessie/updates main non-free contrib
+deb-src http://mirrors.163.com/debian-security/ jessie/updates main non-free contrib
+
+Debian
+sudo apt update
+sudo apt install apt-transport-https ca-certificates curl gnupg lsb-release htop
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io rsync
+apt list -a docker-ce
+
+Centos 7
+sudo yum update
+sudo yum install -y yum-utils device-mapper-persistent-data lvm2 rsync htop nano
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+sudo yum install docker-ce
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo docker --version
+sudo usermod -aG docker root
+
+Debain 9
+sudo apt install docker-ce=5:19.03.15~3-0~debian-stretch docker-ce-cli=5:19.03.15~3-0~debian-stretch containerd.io
+
+Debain 8
+sudo apt install docker-ce=18.06.3~ce~3-0~debian  containerd.io docker-ce-cli=18.06.3~ce~3-0~debian
+
+sudo fdisk -l
+sudo nano /etc/fstab
+/dev/vdb    /www    ext4    defaults    0    2
+sudo systemctl stop docker
+nano /etc/docker/daemon.json
+{
+  "data-root": "/www/docker"
+}
+sudo mkdir -p /www/docker
+sudo rsync -aP /var/lib/docker/ /www/docker
+sudo systemctl start docker
+sudo docker info | grep "Docker Root Dir"
+sudo systemctl start docker
+sudo systemctl enable docker
+
+
+curl -s https://install.zerotier.com | sudo bash
+cd /var/lib/zerotier-one/
+zerotier-idtool initmoon identity.public >>moon.json
+nano moon .json
+{
+ "id": "92527bb609",
+ "objtype": "world",
+ "roots": [
+  {
+   "identity": "92527bb609:0:e031c5401ff7e69819f6bbdadd9ee8a3369e7156d012d2579871a842a57b9533e0de7a38f909dbc6b98ba61c6fe573806f37c74fd54cac4fa6a5c2e0193c1a8d",
+   "stableEndpoints": ["47.242.164.51/9993"]
+  }
+ ],
+ "signingKey": "1fac60172901e2f44c00135e1b6b952191df997e69a4a9db5eb7e010040a3416c76016d86fbee89549a0857d250b73ce4b2dde38236e6aa0ed497cd4989df229",
+ "signingKey_SECRET": "6f7aa7430dd301c700245a2f20add32eea52ce8a80a854baf00efcb915e562147f995da21dac3745687f6ac44d14fcdd225247616879f859790dab3aa6f68415",
+ "updatesMustBeSignedBy": "1fac60172901e2f44c00135e1b6b952191df997e69a4a9db5eb7e010040a3416c76016d86fbee89549a0857d250b73ce4b2dde38236e6aa0ed497cd4989df229",
+ "worldType": "moon"
+}
+zerotier-idtool genmoon moon.json      
+mkdir /var/lib/zerotier-one/moons.d
+cp 00000092527bb609.moon ./moons.d
+systemctl restart zerotier-one
+
+sudo docker run -d -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /www/docker/portainer_data:/data portainer/portainer-ce
+
+docker run --name myzerotier --rm --cap-add NET_ADMIN --device /dev/net/tun zerotier/zerotier:latest abcdefdeadbeef00
+docker exec myzerotier zerotier-cli listnetworks
+
+docker run --name zerotier-moon -d --restart always -p 9993:9993/udp -v ~/somewhere:/var/lib/zerotier-one seedgou/zerotier-moon -4 1.2.3.4
+docker run --name ztncui -dp 3443:3443 keynetworks/ztncui
+
+docker pull keynetworks/ztncui
+
+curl -O https://s3-us-west-1.amazonaws.com/key-networks/deb/ztncui/1/x86_64/ztncui_0.8.13_amd64.deb
+dpkg -i ztncui_0.8.13_amd64.deb
+sh -c "echo ZT_TOKEN=`sudo cat /var/lib/zerotier-one/authtoken.secret' > /opt/key-networks/ztncui/.env”sh -c "echo HTTP ALL INTERFACES=yes >> /opt/key-networks/ztncui/.env"
+sh -c "echo NODE_ENV=production >> /opt/key-networks/ztncui/.env"
+chmod 400 /opt/key-networks/ztncui/.envchown ztncui.ztncui /opt/key-networks/ztncui/.env
+systemctl enable ztncui
+systemctl restart ztncui
+
+docker run -d --privileged --restart=always -p 3443:3443 keynetworks/ztncui
+
+docker run -d --restart unless-stopped --name baota --net=host -v /www/wwwroot:/www/wwwroot -v /www/server/data:/www/server/data -v /www/server/panel/vhost:/www/server/panel/vhost btpanel/baota:lnmp
+docker run --name ztncui -dp 3443:3443 keynetworks/ztncui
+
+
+
+:Debian 9
+sudo ufw disable
+sudo iptables -P INPUT ACCEPT
+sudo iptables -P FORWARD ACCEPT
+sudo iptables -P OUTPUT ACCEPT
+sudo iptables -t nat -F
+sudo iptables -t mangle -F
+sudo iptables -F
+sudo iptables -X
+sudo apt-get remove --auto-remove iptables
+sudo apt-get remove --auto-remove ufw
+
+git clone https://github.com/key-networks/ztncui-aio
+vi denv 
+NODE_ENV=production
+HTTPS_PORT=3443
+HTTP_PORT=3000
+ZTNCUI_PASSWD=password
+MYDOMAIN=zerotier.12gm.com
+MYADDR=47.242.164.51
+docker build . -t keynetworks/ztncui:latest
+#直接安装
+docker pull keynetworks/ztncui
+
+网易SMTP
+adminroot
+Adminroot123456
+POP3服务器: pop.163.com
+SMTP服务器: smtp.163.com:465
+IMAP服务器: imap.163.com
+MSPZHGUTYJJVWJAH
+
+http://192.168.100.10:10880/adminroot/spider_by_node.git
+
+
+
+docker run -d --restart unless-stopped --name baota --net=host -v /www/wwwroot:/www/wwwroot -v /www/server/data:/www/server/data -v /www/server/panel/vhost:/www/server/panel/vhost --restart unless-stopped btpanel/baota:lnmp
+docker run --name=gogs -p 10022:22 -p 10880:3000 -v /www/git_gogs:/data --add-host=host.docker.internal:host-gateway --restart unless-stopped gogs/gogs
+
+
+docker run --name phpmyadmin -d --restart unless-stopped --add-host=host.docker.internal:host-gateway -p 8180:80 -v /www/docker/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php phpmyadmin
+
+docker run --name mongo  -d \
+--restart unless-stopped --add-host=host.docker.internal:host-gateway \
+-v /www/docker/mongo:/etc/mongo \
+-v /www/docker/mongo/data:/data/db \
+--config /www/docker/mongo/mongod.conf \
+-p 27019:27019 \
+mongo
+
+
+docker run -itd --name mysql --restart unless-stopped -p 3306:3306 \
+-v /www/mysql8_docker/conf.d:/etc/mysql/conf.d \
+-v /www/mysql8_docker/data:/var/lib/mysql  \
+-e MYSQL_ROOT_PASSWORD=root mysql
+docker run -d --name pm2 --net=host -v /www:/www --restart unless-stopped keymetrics/pm2
+docker run -it pm2 /bin/sh
+
+	
+docker run -d \
+--restart unless-stopped \
+--add-host=host.docker.internal:host-gateway \
+-e DB_HOST=host.docker.internal:3306 \
+-e DB_DATABASE=bookstack2 \
+-e DB_USERNAME=root \
+-e DB_PASSWORD=root \
+-p 18010:8080 \
+-e APP_URL=https://doc.local.12gm.com:888 \
+--name bookstack \
+ solidnerd/bookstack:22.04
+
+sudo docker exec -it nginx-proxy-manager python3 -m pip install --upgrade pip
+sudo docker exec -it nginx-proxy-manager pip install zope zope.interface certbot-dns-dnspod
+sudo docker exec -it nginx-proxy-manager sh
+
+  
+如何使用extra_host  能连接到宿主机
+
+  
+给以上命令加上访问宿主机localhost的能力，以及和其他容器互访
+
+
+dns_dnspod_email = "accountbelongstox@163.com"
+dns_dnspod_api_token = "423302,c7d75d337e837276da7239693955b137"
+
+sudo yum install python3
+nano ~/.pip/pip.conf
+[global]
+index-url = https://mirrors.tencent.com/pypi/simple/
+
+sudo pip3 install certbot
+sudo certbot renew --dry-run
+pip install zope.interface==5.4.0
+yum certbot
+sudo certbot renew --dry-run
+
+docker run --name mautic -d \
+--restart unless-stopped \
+    --add-host=host.docker.internal:host-gateway \
+    -e MAUTIC_DB_HOST=host.docker.internal:3306 \
+    -e MAUTIC_DB_USER=root \
+    -e MAUTIC_DB_PASSWORD=root \
+    -e MAUTIC_DB_NAME=mautic \
+    -e MAUTIC_RUN_CRON_JOBS=true \
+    -p 8302:80 \
+    -v /www/docker/mautic_data:/var/www/html \
+    mautic/mautic:v4
+
+docker run --name mauticv3 -d \
+    --add-host=host.docker.internal:host-gateway \
+    --restart=always \
+    -e MAUTIC_DB_HOST=host.docker.internal:3306 \
+    -e MAUTIC_DB_USER=root \
+    -e MAUTIC_DB_PASSWORD=root \
+    -e MAUTIC_DB_NAME=mautic \
+    -e MAUTIC_RUN_CRON_JOBS=true \
+    -p 8203:80 \
+    -v mautic_data:/var/www/html \
+    mautic/mautic:v3
+	
+	
+docker-compose.yml

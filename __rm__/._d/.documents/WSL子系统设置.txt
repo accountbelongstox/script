@@ -1,0 +1,101 @@
+低版本windows不支持
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform
+wsl --set-default-version 2
+
+wsl —update
+wsl —version
+
+开启Hyper-V
+创建虚拟交换机，并绑定物理网卡（命名为：WSL）
+关闭防火墙
+
+[配置] 用户名文件夹下
+.wslconfig
+[wsl2]
+networkingMode=bridged
+vmSwitch=Lan
+ipv6=true
+
+win10/Server 2022
+
+debian11 安装宝塔
+面板设置
+/mnt/d/programing/
+/mnt/d/programing/btbackup
+
+New-NetFirewallRule -DisplayName "LocalNet" -Direction Inbound -InterfaceAlias "vEthernet (LocalNet)"  -Action Allow
+
+apt-get install network-manager
+nmcli con mod 'eth0' ipv4.address 192.168.100.10/24
+
+vi /etc/init.wsl
+
+#! /bin/sh
+/etc/init.d/cron $1
+/etc/init.d/ssh $1
+/etc/init.d/bt $1
+/etc/init.d/nginx $1
+/etc/init.d/php-fpm-74 $1
+/etc/init.d/mysqld $1
+/etc/init.d/redis $1
+/etc/init.d/mongodb $1
+/etc/init.d/pure-ftpd $1
+/etc/init.d/php-fpm-56 $1
+/etc/init.d/php-fpm-74 $1
+sudo service docker start
+
+sudo chmod +x /etc/init.wsl
+
+C:\Windows\System32\wsl.exe -d debian -u root /etc/init.wsl restart
+
+运行中运行：
+shell:startup
+C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup
+C:\Users\[用户名]\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+
+
+vim /etc/docker/daemon.json
+{
+    "registry-mirrors": [
+        "http://hub-mirror.c.163.com",
+        "https://docker.mirrors.ustc.edu.cn",
+        "https://registry.docker-cn.com"
+    ]
+}
+
+{
+    "registry-mirrors":[
+        "https://hub-mirror.c.163.com", 
+        "https://docker.mirrors.ustc.edu.cn", 
+        "https://mirror.baidubce.com", 
+        "https://registry.docker-cn.com"
+    ]
+}
+service docker restart
+docker info
+
+wsl --import Debian Debian \\192.168.100.1\router\programing\wsl_backup\Debian_2023-08-19T14-08-58.tar
+
+wsl --import Debian Debian C:\Users\Administrator\Downloads\Debian_2023-08-19T14-08-58.tar
+
+windwos Server服务器
+Set-NetOffloadGlobalSetting -NetworkDirect Enabled
+安装 文件和存储服务->文件和ISCSI服务->NFS服务器，文件服务器资源管理器
+SMB客户端，NFS客端,WSL，
+启用Guest账号
+组策略 gpedit.msc
+计算机配置->Windows设置->安全设置->账户策略->密码策略
+gpupdate /force
+
+sudo docker run --detach \
+  --hostname gitlab.example.com \
+  --publish 10443:443 --publish 1080:80 --publish 1022:22 \
+  --name gitlab \
+  --restart always \
+  --volume /mnt/d/programing/gitlab/config:/etc/gitlab \
+  --volume /mnt/d/programing/gitlab/logs:/var/log/gitlab \
+  --volume /mnt/d/programing/gitlab/data:/var/opt/gitlab \
+  --shm-size 256m \
+  gitlab/gitlab-ee:latest

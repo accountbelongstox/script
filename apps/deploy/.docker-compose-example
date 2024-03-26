@@ -1,0 +1,10 @@
+full=portainer baota phpmyadmin mongo mysql nginx-proxy-manager gogs mediawiki mautic confluence nextcloud bookstack registry registry-web php php74 nginx redis docker-compose-ui samba nginxwebui pm2_node18 nodejs18
+manager=portainer samba
+default=portainer phpmyadmin mongo mysql nginx_ui gogs php82 redis pm2_node18 nginx-proxy-manager
+manager=portainer samba
+APP=ztncui gogs
+SERVER=php php74 nginx mongo mysql nginx-proxy-manager baota phpmyadmin redis
+HK=portainer ztncui phpmyadmin portainer ddnsgo nginx-proxy-manager php82 nginx mysql pm2_node18
+local=portainer phpmyadmin mongo mysql nginx-proxy-manager gogs nginx php82 mediawiki mautic confluence nextcloud bookstack
+docker_compose=portainer phpmyadmin mongo mysql redis nginx-proxy-manager pm2_node18
+server=portainer phpmyadmin mongo mysql gogs php82 redis pm2_node18 nginx-proxy-manager nginx_ui
