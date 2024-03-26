@@ -27,11 +27,14 @@ tmpdir = "/home/script/.tmp"
 infodir = "/home/script/.info"
 file.mkdir(tmpdir)
 file.mkdir(infodir)
+shells_dir = os.path.join(_deploy_dir, "shells")
+
 deploy_dir_file = os.path.join(infodir,".deploy_dir")
 shells_dir_file = os.path.join(infodir,".shells_dir")
 apps_dir_file = os.path.join(infodir,".apps_dir")
 systeminfo_file = os.path.join(infodir,".systeminfo_dir")
 script_dir_file = os.path.join(_deploy_dir, "shells")
+
 env = _env
 compose_env = _env.load(_deploy_dir, ".docker")
 deploy_dir = _deploy_dir
