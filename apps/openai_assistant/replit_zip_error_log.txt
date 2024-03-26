@@ -1,0 +1,1 @@
+{"error":".zip archives do not support non-regular files","level":"error","msg":"unable to write file .cache/replit/modules/python-3.10:v34-20231216-fb57c71","time":"2023-12-19T16:17:25Z"}

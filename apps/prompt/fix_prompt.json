@@ -1,0 +1,103 @@
+{
+  "default_prompts_dir": ".ppcache",
+  "default_doc_dir": ".doc",
+  "maximum_running_seconds_per_day": 86400,
+  "maximum_per_account_per_day": 600,
+  "promptCodeComments": [
+    {
+      "zh": [
+        "针对以上的 {lang} 代码。按我以下要求进行分析, 并输出为代码格式:",
+        "1:对每行代码逐行注释,注释输出到每一行代码的下方(您可以使用中文注释),格式: \"// 注释\" .",
+        "2:在末尾,以注释的形式,列出以上代码用到的 {lang} 语言的基础点,并对每个基础点逐一说明,格式为:\"特性说明 : 简单示例\"(不超过100字),输出到:\"[语法基础]:\"",
+        "3:在末尾,以注释的形式,总结以上代码的主要功能(不超过100字),输出到:\"[总结]:\"",
+        "4:在末尾,以注释的形式,对引用的第三方包作出说明,请逐个列出,每个包不超过100字,输出到:\"[第三方包总结]:\""
+      ],
+      "en": [
+        "For the above {lang} code. Analyze it according to my following requirements and output it in code format:",
+        "1: Comment each line of code line by line, and the comments are output below each line of code (you can use Chinese comments), format: \"// Comment\" .",
+        "2: At the end, in the form of comments, list the basic points of the {lang} language used in the above code, and explain each basic point one by one. The format is: \"Feature Description: Simple Example\" (no more than 100 words), output to:\"[Grammar Basics]:\"",
+        "3: At the end, summarize the main functions of the above code in the form of comments (no more than 100 words), output to:\"[Summary]:\"",
+        "4: At the end, in the form of comments, explain the referenced third-party packages. Please list them one by one. Each package should not exceed 100 words. Output to:\"[Third-party package summary]:\""
+      ]
+    }
+  ],
+  "promptCodeCallListSummary.": [
+    {
+      "zh": "以上是 {lang} 语言 {frameworks} 的代码,请根据以上的代码生成调用清单并以markdown的形式输出。输出格式为: \"{package}.方法名(参数列表) @return 返回类型 {comment_symbol} 方法简短说明\". 请注意,一行一个，不要浪费空间。",
+      "en": "Above is the code for the {lang} language {frameworks}. Please generate a call list based on the provided code and output it in Markdown format. The output format should be: \"{package}.method_name(parameter_list) @return return_type {comment_symbol} Brief explanation of the method.\" Please note, one line per entry, and avoid unnecessary spacing"
+    }
+  ],
+  "transPromptByWord": [
+    "翻译以下单词 \"{words}\",这些单词原来是存在于计算机代码中, 翻译格式为: \"word (音标) 含义 或 特殊含义... \",输出到:\"[代码词汇]:\"."
+  ],
+  "transSentencePrompt": [
+    {
+      "zh": "\"翻译这几个句子 \\\"{sentences}\\\",翻译格式为: \\\"1:原句含义(以您的理解); 2:语法解读(不低于50字); 3:包含单词(列出音标+释义); 5:同义句举例(用另一种表达说出这句话) \\\",输出到:\\\"[语句翻译]:\\\".\"",
+      "en": ""
+    }
+  ],
+  "taskDistribution": [],
+  "currentLanguage": [],
+  "promptWordPreposition": [],
+  "promptWordIsPlacedAfter.": [],
+  "postSecondary": [],
+  "triggeringConditions": [],
+  "stringReplacement": [],
+  "extendByLanguage": {
+    "Golang": {
+      "filterFolder": [],
+      "filterFiles": [],
+      "promptCodeComments": [
+        {
+          "zh": "5:在末尾,以注释的形式,将以上代码输出为一个清单(以供其他文件调用),清单需要的内容为: 包.方法(参数列表...) 调用示例, 结构体名称/介绍,注意一行一个,不要浪费空间, 输出到:\"[调用清单]:\".",
+          "en": ""
+        }
+      ]
+    },
+    "Python": {
+      "filterFolder": [],
+      "filterFiles": []
+    }
+  },
+  "extendByFramework": {},
+  "filterExtension": [
+    ".gz",
+    ".map",
+    ".gitkeep",
+    ".log",
+    ".woff2",
+    ".txt",
+    ".md",
+    ".gz",
+    ".gitkeep",
+    ".map",
+    ".html",
+    ".mmdb",
+    ".ico"
+  ],
+  "filterTransExtension": [
+    ".log",
+    ".woff2",
+    ".gz",
+    ".gitkeep",
+    ".map",
+    ".html",
+    ".mmdb",
+    ".ico"
+  ],
+  "filterFileStartsWith": [],
+  "filterFileEndsWith": [],
+  "filterFileRegex": [],
+  "filterFolder": [
+    "node_modules",
+    "build",
+    ".git",
+    ".vscode",
+    ".prompts"
+  ],
+  "filterFolderStartsWith": [
+    "."
+  ],
+  "filterFolderEndsWith": [],
+  "filterFolderRegex": []
+}

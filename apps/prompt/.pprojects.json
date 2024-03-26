@@ -1,0 +1,11 @@
+{
+  "common": [
+    {
+      "root": "\\\\192.168.100.10/www/wwwroot/pm2_manager",
+      "name": "pm2_manager",
+      "name_space": "pm2_manager",
+      "language": ["Golang"],
+      "framework": ["go-fiber"]
+    }
+  ]
+}

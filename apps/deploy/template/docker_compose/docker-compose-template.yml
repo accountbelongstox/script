@@ -1,0 +1,533 @@
+version: '3'
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - "${DOCKER_SOCK}:/var/run/docker.sock"
+      - "${DOCKER_DATA}/portainer:/data"
+  docker-compose-ui:
+    image: francescou/docker-compose-ui:1.13.0
+    container_name: docker-compose-ui
+    restart: unless-stopped
+    ports:
+      - "9001:5000"
+    volumes:
+      - "${DOCKER_SOCK}:/var/run/docker.sock"
+    working_dir: /opt/docker-compose-projects/
+  nginx:
+    build:
+      context: ./nginx/alpineDockerfile
+      dockerfile: Dockerfile
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+#      - "${SERVICE_DIR}/conf/nginx/vhost:/etc/nginx/conf.d"
+      - "${DOCKER_DATA}/nginx/proxy_temp_dir:/home/tmp/proxy_temp_dir"
+      - "${DOCKER_DATA}/nginx/proxy_cache_dir:/home/tmp/proxy_cache_dir"
+      - "${DOCKER_DATA}/nginx/wwwlogs:/www/wwwlogs"
+      - "${SERVICE_DIR}/conf/nginx:/etc/nginx"
+      - "${WEB_DIR}:/www/wwwroot"
+#    command: "chmod -R 777 /www/wwwroot"
+#    links:
+#      - "php82:php82"
+  nginx_ui:
+    build:
+      context: nginx_ui
+      dockerfile: Dockerfile
+#    stdin_open: true
+#    tty: true
+    container_name: nginx_ui
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - '${DOCKER_DATA}/nginx_ui/nginx_conf:/etc/nginx'
+      - '${DOCKER_DATA}/nginx_ui/:/etc/nginx_ui'
+      - '${WEB_DIR}:/var/www'
+    ports:
+      - "80:80"
+      - "443:443"
+#    image: 'uozi/nginx_ui:latest'
+  php83:
+    build:
+      context: ./php/8.3/alpine3.19/fpm
+      dockerfile: Dockerfile
+#    image: php:8.2-rc-fpm
+    container_name: php83
+    restart: unless-stopped
+    volumes:
+      - "${WEB_DIR}:/var/www/html"
+    ports:
+      - "9083:9000"
+  php82:
+#    build:
+#      context: ./php/8.2/bullseye/fpm
+#      dockerfile: Dockerfile
+    image: php:8.2-rc-fpm
+#    image: php:fpm
+    container_name: php82
+    restart: unless-stopped
+    volumes:
+      - "${WEB_DIR}:/var/www/html"
+    ports:
+      - "9082:9000"
+  php74:
+    image: php:7.4.33-fpm
+    container_name: php74
+    restart: always
+    volumes:
+      - "${DOCKER_DIR}/wwwroot:/var/www/html"
+  redis:
+    image: redis
+    container_name: redis
+    restart: always
+    volumes:
+      - "${DOCKER_DATA}/redis:/data"
+  ztncui:
+    image: keynetworks/ztncui:latest
+    container_name: ztncui
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "18001:3443"
+      - "18002:3000"
+      - "9993:9993"
+    environment:
+      NODE_ENV: production
+      HTTPS_PORT: 3443
+      HTTP_PORT: 3000
+      ZTNCUI_PASSWD: "${ZTNCUI_PASSWORD}"
+      MYDOMAIN: "${ZEROTIER_DOMIAN}"
+      MYADDR: "${MAIN_IP}"
+    volumes:
+      - "${DOCKER_DATA}/ztncui:/opt/key-networks/ztncui/etc"
+      - "${DOCKER_DATA}/ztncui/zt1:/var/lib/zerotier-one"
+  baota:
+    image: "${BT_IMAGE}"
+    container_name: baota
+    restart: unless-stopped
+    volumes:
+      - "${WEB_DIR}:/www/wwwroot"
+      - "${DOCKER_DATA}/baota/mysql:/www/server/data"
+      - "${DOCKER_DATA}/baota/vhost:/www/server/panel/vhost"
+    network_mode: "host"
+#    command: "chmod -R 777 /www"
+  baotab:
+    image: "${BT_IMAGE_BAK}"
+    container_name: baotab
+    restart: unless-stopped
+    volumes:
+      - "${DOCKER_DATA}/baota/www:/www"
+    #      - "${DOCKER_DATA}/baota/www/server:/www/server"
+    #      - "${DOCKER_DATA}/baota/www/wwwlogs:/www/wwwlogs"
+    #      - "${WEB_DIR}:/www/wwwroot"
+    network_mode: "host"
+    command: "-port 8888 -username ${BT_USER} -password ${BT_PWD}"
+  #    command: "chmod -R 777 /www"
+  aapanel:
+    build:
+      context: ./aapanel
+      dockerfile: Dockerfile
+    container_name: aapanel
+    ports:
+      - "7889:7800"
+      - "221:21"
+      - "222:22"
+      - "443:443"
+      - "80:80"
+      - "888:888"
+    volumes:
+      - "${WEB_DIR}:/www/wwwroot"
+      - "${DOCKER_DATA}/aapanel/data:/www/server/data"
+      - "${DOCKER_DATA}/aapanel/vhost:/www/server/panel/vhost"
+    environment:
+      - TIMEZONE=Asia/Shanghai
+      - LINUX_ROOT_PASS=aapanel@
+      - LINUX_USER_NAME=username
+      - LINUX_USER_PASS=aapanel@
+      - PANEL_USER=username
+      - PANEL_PASS=aapanel@
+      - PANEL_PATH=aap_login
+      - DB_ROOT_PASS=aapanel@
+      - REDIS_PASS=aapanel@
+#    network_mode: "host"
+#    volumes:
+#      - "${DOCKER_DATA}/aapanel/www:/www"
+##    command: "chmod -R 777 /www"
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "18003:80"
+    volumes:
+      - "${DOCKER_DATA}/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+    links:
+      - mysql
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    restart: unless-stopped
+    ports:
+      - "27019:27019"
+    volumes:
+      - "${DOCKER_DATA}/mongo:/etc/mongo"
+      - "${DOCKER_DATA}/mongo/data:/data/db"
+#  mysql:
+#    image: mysql:latest
+#    container_name: mysql
+#    restart: unless-stopped
+#    ports:
+#      - "3306:3306"
+##    volumes:
+##      - "${DOCKER_DATA}/mysql8/conf.d:/etc/mysql/conf.d"
+##      - "${DOCKER_DATA}/mysql8/data:/var/lib/mysql"
+#    environment:
+#      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+#      MYSQL_USER: "${MYSQL_USER}"
+#      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+  mysql:
+    image: mariadb:10.5.23-focal
+    container_name: mysql
+    restart: always
+    environment:
+      MARIADB_USER: "${MYSQL_USER}"
+      MARIADB_PASSWORD: "${MYSQL_PASSWORD}"
+      MARIADB_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+#      MARIADB_DATABASE: wp
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'false'
+      MARIADB_RANDOM_ROOT_PASSWORD: 'false'
+    ports:
+      - "3306:3306"
+#    volumes:
+#      - /my/own/datadir:/var/lib/mysql:Z  # Adjust the host data directory as needed
+  gogs:
+    image: gogs/gogs:latest
+    container_name: gogs
+    restart: unless-stopped
+    ports:
+      - "10022:22"
+      - "10880:3000"
+    volumes:
+      - "${DOCKER_DATA}/git_gogs:/data"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  mediawiki:
+    image: mediawiki:latest
+    container_name: mediawiki
+    restart: unless-stopped
+    ports:
+      - "18004:80"
+    volumes:
+      - "${DOCKER_DATA}/mediawiki/html/images:/var/www/html/images"
+      - "${DOCKER_DATA}/mediawiki/html/LocalSettings.php:/var/www/html/LocalSettings.php"
+    links:
+      - mysql:mediawiki
+  mautic:
+    image: mautic/mautic:latest
+    container_name: mautic
+    restart: unless-stopped
+    ports:
+      - "18005:80"
+    environment:
+      MAUTIC_DB_HOST: host.docker.internal
+      MAUTIC_DB_USER: "${MYSQL_USER}"
+      MAUTIC_DB_PASSWORD: "${MYSQL_PASSWORD}"
+      MAUTIC_DB_NAME: "${MAUTIC_DB_NAME}"
+      MAUTIC_RUN_CRON_JOBS: 'true'
+#    networks:
+#      - l_net
+    volumes:
+      - "${DOCKER_DATA}/mautic:/var/www/html"
+  confluence:
+    image: atlassian/confluence:latest
+    container_name: confluence
+    restart: unless-stopped
+    ports:
+      - "18006:8090"
+      - "18007:8091"
+    volumes:
+      - "${DOCKER_DATA}/confluence:/var/atlassian/application-data/confluence"
+  nextcloud:
+    image: nextcloud:latest
+    container_name: nextcloud
+    restart: unless-stopped
+    ports:
+      - "18008:80"
+    volumes:
+      - "${DOCKER_DATA}/nextcloud/html:/var/www/html"
+      - "${DOCKER_DATA}/nextcloud/custom_apps:/var/www/html/custom_apps"
+      - "${DOCKER_DATA}/nextcloud/config:/var/www/html/config"
+      - "${DOCKER_DATA}/nextcloud/data:/var/www/html/data"
+      - "${DOCKER_DATA}/nextcloud/themes:/var/www/html/themes"
+  bookstack:
+    image: solidnerd/bookstack:22.04
+    container_name: bookstack
+    restart: unless-stopped
+    environment:
+      DB_HOST: host.docker.internal:3306
+      DB_DATABASE: "${BOOKSTACK_DB_NAME}"
+      DB_USERNAME: "${MYSQL_USER}"
+      DB_PASSWORD: "${MYSQL_PASSWORD}"
+      MAUTIC_RUN_CRON_JOBS: 'true'
+    ports:
+      - "18009:8080"
+    volumes:
+      - "${DOCKER_DATA}/nextcloud/html:/var/www/html"
+      - "${DOCKER_DATA}/nextcloud/custom_apps:/var/www/html/custom_apps"
+      - "${DOCKER_DATA}/nextcloud/config:/var/www/html/config"
+      - "${DOCKER_DATA}/nextcloud/data:/var/www/html/data"
+      - "${DOCKER_DATA}/nextcloud/themes:/var/www/html/themes"
+  ddnsgo:
+    image: jeessy/ddns-go:latest
+    container_name: ddnsgo
+    restart: unless-stopped
+    ports:
+      - "18010:9876"
+  samba:
+    image: dperson/samba:latest
+    container_name: samba
+    ports:
+      - "139:139"
+      - "445:445"
+    volumes:
+      - "${MAIN_DIR}:/mount"
+      - "${MAIN_DIR}:/${SAMBA_USER}"
+    command:
+      -u "${SAMBA_USER};${SAMBA_PWD}"
+      -s "public;/${SAMBA_USER}"
+      -s "users;/${SAMBA_USER};yes;no;yes;all,${SAMBA_USER}"
+    environment:
+      - CHARMAP=ISO8859-1:UTF-8,ISO8859-15:UTF-8
+      - GLOBAL=log level = 2
+      #      - IMPORT=/path/to/smbpassword
+      - NMBD=true
+      - PERMISSIONS=true
+      - RECYCLE=false
+      - "SHARE=${SAMBA_USER};/${SAMBA_USER};yes;no;yes;all;${SAMBA_USER}"
+      - SMB=false
+      - TZ=Asia/Shanghai
+      - "USER=${SAMBA_USER};${SAMBA_PWD}"
+      - WIDELINKS=false
+      - WORKGROUP=WORKGROUP
+      - "INCLUDE=${DOCKER_DATA}/samba/include"
+    restart: always
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    volumes:
+      - "${DOCKER_DATA}/nginx_proxy_manager/data:/data"
+      - "${WEB_DIR}:/var/www/html"
+      - "${DOCKER_DATA}/nginx_letsencrypt:/etc/letsencrypt"
+#    extra_hosts:
+#      - "host.docker.internal:host-gateway"
+    ports:
+      - '18011:80'
+      - '18012:81'
+      - '18013:443'
+#    command: "/bin/bash -c 'while sleep 1000; do :; done'"  # Command to keep the container running without starting nginx-proxy-manager
+#    links:
+#      - "php82:php82"
+  nodejs18:
+    build:
+      context: docker_node/18/alpine3.19
+      dockerfile: Dockerfile
+    container_name: nodejs18
+    restart: unless-stopped
+    volumes:
+      - "${WEB_DIR}:/www"
+    network_mode: "host"
+  nvm:
+    build:
+      context: ./nvm
+      dockerfile: Dockerfile
+    container_name: nvm
+    restart: unless-stopped
+    volumes:
+      - "${WEB_DIR}:/www"
+  nvm_node:
+    build:
+      context: ./nvm_node
+      dockerfile: Dockerfile
+    container_name: nvm_node
+    restart: unless-stopped
+    volumes:
+      - "${WEB_DIR}:/www"
+#    ports:
+#      - "1802-1899:1802-1899"
+#      - "1800:80"
+#      - "1801:443"
+  pm2_node18:
+    build:
+      context: ./pm2/node18
+      dockerfile: Dockerfile
+    container_name: pm2_node18
+    restart: unless-stopped
+    volumes:
+      - "${WEB_DIR}:/www"
+    ports:
+      - "1802-1899:1802-1899"
+      - "1800:80"
+      - "1801:443"
+  1panel:
+    container_name: 1panel
+    restart: unless-stopped
+#    network_mode: "host"
+    volumes:
+      - "${DOCKER_SOCK}:/var/run/docker.sock"
+      - "${DOCKER_DIR}:/var/lib/docker/volumes"
+      - "${DOCKER_DIR}/1panel:/opt"
+      - "${WEB_DIR}:/root"
+    environment:
+      - TZ=Asia/Shanghai
+    networks:
+      - 1panel-network
+    image: moelin/1panel:latest
+    ports:
+      - "10086:10086"
+#      - "8888:8888"
+    labels:
+      createdBy: "Apps"
+  nginxwebui:
+    image: cym1102/nginxwebui:latest
+    container_name: nginxwebui
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: "${MAIN_DIR}"
+        target: "/home/nginxWebUI"
+    environment:
+      BOOT_OPTIONS: "--server.port=8888"
+    privileged: true
+#    ports:
+#      - "80:80"
+#      - "8888:8888"
+#      - "443:443"
+#    extra_hosts:
+#      - "host.docker.internal:host-gateway"
+    network_mode: "host"
+#    links:
+#      - php82
+#      - pm2
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      PGDATA: /var/lib/postgresql/data/pgdata
+      LANG: zh_CN.utf8
+      POSTGRES_INITDB_ARGS: --locale-provider=icu --icu-locale=zh-CN
+    volumes:
+      - "${DOCKER_DATA}/postgresql/data:/var/lib/postgresql/data"
+    ports:
+      - "5432:5432"
+  registry:
+    image: registry:2
+    ports:
+      - "18014:5000"
+    volumes:
+      - "${DOCKER_DATA}/srv_registry/data:/var/lib/postgresql/data"
+      - "${SERVICE_DIR}/conf/srv_registry/registry_srv.yml:/etc/docker/registry/config.yml:ro"
+#      - "${SERVICE_DIR}/conf/srv_registry/auth.cert:/etc/docker/registry/auth.cert:ro"
+    container_name: registry
+    command: [ "serve", "/etc/docker/registry/config.yml" ]
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+  registry-web:
+    image: hyper/docker-registry-web
+    ports:
+      - "18015:8080"
+    links:
+      - registry
+    volumes:
+      - "${SERVICE_DIR}/conf/registry_web/registry-web.yml:/conf/config.yml:ro"
+      - "${SERVICE_DIR}/conf/registry_web/auth.key:/conf/auth.key"
+      - "${DOCKER_DATA}/registry_web/db:/data"
+    environment:
+      - REGISTRY_READONLY=false
+      - REGISTRY_TRUST_ANY_SSL=true
+      - REGISTRY_BASIC_AUTH="YWRtaW46Y2hhbmdlbWU="
+      - REGISTRY_TOKEN_ISSUER=my_issuer
+      - REGISTRY_URL=http://registry:5000/v2
+      - REGISTRY_NAME=localhost:5000
+    container_name: registry-web
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+  webnut:
+    image: edgd1er/webnut:latest
+    container_name: webnut
+    hostname: webnut
+    restart: always
+    network_mode: host
+    environment:
+      - "UPS_HOST=${MAIN_IP}"
+      - UPS_PORT=3493
+      - UPS_USER=admin
+      - UPS_PASSWORD=12345678
+  nut-upsd:
+    image: upshift/nut-upsd
+    container_name: nut-upsd
+    hostname: nut-upsd
+    restart: always
+    network_mode: host
+    devices:
+      - /dev/bus/usb/001/003
+    environment:
+      - UPS_NAME=server_ups
+      - UPS_DESC=USB to Serial
+      - UPS_DRIVER=nutdrv_qx
+      - UPS_PORT=auto
+      - API_USER=admin
+      - API_PASSWORD=12345678
+      - ADMIN_PASSWORD=12345678
+      - SHUTDOWN_CMD=echo 'Home has no current. Proceeding to shut down...'
+  openresty:
+    image: openresty/openresty:1.21.4.3-0-focal
+    container_name: 1Panel-openresty-1zbx
+    restart: always
+#    network_mode: host
+    networks:
+      - 1panel-network
+    volumes:
+#      - "${DOCKER_DIR}/1panel/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf"
+#      - "${DOCKER_DIR}/1panel/conf/fastcgi_params:/usr/local/openresty/nginx/conf/fastcgi_params"
+#      - "${DOCKER_DIR}/1panel/conf/fastcgi-php.conf:/usr/local/openresty/nginx/conf/fastcgi-php.conf"
+#      - "${DOCKER_DIR}/1panel/log:/var/log/nginx"
+#      - "${DOCKER_DIR}/1panel/conf/conf.d:/usr/local/openresty/nginx/conf/conf.d/"
+      - "${WEB_DIR}:/www"
+      - "${WEB_DIR}:/usr/share/nginx/html"
+      - /etc/localtime:/etc/localtime
+    labels:
+      createdBy: "Apps"
+
+#configs:
+#  my_other_config:
+#    external: true
+networks:
+  1panel-network:
+    driver: bridge

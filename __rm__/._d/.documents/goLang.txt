@@ -1,0 +1,11 @@
+export GOPROXY=https://goproxy.cn,direct
+go env -w GO111MODULE=on
+go env -w GOPROXY=https://goproxy.cn,direct
+go env | grep GOPROXY
+
+windows :
+$env:GO111MODULE="on"
+$env:GOPROXY="https://goproxy.cn,direct"
+go install github.com/suyuan32/goctls@latest
+go install github.com/zeromicro/go-zero/tools/goctl@latest
+go get -u github.com/golang/protobuf/proto

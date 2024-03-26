@@ -1,0 +1,20 @@
+DDNS-GO
+docker run -d --name ddns-go --restart=always -p 9876:9876 jeessy/ddns-go
+docker run -d -p 8680:80 -v /www/:/var/www/html kodcloud/kodbox
+docker run  -p 8680:80 --name OpenMediaVault -d -ti -h openmediavault.example.test -v /www/docker_data/OpenMediaVault:/data:Z -P ikogan/openmediavault
+
+sudo docker run --detach \
+--hostname gitlab.example.com \
+--publish 443:443 --publish 80:80 --publish 22:22 \
+--name gitlab \
+--restart always \
+--volume /www/docker_data/gitlab/config:/etc/gitlab \
+--volume /www/docker_data/gitlab/logs:/var/log/gitlab \
+--volume /www/docker_data/gitlab/data:/var/opt/gitlab \
+--shm-size 256m \
+gitlab/gitlab-ee:latest
+sudo docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password
+
+opkg update
+opkg install dockerd luci-app-dockerman luci-i18n-dockerman-zh-cn kmod-macvlan docker-compose
+docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v /www/docker_data/portainer:/data portainer/portainer-ce

@@ -1,0 +1,172 @@
+Set-ExecutionPolicy RemoteSigned
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+New-Item -ItemType SymbolicLink -Path "C:\Users\accou\AppData\Local" -Name Google -Target "D:\applications\Google"
+New-Item -ItemType SymbolicLink -Path "C:\Users\accou\AppData\Local" -Name "AVAST Software" -Target "D:\applications\AVAST Software"
+New-Item -ItemType SymbolicLink -Path "C:\Users\accou\AppData\Local" -Name AVG -Target "D:\applications\AVG"
+New-Item -ItemType SymbolicLink -Path "C:\Program Files" -Name BraveSoftware -Target "D:\applications\BraveSoftware"
+New-Item -ItemType SymbolicLink -Path "C:\Program Files" -Name Google -Target "D:\applications\Google"
+New-Item -ItemType SymbolicLink -Path "C:\Program Files (x86)" -Name "AVAST Software" -Target "D:\applications\AVAST Software"
+
+【安装choco】
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+choco install gsudo
+Windows Terminal打开settings.json文件，并在list列表中添加设置项：
+{
+      "guid": "{41dd7a51-f0e1-4420-a2ec-1a7130b7e950}",
+      "name": "Windows PowerShell Elevated",
+      "commandline": "gsudo.exe powershell.exe",
+      "hidden": false,
+      "colorScheme": "Solarized Dark"
+},
+
+【node_install】
+npm config set registry http://mirrors.cloud.tencent.com/npm/
+npm config set sharp_binary_host "https://npmmirror.com/mirrors/sharp"
+npm config set sharp_libvips_binary_host "https://npmmirror.com/mirrors/sharp-libvips"
+npm install sharp -g
+npm install cnpm -g
+cnpm install electron -g
+npm install yarn -g
+npm install expo-cli -g
+npm install ncu -g
+
+【开启copilet】
+"C:\Users\accou\AppData\Local\Microsoft\Edge SxS\Application\msedge.exe" --enable-features=msEdgeAskCopilot,msShorelineToolbarWinCopilot,msUndersideSidebarPinning,msEdgeSidebarIntoFRE,msStandaloneSidebarFramework --flag-switches-begin --flag-switches-end
+cmd
+E:\File\soft_libs\base_soft\ViVeTool\ViVeTool.exe /enable /id:44774629,44850061,44776738,42105254,41655236
+
+【关闭防火墙】
+gpedit.msc
+“本地计算机策略”——“计算机配置”——“Windows设置”——“安全设置”中找到“高级安全Windows Defender防火墙”
+然后，在右侧窗口中点击“Windows Defender防火墙属性”，接着在弹出的窗口中，依次更改“专用”与“公用”配置，可将防火墙直接关闭。
+
+计算机配置->管理模板->Windows组件->Microsoft Defender防病毒；
+把关闭Microsoft Defender防病毒 改为已启用，应用并确定；
+把允许反恶意软件服务始终保持运行状态改为已禁用，应用并确定；
+点开实时防护；
+把关闭实时防护 改为已启用，应用并确定；
+把扫描所有下载文件和附件改为已禁用，应用并确定。
+
+
+【server 2022】
+VDYBN-27WPP-V4HQT-9VMD4-VMK7H
+【客户端key】
+#版本名称 Windows Server 2022 Datacenter
+#KMS客户端设置密钥
+WX4NM-KYWYW-QJJR4-XV3QB-6VM33
+#版本名称 Windows Server 2022 Standard
+#KMS客户端设置密钥
+VDYBN-27WPP-V4HQT-9VMD4-VMK7H
+【激活】以数据中心版为例
+slmgr /upk
+slmgr /ipk WX4NM-KYWYW-QJJR4-XV3QB-6VM33
+slmgr /skms kms.03k.org
+slmgr /ato
+
+【安装密钥】
+WIN7 旗舰版
+P6CK6-MYJX6-W33CK-37893-6GV3Y
+WIN10 企业版
+NQTJT-Q9PQR-2C9MJ-4FXQ7-JQKR4
+WIN11
+VK7JG-NPHTM-C97JM-9MPGT-3V66T
+winget install Microsoft.PowerToys -s winget
+UltraISO 多语言版
+用户名：王涛
+注册码：7C81-1689-4046-626F
+
+安装choco
+Powershell 执行
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+金山软件PDF独立版
+QE2EV-2X2RH-9C2NW-UAGQN-HGD4C
+
+《Sublime Text 4》
+<pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="bash" cid="n198" mdtype="fences" style="box-sizing: border-box; overflow: visible; font-family: var(--monospace); font-size: 0.9em; display: block; break-inside: avoid; text-align: left; white-space: normal; background-image: inherit; background-position: inherit; background-size: inherit; background-repeat: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: rgb(248, 248, 248); position: relative !important; border: 1px solid rgb(231, 234, 237); border-radius: 3px; padding: 8px 4px 6px; margin-bottom: 15px; margin-top: 15px; width: inherit; color: rgb(51, 51, 51); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">—– BEGIN LICENSE —–
+
+Mifeng User
+
+Single User License
+
+EA7E-1184812
+
+C0DAA9CD 6BE825B5 FF935692 1750523A
+
+EDF59D3F A3BD6C96 F8D33866 3F1CCCEA
+
+1C25BE4D 25B1C4CC 5110C20E 5246CC42
+
+D232C83B C99CCC42 0E32890C B6CBF018
+
+B1D4C178 2F9DDB16 ABAA74E5 95304BEF
+
+9D0CCFA9 8AF8F8E2 1E0A955E 4771A576
+
+50737C65 325B6C32 817DCB83 A7394DFA
+
+27B7E747 736A1198 B3865734 0B434AA5
+
+—— END LICENSE ——</pre>
+
+Fences0000
+
+可以永久在3台电脑使用，换电脑或者重装系统卸载当前已激活的电脑，在新的电脑或者系统安装继续激活使用即可。
+--------------------------------------------------------------------------------
+Fence
+激活信息：
+激活密钥：B4E58-55A3B-61060-D02A2-84DCC-3CDBE
+电子邮箱：qq937768855@987123.xyz
+【软件下载】
+官方下载https://cdn.stardock.us/downloads/public/software/fences/Fences4_setup_sd.exe
+备用地址https://wwd.lanzouf.com/igDX700r9zfc
+-操作步骤
+把地址C:\ProgramData\Stardock\Fences4复制到“我的电脑”地址栏，按回车键：
+在License.sig文件上点右键->属性：
+“常规”选项卡，
+1.勾选“只读”
+2.点击“高级”，勾选“加密内容以便保护数据”。如果是灰色无法勾选，请仅设置“只读”就好。
+设置License.sig以免清理垃圾等误删除导致失效。
+
+ 【安装Hyper-v】
+1.安装openwrt
+创建虚拟交换机，每个网卡创建一个外部网络
+其中Wan口不允许操作系统共享
+Lan允许操作系统共享
+创建一个内部网络，用于本机上网LocalNet
+
+虚拟机存放位置
+C:\programing\VirtualMachines\Hyper-V\
+
+2.将虚拟交换机添加到虚拟机
+3.转换openwrt为vhdx
+创建虚拟交换机
+
+ 【安装wsl】
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+wsl —update
+wsl —version
+wsl --set-default-version 2
+关闭防火墙
+New-NetFirewallRule -DisplayName "Lan" -Direction Inbound -InterfaceAlias "vEthernet (Lan)"  -Action Allow
+
+设置开机启动
+vi /etc/init.wsl
+
+#! /bin/sh
+/etc/init.d/cron $1
+/etc/init.d/ssh $1
+/etc/init.d/bt $1
+/etc/init.d/nginx $1
+/etc/init.d/php-fpm-74 $1
+/etc/init.d/mysqld $1
+/etc/init.d/redis $1
+/etc/init.d/mongodb $1
+/etc/init.d/pure-ftpd $1
+
+sudo chmod +x /etc/init.wsl
+
+C:\Windows\System32\wsl.exe -d debian -u root /etc/init.wsl restart
+
+wsl --import Debian F:\VirtualMachines\backup_wsl\Debian.tar
