@@ -4,7 +4,6 @@ from pycore.base import Base
 from apps.deploy.pyscript.provider.deployenv import env, compose_env
 import re
 
-
 class Disk(Base):
     def __init__(self):
         pass
