@@ -3,7 +3,7 @@ import operator
 import shutil
 import pprint
 import subprocess
-from pycore.base import Base
+from pycore.base.base import Base
 import os
 import re
 import time

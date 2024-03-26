@@ -1,6 +1,6 @@
 import time
 
-from pycore.base import Base
+from pycore.base.base import Base
 import os
 import json
 import re

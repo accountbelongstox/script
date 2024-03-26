@@ -1,4 +1,4 @@
-from pycore.base import Base
+from pycore.base.base import Base
 import re
 # import datetime
 from datetime import datetime, timedelta

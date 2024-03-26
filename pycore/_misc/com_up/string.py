@@ -2,7 +2,7 @@ import html
 import json
 import base64
 from cryptography.fernet import Fernet
-from pycore.base import Base
+from pycore.base.base import Base
 # import xml.dom.minidom
 import random
 import string

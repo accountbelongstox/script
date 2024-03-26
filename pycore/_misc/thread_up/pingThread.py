@@ -1,4 +1,4 @@
-from pycore.base import Base
+from pycore.base.base import Base
 import os
 import re
 import threading
