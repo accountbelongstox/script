@@ -46,7 +46,7 @@ class AutoInstall():
         if self.server_role == "server":
             file_name = '.requirements_linux.txt'
         else:
-            file_name = '..requirements-.txt'
+            file_name = '.requirements.txt'
         return file_name
 
     def get_installed_requirements(self):
@@ -186,6 +186,7 @@ class AutoInstall():
             extra_lines = [line for line in a_lines]
         source_url = self.get_pip_source_url()
         if len(extra_lines) > 0:
+            self.success(f"using {require_file}")
             if self.server_role != "server":
                 self.success(f"Current server:{self.server_role}, using {require_file}")
             upgrade_pip_cmd = f"{python_exe} -m pip install --upgrade pip"
