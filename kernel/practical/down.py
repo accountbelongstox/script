@@ -6,8 +6,8 @@ import urllib
 from urllib.parse import *
 import http.cookiejar
 import time
-from kernel.base.base import Base
-from kernel.utils import file, http
+from pycore.base import Base
+from pycore.utils import file, http
 from queue import Queue
 
 threadQueue = None

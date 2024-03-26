@@ -1,11 +1,6 @@
 import subprocess
-<<<<<<< HEAD
-from kernel.utils_prune import plattools
-from kernel.base.base import Base
-=======
 from pycore.utils_prune import plattools
-from pycore._base import Base
->>>>>>> origin/main
+from pycore.base import Base
 
 class Ssh(Base):
 

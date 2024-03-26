@@ -1,24 +1,11 @@
 import os.path
-
-<<<<<<< HEAD
-from kernel.utils import arr, file, strtool
-from kernel.base.base import Base
-from apps.prompt.mdous.resolve_prompt.create_prompt import create_prompt
-from apps.task.task import task
-from kernel.practicals import wdoc
-
-
-# from apps.prompt.mdous.analyze.config_weights import config_weights
-=======
 from pycore.utils import arr, file, strtool
-from pycore._base import Base
+from pycore.base import Base
 from apps.prompt.mdous.resolve_prompt.create_prompt import create_prompt
 from apps.task.task import task
 from pycore.practicals import wdoc
 
-
-# from applications.prompt.mdous.analyze.config_weights import config_weights
->>>>>>> origin/main
+# from apps.prompt.mdous.analyze.config_weights import config_weights
 
 class promptMapFile(Base):
 

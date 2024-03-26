@@ -1,6 +1,6 @@
 import queue
 import threading
-from pycore._base import Base
+from pycore.base import Base
 import uuid
 
 class ComThread(threading.Thread, Base):

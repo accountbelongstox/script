@@ -1,5 +1,5 @@
 # from queue import Queue
-from pycore._base import Base
+from pycore.base import Base
 from pycore._base._config_manager import ConfigManager
 import importlib, importlib.util
 import os

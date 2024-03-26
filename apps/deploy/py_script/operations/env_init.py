@@ -1,15 +1,8 @@
 # import os
-<<<<<<< HEAD
-from deploy2.py_script.provider.deployenv import env, compose_env,main_dir,wwwroot_dir
-from deploy2.py_script.operations.ssh import ssh
-from deploy2.py_script.system.user_tools import user_tools
-from kernel.base.base import Base
-=======
-from deploy.py_script.provider.deployenv import env, compose_env,main_dir,wwwroot_dir
-from deploy.py_script.operations.ssh import ssh
-from deploy.py_script.system.user_tools import user_tools
-from pycore._base import Base
->>>>>>> origin/main
+from apps.deploy.py_script.provider.deployenv import env, compose_env,main_dir,wwwroot_dir
+from apps.deploy.py_script.operations.ssh import ssh
+from apps.deploy.py_script.system.user_tools import user_tools
+from pycore.base import Base
 
 class EnvInit(Base):
     relative_settings = {}

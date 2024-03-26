@@ -1,7 +1,7 @@
 # import os.path
 from flask import request as flask_request, render_template
-from kernel.base.base import Base
-from kernel.practicals import flasktool
+from pycore.base import Base
+from pycore.practicals import flasktool
 from apps.ncss.provider.data_src import data_src
 from apps.ncss.oper.data_save import data_save
 from datetime import datetime

@@ -3,7 +3,7 @@ import pyautogui
 import time
 import os
 import sys
-from kernel.base.base import Base
+from pycore.base import Base
 import re
 import datetime
 

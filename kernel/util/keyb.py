@@ -1,5 +1,5 @@
 import keyboard
-from kernel.base.base import Base
+from pycore.base import Base
 
 class Keyboard(Base):
     def __init__(self):

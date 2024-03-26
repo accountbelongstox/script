@@ -1,11 +1,11 @@
 from queue import Queue
 
-from kernel.base.base import *
+from pycore.base import *
 import sys
 import os
 from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtUiTools import QUiLoader
-from kernel.qt.qt_controller import *
+from pycore.qt.qt_controller import *
 
 GLOBAL_Queue = Queue()
 
@@ -41,7 +41,7 @@ class QtMain(Base):
         sys.exit(app.exec())
 
     def import_uiclass(self):
-        from kernel.qt.ui.mainui import MainUi
+        from pycore.qt.ui.mainui import MainUi
         # 依次载入UI模块，并将UI实例添加到堆栈中
         self.ui_stack = [MainUi(),]
         # 设置当前UI

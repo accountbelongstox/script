@@ -6,19 +6,11 @@ from datetime import datetime, timedelta
 from apps.prompt.mdous.save.prompt_map import prompt_map_file
 from apps.prompt.mdous.usage_code.code_prompts import usagemain
 from apps.prompt.config.config import pConfig
-<<<<<<< HEAD
 # from apps.prompt.mdous.analyze.analyze import analyze
-from kernel.utils import arg
-from kernel.utils import file, arr, keyb
-from kernel.threads import ComThread
-from kernel.base.base import Base
-=======
-# from applications.prompt.mdous.analyze.analyze import analyze
 from pycore.utils import arg
 from pycore.utils import file, arr, keyb
 from pycore.threads import ComThread
-from pycore._base import Base
->>>>>>> origin/main
+from pycore.base import Base
 
 class promptMain(Base):
     def __init__(self):

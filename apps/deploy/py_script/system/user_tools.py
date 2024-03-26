@@ -3,13 +3,8 @@ import crypt
 import spwd
 import grp
 import getpass
-<<<<<<< HEAD
-from deploy2.py_script.tools.choice import choice
-from kernel.base.base import Base
-=======
-from deploy.py_script.tools.choice import choice
-from pycore._base import Base
->>>>>>> origin/main
+from apps.deploy.py_script.tools.choice import choice
+from pycore.base import Base
 
 class UserTools(Base):
     def valid_user_and_pwd(self, username, password):

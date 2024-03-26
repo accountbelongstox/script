@@ -4,8 +4,8 @@ import numpy as np
 import os
 from pycore.utils import file
 from pycore.utils import screen
-# from applications.automation.lib.ctrler.operation_keys import get_operate_code
-from pycore._base import Base
+# from apps.automation.lib.ctrler.operation_keys import get_operate_code
+from pycore.base import Base
 
 class Cv2(Base):
     threshold = 0.9

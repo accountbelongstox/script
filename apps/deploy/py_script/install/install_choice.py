@@ -1,27 +1,14 @@
 # import os
-<<<<<<< HEAD
-from kernel.utils_prune import strtool, ip
-from kernel.practicals_prune import select
-from deploy2.py_script.tools.server_info import server_info
-from deploy2.py_script.tools.disk import disk
-from deploy2.py_script.tools.docker import docker
-from deploy2.py_script.tools.migrate import migrate
-from deploy2.py_script.provider.deployenv import env, compose_env,main_dir,wwwroot_dir
-from deploy2.py_script.provider.docker_info import docker_info
-from deploy2.py_script.operations.ssh import ssh
-from kernel.base.base import Base
-=======
 from pycore.utils_prune import strtool, ip
 from pycore.practicals_prune import select
-from deploy.py_script.tools.server_info import server_info
-from deploy.py_script.tools.disk import disk
-from deploy.py_script.tools.docker import docker
-from deploy.py_script.tools.migrate import migrate
-from deploy.py_script.provider.deployenv import env, compose_env,main_dir,wwwroot_dir
-from deploy.py_script.provider.docker_info import docker_info
-from deploy.py_script.operations.ssh import ssh
-from pycore._base import Base
->>>>>>> origin/main
+from apps.deploy.py_script.tools.server_info import server_info
+from apps.deploy.py_script.tools.disk import disk
+from apps.deploy.py_script.tools.docker import docker
+from apps.deploy.py_script.tools.migrate import migrate
+from apps.deploy.py_script.provider.deployenv import env, compose_env,main_dir,wwwroot_dir
+from apps.deploy.py_script.provider.docker_info import docker_info
+from apps.deploy.py_script.operations.ssh import ssh
+from pycore.base import Base
 
 class installChoice(Base):
     relative_settings = {}

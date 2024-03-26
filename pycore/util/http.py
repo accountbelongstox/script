@@ -4,7 +4,7 @@ import re
 import requests
 import urllib
 from urllib.parse import *
-from pycore._base import Base
+from pycore.base import Base
 import http.cookiejar
 # import time
 # from queue import Queue

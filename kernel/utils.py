@@ -1,14 +1,14 @@
-from kernel.util.arg import Arg
-from kernel.util.arr import Arr
-from kernel.util.file import File
-from kernel.util.oper import Oper
-from kernel.util.http import Http
-from kernel.util.strtool import Strtool
-from kernel.util.tool import Tool
-from kernel.util.keyb import Keyboard
-from kernel.util.sysarg import SysArg
-from kernel.util.plattools import Plattools
-from kernel.util.screen import Screen
+from pycore.util.arg import Arg
+from pycore.util.arr import Arr
+from pycore.util.file import File
+from pycore.util.oper import Oper
+from pycore.util.http import Http
+from pycore.util.strtool import Strtool
+from pycore.util.tool import Tool
+from pycore.util.keyb import Keyboard
+from pycore.util.sysarg import SysArg
+from pycore.util.plattools import Plattools
+from pycore.util.screen import Screen
 
 arg = Arg()
 arr = Arr()

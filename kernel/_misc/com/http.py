@@ -2,7 +2,7 @@ import re
 import ipaddress
 # import socket
 
-from kernel.base.base import *
+from pycore.base import *
 import os
 from lxml import etree
 # import re
@@ -582,7 +582,7 @@ class Http(Base):
 
     def get_ip_city_by_cz88(self, ip):
         if self.query_ip_data == None:
-            from kernel.db.sqliteNative import sqliteNative
+            from pycore.db.sqliteNative import sqliteNative
             ipdata = self.com_config.get_control_core_file('libs/ipdata/ipdata.db')
             self.query_ip_data = sqliteNative(ipdata)
         ip_split = ip.split(".")[:3]

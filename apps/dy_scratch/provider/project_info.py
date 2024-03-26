@@ -1,9 +1,5 @@
 import os
-<<<<<<< HEAD
-from kernel.practicals_prune import env as _env
-=======
 from pycore.practicals_prune import env as _env
->>>>>>> origin/main
 
 _project_dir = os.path.dirname(os.path.dirname(__file__))
 _env.set_root_dir(_project_dir)

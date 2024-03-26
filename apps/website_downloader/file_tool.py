@@ -2,11 +2,8 @@ import os
 import requests
 from urllib.parse import urlparse
 from url_tool import  urlTool  
-<<<<<<< HEAD
-from kernel.base.base import Base
-=======
-from pycore._base import Base
->>>>>>> origin/main
+
+from pycore.base import Base
 
 class fileTool(Base):
     @staticmethod

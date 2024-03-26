@@ -1,5 +1,5 @@
-from kernel.base.base import *
-from kernel.db_baseclass.dbbase import *
+from pycore.base import *
+from pycore.db_baseclass.dbbase import *
 # from sqlalchemy import create_engine
 # from sqlalchemy.orm import sessionmaker
 from sqlalchemy import asc, desc, inspect

@@ -1,16 +1,8 @@
-<<<<<<< HEAD
-from kernel.base.base import Base
-from kernel.utils_prune import file
-from deploy2.py_script.provider.deployenv import deploy_dir, env
-from deploy2.py_script.tools.nginx import nginx
-from deploy2.py_script.provider.docker_info import docker_info
-=======
-from pycore._base import Base
+from pycore.base import Base
 from pycore.utils_prune import file
-from deploy.py_script.provider.deployenv import deploy_dir, env
-from deploy.py_script.tools.nginx import nginx
-from deploy.py_script.provider.docker_info import docker_info
->>>>>>> origin/main
+from apps.deploy.py_script.provider.deployenv import deploy_dir, env
+from apps.deploy.py_script.tools.nginx import nginx
+from apps.deploy.py_script.provider.docker_info import docker_info
 import os
 # import re
 

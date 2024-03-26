@@ -1,16 +1,8 @@
-<<<<<<< HEAD
-from kernel.utils import arr, strtool, tool
-from apps.prompt.config.lang_config import lang_config
-from apps.prompt.mdous.analyze.config_weights import config_weights
-import os
-# from kernel.utils import file
-=======
 from pycore.utils import arr, strtool, tool
 from apps.prompt.config.lang_config import lang_config
 from apps.prompt.mdous.analyze.config_weights import config_weights
 import os
 # from pycore.utils import file
->>>>>>> origin/main
 
 class CreatePrompt:
     _pre = "#"

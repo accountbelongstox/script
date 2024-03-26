@@ -1,4 +1,4 @@
-from kernel.base.base import *
+from pycore.base import *
 import sys
 import os
 from PySide6 import QtCore, QtWidgets, QtGui
@@ -63,7 +63,7 @@ class QtWidgetClass(Base,QtWidgets.QWidget):
         # dialog.show()
 
     def import_ui(self):
-        from kernel.qt.qt_ui import Ui_Dialog
+        from pycore.qt.qt_ui import Ui_Dialog
         ui = Ui_Dialog()
         ui.setupUi(self)
 

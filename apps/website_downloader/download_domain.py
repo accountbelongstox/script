@@ -11,11 +11,7 @@ from url_tool import urlTool
 
 css_parser = CssUrlParser()
 
-<<<<<<< HEAD
-from kernel.base.base import Base
-=======
-from pycore._base import Base
->>>>>>> origin/main
+from pycore.base import Base
 
 class WebPageDownloader(Base):
     def __init__(self):

@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-from kernel.utils import arr, tool
-from kernel.base.base import Base
-=======
 from pycore.utils import arr, tool
-from pycore._base import Base
->>>>>>> origin/main
+from pycore.base import Base
 
 
 class ConfigWeights(Base):

@@ -3,16 +3,9 @@ import hashlib
 import os
 from time import time
 from datetime import datetime
-<<<<<<< HEAD
-from kernel.base.base import Base
-from kernel.utils import http, file,strtool
-from kernel.practicals import env
-=======
-from pycore._base import Base
+from pycore.base import Base
 from pycore.utils import http, file,strtool
 from pycore.practicals import env
->>>>>>> origin/main
-
 
 class TaskManager(Base):
     task_name = "ai"

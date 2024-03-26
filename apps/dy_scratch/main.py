@@ -5,15 +5,9 @@ import time
 from apps.dy_scratch.flask_router.auto_flask_conf import config
 from apps.dy_scratch.flask_router.router import Router
 from apps.dy_scratch.oper.down import down
-<<<<<<< HEAD
-from kernel.base.base import Base
-from kernel.threads import FlaskThread
-from kernel.utils import file
-=======
-from pycore._base import Base
+from pycore.base import Base
 from pycore.threads import FlaskThread
 from pycore.utils import file
->>>>>>> origin/main
 
 class autoMain(Base):
     current_screen_file = None

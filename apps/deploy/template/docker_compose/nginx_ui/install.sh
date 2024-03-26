@@ -163,11 +163,7 @@ identify_the_operating_system_and_architecture() {
             exit 1
         fi
         # Do not combine this judgment condition with the following judgment condition.
-<<<<<<< HEAD
-        ## Be aware of Linux distribution like Gentoo, which kernel supports switch between Systemd and OpenRC.
-=======
         ## Be aware of Linux distribution like Gentoo, which pycore supports switch between Systemd and OpenRC.
->>>>>>> origin/main
         if [[ -f /.dockerenv ]] || grep -q 'docker\|lxc' /proc/1/cgroup && [[ "$(type -P systemctl)" ]]; then
             true
         elif [[ -d /run/systemd/system ]] || grep -q systemd <(ls -l /sbin/init); then

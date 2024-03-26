@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-from kernel.utils import arr, strtool, tool
-=======
 from pycore.utils import arr, strtool, tool
->>>>>>> origin/main
 
 class LanguageConfig:
     _pre = "#"

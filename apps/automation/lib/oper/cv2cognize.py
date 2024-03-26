@@ -2,17 +2,10 @@ import os.path
 import cv2
 import numpy as np
 import os
-<<<<<<< HEAD
-from kernel.utils import file
-from apps.automation.lib.oper.screen import Screen
-from apps.automation.lib.ctrler.operation_keys import get_operate_code
-from kernel.base.base import Base
-=======
 from pycore.utils import file
 from apps.automation.lib.oper.screen import Screen
 from apps.automation.lib.ctrler.operation_keys import get_operate_code
-from pycore._base import Base
->>>>>>> origin/main
+from pycore.base import Base
 
 screen = Screen()
 

@@ -2,11 +2,11 @@ import os.path
 import os
 from datetime import datetime
 import time
-from kernel.utils import file,strtool
-from kernel.utils import screen,oper
+from pycore.utils import file,strtool
+from pycore.utils import screen,oper
 from apps.ncss.provider.project_info import project_name,app_name
-from kernel.practicals import cv2
-from kernel.base.base import Base
+from pycore.practicals import cv2
+from pycore.base import Base
 
 class DataSrc(Base):
 

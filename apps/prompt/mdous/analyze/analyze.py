@@ -1,10 +1,6 @@
 import json
 import hashlib
-<<<<<<< HEAD
-from kernel.utils import http, file, arr
-=======
 from pycore.utils import http, file, arr
->>>>>>> origin/main
 import os
 from time import time
 

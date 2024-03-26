@@ -4,11 +4,7 @@ import time
 from flask import Flask, request, jsonify
 import openai
 from openai import OpenAI
-<<<<<<< HEAD
-from kernel.practicals import env
-=======
 from pycore.practicals import env
->>>>>>> origin/main
 import apps.openai_assistant.functions as functions
 
 class ChatBot:

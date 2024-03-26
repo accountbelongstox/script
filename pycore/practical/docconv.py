@@ -3,7 +3,7 @@ import os
 import subprocess
 import time
 from queue import Queue
-from pycore._base import Base
+from pycore.base import Base
 from pycore.threads import ComThread
 from pycore.utils import file, arr, plattools
 

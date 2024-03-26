@@ -1,6 +1,6 @@
 # import html
-from kernel.base.base import *
-from kernel.db_baseclass.dbbase import *
+from pycore.base import *
+from pycore.db_baseclass.dbbase import *
 from mongoengine import (Document, StringField, IntField, LongField, FloatField, DecimalField, BooleanField,
                          DateTimeField, DateField, BinaryField, FileField)
 # import time

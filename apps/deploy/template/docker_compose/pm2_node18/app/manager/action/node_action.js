@@ -27,11 +27,6 @@ class NodeAction extends Base {
         }
         return true
     }
-<<<<<<< HEAD
-=======
-    
-
->>>>>>> origin/main
 }
 const node_action = new NodeAction()
 module.exports = node_action;

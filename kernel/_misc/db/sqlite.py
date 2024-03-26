@@ -1,4 +1,4 @@
-from kernel.db_baseclass.dbcommon import DBCommon
+from pycore.db_baseclass.dbcommon import DBCommon
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker

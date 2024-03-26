@@ -3,11 +3,7 @@
 #DEPLOY_DIR="$(dirname "$(dirname "$(dirname "$(dirname "$CURRENT_DIR")")")")"
 #TOP_DIR="$(dirname "$DEPLOY_DIR")"
 #main_script="$TOP_DIR/main.py"
-<<<<<<< HEAD
-#sudo python3 "$main_script" deploy2 set
-=======
 #sudo python3 "$main_script" deploy set
->>>>>>> origin/main
 #ssh_config="/etc/ssh/sshd_config"
 
 if ! command -v sshd &> /dev/null; then

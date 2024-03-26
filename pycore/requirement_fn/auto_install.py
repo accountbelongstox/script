@@ -580,4 +580,4 @@ class AutoInstall():
         return ""
 
 
-auto_start = AutoInstall()
+auto_install = AutoInstall()

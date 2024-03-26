@@ -1,4 +1,4 @@
-from kernel.base.base import *
+from pycore.base import *
 import os
 import re
 

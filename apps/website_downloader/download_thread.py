@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-# from kernel.base.base import *
-=======
-# from pycore._base._base import *
->>>>>>> origin/main
 import threading
 threadLock = threading.Lock()
 global_thread = {}
@@ -11,11 +6,7 @@ import os
 import requests
 from url_tool import  urlTool
 from file_tool import  fileTool
-<<<<<<< HEAD
-from kernel.base.base import Base
-=======
-from pycore._base import Base
->>>>>>> origin/main
+from pycore.base import Base
 
 class DownThread(threading.Thread,Base):
     __count = 0

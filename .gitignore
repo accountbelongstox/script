@@ -24,15 +24,12 @@ dist/
 build/
 data/
 logs/
-<<<<<<< HEAD
 public/video/
 out/
 public/source/
-=======
 video/
 out/
 source/
->>>>>>> origin/main
 
 .env
 *.swp

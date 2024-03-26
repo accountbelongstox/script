@@ -1,4 +1,4 @@
-from kernel.base.base import *
+from pycore.base import *
 import ffmpeg
 
 import subprocess as sp

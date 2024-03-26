@@ -1,12 +1,12 @@
 import string
 from queue import Queue
-from kernel.base.base import *
+from pycore.base import *
 import time
 import threading
 import random
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.jobstores.base import JobLookupError
-from kernel.com.selenium import Selenium
+from pycore.com.selenium import Selenium
 
 thread_lock = threading.Lock()
 global_thread = {}

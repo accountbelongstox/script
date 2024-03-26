@@ -148,10 +148,6 @@ class FileHandler:
         return md5_hash
 
 if __name__ == "__main__":
-<<<<<<< HEAD
     folder_path = "../../public/source/prompt"  # 替换为你的文件夹路径
-=======
-    folder_path = "../../source/prompt"  # 替换为你的文件夹路径
->>>>>>> origin/main
     file_handler = FileHandler(folder_path)
     file_handler.listen_folder()

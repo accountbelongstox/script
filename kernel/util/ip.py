@@ -1,7 +1,7 @@
 import re
 import ipaddress
 import socket
-from kernel.base.base import Base
+from pycore.base import Base
 import requests
 
 threadQueue = None
@@ -222,7 +222,7 @@ class Ip(Base):
 
     def get_ip_city_by_cz88(self, ip):
         if self.query_ip_data == None:
-            from kernel.db.sqliteNative import sqliteNative
+            from pycore.db.sqliteNative import sqliteNative
             ipdata = self.com_config.get_control_core_file('libs/ipdata/ipdata.db')
             self.query_ip_data = sqliteNative(ipdata)
         ip_split = ip.split(".")[:3]

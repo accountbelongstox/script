@@ -5,8 +5,8 @@ import win32api
 import win32con
 import pyperclip
 
-from kernel.qt.base.qt_base import *
-from kernel.qt.qt_server import QTServer
+from pycore.qt.base.qt_base import *
+from pycore.qt.qt_server import QTServer
 import re
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
     QGridLayout, QLabel, QLineEdit, QPushButton, QSizePolicy, QTableWidget, QTableWidgetItem,

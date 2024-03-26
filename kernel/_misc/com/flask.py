@@ -1,6 +1,6 @@
 import os
 
-from kernel.base.base import *
+from pycore.base import *
 from flask_wtf import FlaskForm
 from datetime import datetime, timedelta
 import os

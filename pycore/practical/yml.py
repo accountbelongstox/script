@@ -1,7 +1,7 @@
 import yaml
 import os
 from pycore.utils_prune import file
-from pycore._base import Base
+from pycore.base import Base
 # import shutil
 
 class Yml(Base):

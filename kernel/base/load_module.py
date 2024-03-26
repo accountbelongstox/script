@@ -1,6 +1,6 @@
 # from queue import Queue
-from kernel.base.base import Base
-from kernel.base.config_manager import ConfigManager
+from pycore.base import Base
+from pycore._base.config_manager import ConfigManager
 import importlib, importlib.util
 import os
 import json
@@ -45,28 +45,28 @@ class LoadModule(Base):
         pass
 
     def load_kernel_class(self):
-        from kernel.com.api import Api
-        from kernel.com.config import Config
-        from kernel.com.dbbase import Dbbase
-        # from kernel.com.exchange import Exchange
-        # from kernel.com.exchangerate import Exchangerate
-        from kernel.com.file import File
-        from kernel.com.flask import Flask
-        from kernel.com.http import Http
-        # from kernel.com.linuxdeploy import Linuxdeploy
-        from kernel.com.log import Log
-        # from kernel.com.selenium import Selenium
-        from kernel.com.string import String
-        from kernel.com.thread import Thread
-        # from kernel.com.translate import Translate
-        from kernel.com.dictionary import Dictionary
-        from kernel.com.user import User
-        from kernel.com.userinfo import Userinfo
-        from kernel.com.util import Util
-        from kernel.com.xml import Xml
-        from kernel.com.graphql import Graphql
-        # from kernel.com.numpy import Numpy
-        # from kernel.com.ffmpeg import Ffmpeg
+        from pycore.com.api import Api
+        from pycore.com.config import Config
+        from pycore.com.dbbase import Dbbase
+        # from pycore.com.exchange import Exchange
+        # from pycore.com.exchangerate import Exchangerate
+        from pycore.com.file import File
+        from pycore.com.flask import Flask
+        from pycore.com.http import Http
+        # from pycore.com.linuxdeploy import Linuxdeploy
+        from pycore.com.log import Log
+        # from pycore.com.selenium import Selenium
+        from pycore.com.string import String
+        from pycore.com.thread import Thread
+        # from pycore.com.translate import Translate
+        from pycore.com.dictionary import Dictionary
+        from pycore.com.user import User
+        from pycore.com.userinfo import Userinfo
+        from pycore.com.util import Util
+        from pycore.com.xml import Xml
+        from pycore.com.graphql import Graphql
+        # from pycore.com.numpy import Numpy
+        # from pycore.com.ffmpeg import Ffmpeg
         self.set_modules("com", Api(sys.argv))
         self.set_modules("com", Config(sys.argv))
         self.set_modules("com", Dbbase(sys.argv))
@@ -90,48 +90,48 @@ class LoadModule(Base):
         # self.set_modules("com", Numpy(sys.argv))
         # self.set_modules("com", Ffmpeg(sys.argv))
 
-        # from kernel.mode.webdown import Webdown
-        # from kernel.mode.webserver import Webserver
+        # from pycore.mode.webdown import Webdown
+        # from pycore.mode.webserver import Webserver
         # self.set_modules("mode",Webdown(sys.argv))
         # self.set_modules("mode",Webserver(sys.argv))
 
-        # from kernel.db.mongo import Mongo
+        # from pycore.db.mongo import Mongo
         # self.set_modules("db", Mongo(sys.argv))
         #
-        # from kernel.db.mysql import Mysql
+        # from pycore.db.mysql import Mysql
         # self.set_modules("db", Mysql(sys.argv))
         #
-        # from kernel.db.redis import Redis
+        # from pycore.db.redis import Redis
         # self.set_modules("db", Redis(sys.argv))
 
-        from kernel.db.sqlite import Sqlite
+        from pycore.db.sqlite import Sqlite
         self.set_modules("db", Sqlite(sys.argv))
 
-        # from kernel.thread.buyThread import BuyThread
+        # from pycore.thread.buyThread import BuyThread
         # self.set_modules('thread','buy',BuyThread)
 
-        from kernel.thread.comThread import ComThread
+        from pycore.thread.comThread import ComThread
         self.set_modules('thread', "com", ComThread)
 
-        # from kernel.thread.downThread import DownThread
+        # from pycore.thread.downThread import DownThread
         # self.set_modules('thread',"down",ComThread)
 
-        from kernel.thread.flaskThread import FlaskThread
+        from pycore.thread.flaskThread import FlaskThread
         self.set_modules('thread', "flask_router", FlaskThread)
 
-        # from kernel.thread.pingThread import PingThread
+        # from pycore.thread.pingThread import PingThread
         # self.set_modules('thread',"ping",pingThread)
 
-        # from kernel.thread.seleniumThread import SeleniumThread
+        # from pycore.thread.seleniumThread import SeleniumThread
         # self.set_modules('thread', "selenium", SeleniumThread)
 
-        # from kernel.thread.translateThread import TranslateThread
+        # from pycore.thread.translateThread import TranslateThread
         # self.set_modules('thread', "translate", TranslateThread)
 
-        # from kernel.thread.webDownOpenUrlThread import WebDownOpenUrlThread
+        # from pycore.thread.webDownOpenUrlThread import WebDownOpenUrlThread
         # self.set_modules('thread',"web_down_open_url",WebDownOpenUrlThread)
 
-        # from kernel.thread.webdownThread import WebdownThread
+        # from pycore.thread.webdownThread import WebdownThread
         # self.set_modules('thread',"web_down",WebdownThread)
 
         self.set_module('load_module', self)
@@ -166,7 +166,7 @@ class LoadModule(Base):
         if self.is_windows():
             if config["global"]['ui'] == "True":
                 print('load ui')
-                from kernel.qt.qt_main import QtMain
+                from pycore.qt.qt_main import QtMain
                 qt = QtMain(args)
                 self.global_modes['qt'] = {
                     "main": qt,

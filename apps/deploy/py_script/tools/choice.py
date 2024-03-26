@@ -1,13 +1,7 @@
 # import os
-<<<<<<< HEAD
-from kernel.utils_prune import strtool
-from deploy2.py_script.provider.deployenv import env, compose_env,main_dir,wwwroot_dir
-from kernel.base.base import Base
-=======
 from pycore.utils_prune import strtool
-from deploy.py_script.provider.deployenv import env, compose_env,main_dir,wwwroot_dir
-from pycore._base import Base
->>>>>>> origin/main
+from apps.deploy.py_script.provider.deployenv import env, compose_env,main_dir,wwwroot_dir
+from pycore.base import Base
 
 class Choice(Base):
     relative_settings = {}

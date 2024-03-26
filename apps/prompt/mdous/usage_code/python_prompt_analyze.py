@@ -1,13 +1,8 @@
 from apps.prompt.bc.interface.prompt_analyze import PromptAnalyzeInterface
 import re
 # import pprint
-<<<<<<< HEAD
-from kernel.utils import arr
-from kernel.base.base import Base
-=======
 from pycore.utils import arr
-from pycore._base import Base
->>>>>>> origin/main
+from pycore.base import Base
 
 class pythonUsageCode(PromptAnalyzeInterface,Base):
     def __init__(self):

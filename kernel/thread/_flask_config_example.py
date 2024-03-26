@@ -1,5 +1,5 @@
 import os
-from kernel.utils import file
+from pycore.utils import file
 
 
 class Config:

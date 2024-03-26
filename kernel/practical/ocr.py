@@ -3,7 +3,7 @@ import os
 os.environ['PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION'] = 'python'
 from PIL import Image
 # from paddleocr import PaddleOCR, draw_ocr
-from kernel.utils import file
+from pycore.utils import file
 # from urllib.parse import urlparse
 import os
 import sys

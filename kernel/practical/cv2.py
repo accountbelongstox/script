@@ -2,10 +2,10 @@ import os.path
 import cv2
 import numpy as np
 import os
-from kernel.utils import file
-from kernel.utils import screen
+from pycore.utils import file
+from pycore.utils import screen
 # from apps.automation.lib.ctrler.operation_keys import get_operate_code
-from kernel.base.base import Base
+from pycore.base import Base
 
 class Cv2(Base):
     threshold = 0.9

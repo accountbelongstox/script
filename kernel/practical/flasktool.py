@@ -1,5 +1,5 @@
-from kernel.base.base import *
-from kernel.utils import strtool
+from pycore.base import *
+from pycore.utils import strtool
 from flask_wtf import FlaskForm
 from datetime import datetime, timedelta
 import os

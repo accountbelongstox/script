@@ -7,15 +7,13 @@ CPU启动报错
 
 ls -l /dev/disk/by-id/
 qm set 100 --sata1 /dev/disk/by-id/ata-HGST_HMS5C4040BLE640_PL2331LAHB50UJ
-<<<<<<< HEAD
+
 qm set 100 --sata1 /dev/disk/by-id/ata-SSD32G_SZHYPO15091104D0604
 pct set 102 -mp1 /disk/sde,mp=/www
 
 
-=======
 pct set 102 -mp1 /disk/sde,mp=/www
 
->>>>>>> origin/main
 (已使用)ata-CHUZUN_CS101_2304W0221B001167 -> ../../sdb
 (已使用)ata-CLOVER_CM321HI_C439M73320D71165_0 -> ../../sda
 (已使用)ata-HGST_HMS5C4040BLE640_PL2331LAHB50UJ -> ../../sdd
@@ -33,7 +31,6 @@ P2: HGST_HUS726040ALE610_K7H3E4XL
 P3: HGST_HMS5C4040BLE640_PL1331LAH1J2EH
 P4: ata-ST4000NM0033-9ZM170_Z1Z93KP3
 
-<<<<<<< HEAD
 
 
 HGST_HUS726040ALE610_K7H3E4XL
@@ -46,14 +43,13 @@ qm importdisk 104 /var/lib/vz/template/iso/nas-arpl-7.2.img local-lvm
 qm importdisk 100 /var/lib/vz/template/iso/EzOpenWrt-Free-Plus-2024.03.01_by_Sirpdboy_6.1.79-x86-64-combined-efi.img local-lvm
 
 
-=======
 HGST_HUS726040ALE610_K7H3E4XL
 sdc NAS用
 qm set 101 --sata0 /dev/disk/by-id/ata-HGST_HUS726040ALE610_K7H3E4XL
 qm importdisk 100 /var/lib/vz/template/iso/EzOpenWrt-Free-Plus-2023.12.12_by_Sirpdboy_6.1.66-x86-64-combined-efi.img local-lvm
 qm importdisk 104 /var/lib/vz/template/iso/nas-arpl-7.2.img local-lvm
 
->>>>>>> origin/main
+
 /dev/sdb   /mnt/sdb   ntfs-3g   defaults,windows_names,locale=en_US.utf8   0   0
 
 sudo yum install cifs-utils
@@ -70,10 +66,6 @@ sudo apt install ntfs-3g
 
 # doc https://www.cnblogs.com/LandWind/articles/pve-nut-config.html
 
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/main
 [nutdev1]
         driver = "nutdrv_qx"
         port = "auto"

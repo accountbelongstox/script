@@ -15,14 +15,7 @@ sudo docker run --detach \
 gitlab/gitlab-ee:latest
 sudo docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password
 
-<<<<<<< HEAD
 opkg update
 opkg install dockerd luci-app-dockerman luci-i18n-dockerman-zh-cn kmod-macvlan docker-compose
-=======
-<<<<<<< HEAD:doc/wrt/docker_image.txt
-opkg update
-opkg install dockerd luci-app-dockerman luci-i18n-dockerman-zh-cn kmod-macvlan docker-compose
-=======
->>>>>>> 5e5aba39e1273b259cae427410c1ccfa46f4f35f:__rm__/._d/.documents/wrt/docker_image.txt
->>>>>>> origin/main
+
 docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v /www/docker_data/portainer:/data portainer/portainer-ce

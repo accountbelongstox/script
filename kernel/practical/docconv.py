@@ -3,9 +3,9 @@ import os
 import subprocess
 import time
 from queue import Queue
-from kernel.base.base import Base
-from kernel.threads import ComThread
-from kernel.utils import file, arr, plattools
+from pycore.base import Base
+from pycore.threads import ComThread
+from pycore.utils import file, arr, plattools
 
 class DocConv(Base):
     doc_queue = Queue()

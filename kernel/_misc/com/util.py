@@ -5,7 +5,7 @@ import shutil
 import time
 # import socket
 from queue import Queue
-from kernel.base.base import *
+from pycore.base import *
 import datetime
 from time import strftime
 from time import gmtime

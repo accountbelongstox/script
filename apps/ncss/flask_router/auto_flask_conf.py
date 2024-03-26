@@ -1,4 +1,4 @@
-from kernel.utils import file
+from pycore.utils import file
 
 FLASK_NAME = "FlaskMain"
 DEBUG = True

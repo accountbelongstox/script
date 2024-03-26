@@ -1,5 +1,5 @@
-from kernel.base.base import *
-from kernel.utils_prune import strtool,arr
+from pycore.base import *
+from pycore.utils_prune import strtool,arr
 import re
 class Wdoc(Base):
     nltk_english_words = None

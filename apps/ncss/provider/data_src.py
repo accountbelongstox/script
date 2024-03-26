@@ -1,7 +1,7 @@
 # import os.path
-from kernel.base.base import Base
-from kernel.practicals import flasktool
-from kernel.utils import file
+from pycore.base import Base
+from pycore.practicals import flasktool
+from pycore.utils import file
 from apps.ncss.provider.project_info import app_name
 
 class DataSrc(Base):
