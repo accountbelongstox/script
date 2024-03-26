@@ -1,9 +1,16 @@
 import time
 from apps.automation.lib.oper.cv2cognize import Cv2cognize, screen
+<<<<<<< HEAD
 from kernel.utils import oper
 from kernel.utils import arr
 from kernel.base.base import Base
 from kernel.practicals import ocr
+=======
+from pycore.utils import oper
+from pycore.utils import arr
+from pycore._base import Base
+from pycore.practicals import ocr
+>>>>>>> origin/main
 
 cv2cognize = Cv2cognize()
 

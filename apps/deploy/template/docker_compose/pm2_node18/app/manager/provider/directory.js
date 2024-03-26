@@ -50,6 +50,10 @@ class Directory {
       logs: log.info(name),
       port: pm2_provider.getPortFromEcosystemArgs({ is_ecosystem, dir: subdirectory_dir }),
     };
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
     return clusterInfo;
   }
 }

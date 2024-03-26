@@ -11,7 +11,10 @@ class IconExtractor {
         try {
             const iconPath = `${filePath}.ico`;
             const cmd = `powershell -command "Add-Type -AssemblyName System.Drawing; [System.Drawing.Icon]::ExtractAssociatedIcon('${filePath}').ToBitmap().Save('${iconPath}', [System.Drawing.Imaging.ImageFormat]::Icon);"`;
+<<<<<<< HEAD
             console.log(cmd)
+=======
+>>>>>>> origin/main
 			execSync(cmd);
             const iconData = fs.readFileSync(iconPath);
             fs.unlinkSync(iconPath);

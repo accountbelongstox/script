@@ -1,4 +1,5 @@
 # import os
+<<<<<<< HEAD
 from deploy2.py_script.tools.choice import choice
 from deploy2.py_script.operations.env_init import env_init
 from deploy2.py_script.provider.deployenv import env, main_dir, wwwroot_dir
@@ -6,6 +7,15 @@ from deploy2.py_script.system.user_tools import user_tools
 from deploy2.py_script.operations.samba import samba
 from kernel.utils_prune import file
 from kernel.base.base import Base
+=======
+from deploy.py_script.tools.choice import choice
+from deploy.py_script.operations.env_init import env_init
+from deploy.py_script.provider.deployenv import env, main_dir, wwwroot_dir
+from deploy.py_script.system.user_tools import user_tools
+from deploy.py_script.operations.samba import samba
+from pycore.utils_prune import file
+from pycore._base import Base
+>>>>>>> origin/main
 
 
 class installLocalChoice(Base):

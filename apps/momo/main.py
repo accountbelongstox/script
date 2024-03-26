@@ -7,9 +7,15 @@ from apps.automation.lib.flask.auto_flask_conf import config
 from apps.automation.lib.flask.router import Router
 from apps.automation.lib.instance.handle import handle
 from apps.task.task import task
+<<<<<<< HEAD
 from kernel.base.base import Base
 from kernel.threads import FlaskThread
 from kernel.utils import file
+=======
+from pycore._base import Base
+from pycore.threads import FlaskThread
+from pycore.utils import file
+>>>>>>> origin/main
 
 class autoMain(Base):
     current_screen_file = None

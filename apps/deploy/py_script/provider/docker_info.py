@@ -1,9 +1,16 @@
 import json
 import os
+<<<<<<< HEAD
 from kernel.utils_prune import plattools, file, strtool
 from kernel.base.base import Base
 from deploy2.py_script.provider.deployenv import env, deploy_dir, compose_env
 from kernel.practicals_prune import yml
+=======
+from pycore.utils_prune import plattools, file, strtool
+from pycore._base import Base
+from deploy.py_script.provider.deployenv import env, deploy_dir, compose_env
+from pycore.practicals_prune import yml
+>>>>>>> origin/main
 
 class DockerInfo(Base):
     def __init__(self):

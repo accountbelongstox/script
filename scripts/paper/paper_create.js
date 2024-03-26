@@ -4,7 +4,13 @@ const fs = require('fs');
 const crypto = require('crypto');
 
 const client = new OpenAI({
+<<<<<<< HEAD
   apiKey: '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',
+=======
+  apiKey: '',
+  //sk-7nVZaP1jPhutqnHnDhGmT
+  //3BlbkFJoFoK3iAoOiUZp0ES7r87
+>>>>>>> origin/main
 });
 
 

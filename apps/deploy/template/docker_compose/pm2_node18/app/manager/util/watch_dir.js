@@ -1,7 +1,12 @@
 const fs = require('fs');
 const path = require('path');
+<<<<<<< HEAD
 const { web_dir, template_dir } = require('../provider/local_env');
 const { file, arr } = require('../../node_provider/util_prune');
+=======
+const { web_dir,template_dir } = require('../provider/local_env');
+const { file,arr } = require('../../node_provider/utils_prune');
+>>>>>>> origin/main
 class WatchDir {
     cwdlist = [];
     error = {};
@@ -29,6 +34,7 @@ class WatchDir {
         console.log('Updated directory list:', this.cwdlist);
     }
 
+<<<<<<< HEAD
     watchDir(callback) {
         if (this.watchDirEvent) {
             return
@@ -38,12 +44,27 @@ class WatchDir {
             const newDirlist = this.getAndClearNewDirs()
             if (callback) callback(newDirlist)
         }, 1000)
+=======
+    watchDir(callback){
+        if(this.watchDirEvent){
+            return
+        }
+        this.watchDirEvent = setInterval(async ()=>{
+            await this.updateWebDirList();
+            const newDirlist = this.getAndClearNewDirs()
+            if(callback)callback(newDirlist)
+        },1000)
+>>>>>>> origin/main
     }
 
     async updateWebDirList() {
         const currentList = file.scanDir(web_dir);
         for (const dir of currentList) {
+<<<<<<< HEAD
             if (file.isDir(dir)) {
+=======
+            if(file.isDir(dir)){
+>>>>>>> origin/main
                 if (!this.foundDirs.has(dir)) {
                     this.newDirlist.push(dir)
                     this.foundDirs.add(dir);

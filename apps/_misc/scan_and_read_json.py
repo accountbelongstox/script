@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 from kernel.base.auto_installrequire import auto_install
+=======
+from pycore.requirement_fn.auto_install import auto_install
+>>>>>>> origin/main
 
 if __name__ == "__main__":
     auto_install.start()
@@ -7,8 +11,13 @@ if __name__ == "__main__":
     import json
     import re
     import pprint
+<<<<<<< HEAD
     from kernel.practicals import down, wdoc
     from kernel.utils import file
+=======
+    from pycore.practicals import down, wdoc
+    from pycore.utils import file
+>>>>>>> origin/main
 
     filelist = {}
     fileurls = []

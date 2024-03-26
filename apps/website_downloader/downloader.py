@@ -3,7 +3,11 @@ import requests
 from urllib.parse import urlparse
 from url_tool import  urlTool  
 from file_tool import  fileTool
+<<<<<<< HEAD
 from kernel.base.base import Base
+=======
+from pycore._base import Base
+>>>>>>> origin/main
 
 class Downloader(Base):
     def __init__(self, download_dir=None) -> None:

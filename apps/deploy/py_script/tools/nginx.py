@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 from kernel.base.base import Base
 from kernel.utils_prune import file, arr, strtool
 # from kernel.practicals_prune import yml
 from deploy2.py_script.provider.deployenv import env  # , deploy_dir, base_dir
 # from deploy2.py_script.env.docker_info import docker_info
+=======
+from pycore._base import Base
+from pycore.utils_prune import file, arr, strtool
+# from pycore.practicals_prune import yml
+from deploy.py_script.provider.deployenv import env  # , deploy_dir, base_dir
+# from deploy.py_script.env.docker_info import docker_info
+>>>>>>> origin/main
 # import os
 import re
 

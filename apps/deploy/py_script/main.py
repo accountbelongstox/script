@@ -1,9 +1,18 @@
+<<<<<<< HEAD
 from kernel.utils_prune import file, sysarg
 from kernel.practicals_prune import yml
 from deploy2.py_script.install.install_choice import install_choice
 from deploy2.py_script.install.install_local_choice import install_local_choice
 from deploy2.py_script.provider.deployenv import env, compose_env, deploy_dir
 from kernel.base.base import Base
+=======
+from pycore.utils_prune import file, sysarg
+from pycore.practicals_prune import yml
+from deploy.py_script.install.install_choice import install_choice
+from deploy.py_script.install.install_local_choice import install_local_choice
+from deploy.py_script.provider.deployenv import env, compose_env, deploy_dir
+from pycore._base import Base
+>>>>>>> origin/main
 import sys
 
 

@@ -1,8 +1,14 @@
 # import os.path
 from flask import request as flask_request, render_template
+<<<<<<< HEAD
 from kernel.base.base import Base
 from apps.dy_scratch.oper.down import down
 from kernel.practicals import flasktool
+=======
+from pycore._base import Base
+from apps.dy_scratch.oper.down import down
+from pycore.practicals import flasktool
+>>>>>>> origin/main
 
 
 class Router(Base):
@@ -28,6 +34,7 @@ class Router(Base):
                 "video_title": video_title,
             }
 
+<<<<<<< HEAD
         @likeFlaskApp.route('/weibo', methods=['GET', 'POST'])
         def weibo_title():
             title = flasktool.get_request(likeFlaskApp, "title")
@@ -38,6 +45,8 @@ class Router(Base):
                 "video_title": title,
             }
 
+=======
+>>>>>>> origin/main
         @likeFlaskApp.before_request
         def before_request():
             # auth_urls = self._config.AUTHENTICATIONS_PATHS

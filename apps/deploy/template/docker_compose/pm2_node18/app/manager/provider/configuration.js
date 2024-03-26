@@ -4,17 +4,26 @@ const path = require('path');
 class Configuration {
   readEcosystemConfig(directoryPath) {
     const configFilePath = path.join(directoryPath, 'ecosystem.config.js');
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
     if (this.fileExists(configFilePath)) {
       const { apps } = require(configFilePath);
       if (apps?.length > 0) {
         return apps[0].name || null;
       }
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
     return null;
   }
 
   getPortFromEcosystemArgs(clusterInfo) {
     const { ecosystem_config, package_json } = clusterInfo;
+<<<<<<< HEAD
     const args = ecosystem_config?.apps?.[0]?.args || '';
     const portMatch = args.match(/--port (\d+)/);
     if (portMatch?.[1]) {
@@ -24,6 +33,22 @@ class Configuration {
     for (const script in scripts) {
       const scriptContent = scripts[script];
       const portMatch = scriptContent?.match(/--port (\d+)/);
+=======
+
+    const args = ecosystem_config?.apps?.[0]?.args || '';
+    const portMatch = args.match(/--port (\d+)/);
+
+    if (portMatch?.[1]) {
+      return parseInt(portMatch[1], 10);
+    }
+
+    const scripts = package_json?.scripts;
+
+    for (const script in scripts) {
+      const scriptContent = scripts[script];
+      const portMatch = scriptContent?.match(/--port (\d+)/);
+
+>>>>>>> origin/main
       if (portMatch?.[1]) {
         return parseInt(portMatch[1], 10);
       }

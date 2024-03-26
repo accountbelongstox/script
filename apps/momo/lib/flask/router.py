@@ -3,8 +3,13 @@ from flask import request as flask_request, render_template
 import pprint
 from apps.task.task import task
 # import itsdangerous
+<<<<<<< HEAD
 from kernel.base.base import Base
 from kernel.practicals import flasktool
+=======
+from pycore._base import Base
+from pycore.practicals import flasktool
+>>>>>>> origin/main
 
 class Router(Base):
     likeFlaskApp = None

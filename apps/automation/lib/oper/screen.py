@@ -2,8 +2,13 @@ import os.path
 import pyautogui
 import time
 import os
+<<<<<<< HEAD
 from kernel.utils import file
 from kernel.base.base import Base
+=======
+from pycore.utils import file
+from pycore._base import Base
+>>>>>>> origin/main
 import re
 import datetime
 

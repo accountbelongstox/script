@@ -3,6 +3,7 @@ import pprint
 from apps.prompt.mdous.usage_code.python_prompt_analyze import py_analyze
 from apps.prompt.mdous.usage_code.golang_prompt_analyze import go_analyze
 from apps.prompt.mdous.analyze.analyze import text_analyze
+<<<<<<< HEAD
 from kernel.base.base import Base
 # from apps.prompt.mdous.usage_code.goUsageCode import goUsageCode
 # from apps.prompt.mdous.usage_code.jsUsageCode import jsUsageCode
@@ -11,6 +12,16 @@ from kernel.base.base import Base
 
 
 from kernel.utils import arr
+=======
+from pycore._base import Base
+# from applications.prompt.mdous.usage_code.goUsageCode import goUsageCode
+# from applications.prompt.mdous.usage_code.jsUsageCode import jsUsageCode
+# from applications.prompt.mdous.usage_code.javaUsageCode import javaUsageCode
+# from applications.prompt.mdous.usage_code.genericUsageCode import genericUsageCode
+
+
+from pycore.utils import arr
+>>>>>>> origin/main
 
 
 # go_usage = goUsageCode()

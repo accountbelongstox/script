@@ -1,9 +1,16 @@
 import os.path
 import time
+<<<<<<< HEAD
 from kernel.utils import oper,screen
 from kernel.practicals import cv2cognize,ocr
 from kernel.utils import arr
 from kernel.base.base import Base
+=======
+from pycore.utils import oper,screen
+from pycore.practicals import cv2cognize,ocr
+from pycore.utils import arr
+from pycore._base import Base
+>>>>>>> origin/main
 
 class Operation(Base):
     last_failure_time = 0

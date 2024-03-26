@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 from kernel.base.auto_installrequire import auto_install
+=======
+from pycore.requirement_fn.auto_install import auto_start
+>>>>>>> origin/main
 import sys
 
 def get_arg( name):
@@ -8,11 +12,19 @@ def get_arg( name):
         return None
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     auto_install.install()
     from kernel.utils_prune import sysarg
     run_as = sysarg.get_arg(0)
     if run_as == "deploy2":
         from deploy2.py_script.main import deploy
+=======
+    auto_start.install()
+    from pycore.utils_prune import sysarg
+    run_as = sysarg.get_arg(0)
+    if run_as == "deploy":
+        from deploy.py_script.main import deploy
+>>>>>>> origin/main
         deploy.main()
     elif run_as == "prompt":
         from apps.prompt.main import prompt_main
@@ -23,6 +35,7 @@ if __name__ == "__main__":
     elif run_as == "douyin":
         from apps.dy_scratch.main import auto_main
         auto_main.start()
+<<<<<<< HEAD
     elif run_as == "ncss":
         from apps.ncss.main import auto_main
         auto_main.start()
@@ -34,5 +47,9 @@ if __name__ == "__main__":
         # main = promptMain(``)
         # main = main.resolve_project("pm2_manager")
 
+=======
+    else:
+        print("Requires curses.pyc basic parameter")
+>>>>>>> origin/main
 
 

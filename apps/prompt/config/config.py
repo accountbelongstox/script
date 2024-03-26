@@ -2,13 +2,22 @@ import os
 # import json
 # import pprint
 
+<<<<<<< HEAD
 from kernel.utils import file, tool
 from kernel.base.base import Base
+=======
+from pycore.utils import file, tool
+from pycore._base import Base
+>>>>>>> origin/main
 
 class Config(Base):
     def __init__(self):
         self.config = None
+<<<<<<< HEAD
         self.root_dir = os.path.join(file.get_root_dir(),"apps/prompt")
+=======
+        self.root_dir = os.path.join(file.get_root_dir(),"applications/prompt")
+>>>>>>> origin/main
 
     def get_pprojects_path(self):
         return os.path.join(self.root_dir, '.pprojects.json')

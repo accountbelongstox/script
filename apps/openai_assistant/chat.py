@@ -1,8 +1,13 @@
 from openai import OpenAI
 import time
 from flask import Flask, render_template, request
+<<<<<<< HEAD
 from kernel.practicals import env
 from kernel.utils import file
+=======
+from pycore.practicals import env
+from pycore.utils import file
+>>>>>>> origin/main
 
 
 class OpenAIAssistantApp:
@@ -11,7 +16,11 @@ class OpenAIAssistantApp:
         self.client = OpenAI(api_key=self.openai_api_key)
         self.OPENAI_ASSISTANT_ID = env.get_env("OPENAI_ASSISTANT_ID")
         self.assistant = self.client.beta.assistants.retrieve(self.OPENAI_ASSISTANT_ID)
+<<<<<<< HEAD
         template_folder = file.resolve_path(file.get_root_dir(), "apps/openai_assistant/templates")
+=======
+        template_folder = file.resolve_path(file.get_root_dir(), "applications/openai_assistant/templates")
+>>>>>>> origin/main
         print("template_folder", template_folder)
         self.app = Flask(__name__)
         self.port = int(env.get_env("OPENAI_PORT"))

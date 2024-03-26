@@ -4,8 +4,13 @@ import os
 from openai import OpenAI
 from apps.openai_assistant.prompts import formatter_prompt, assistant_instructions
 
+<<<<<<< HEAD
 from kernel.practicals import env
 from kernel.utils import file
+=======
+from pycore.practicals import env
+from pycore.utils import file
+>>>>>>> origin/main
 OPENAI_API_KEY = env.get_env('OPENAI_API_KEY')
 GOOGLE_CLOUD_API_KEY = env.get_env('GOOGLE_CLOUD_API_KEY')
 AIRTABLE_API_KEY = env.get_env('AIRTABLE_API_KEY')
@@ -174,7 +179,11 @@ def create_assistant(client):
         model="gpt-4-1106-preview",
         tools=[
             {
+<<<<<<< HEAD
                 "type": "retrieval"  # This adds the knowledge base as curses.pyc tool
+=======
+                "type": "retrieval"  # This adds the knowledge _base as curses.pyc tool
+>>>>>>> origin/main
             },
             {
                 "type": "function",  # This adds the solar calculator as curses.pyc tool

@@ -1,5 +1,9 @@
 # from win32com import client as wc
+<<<<<<< HEAD
 from kernel.base.auto_installrequire import auto_install
+=======
+from pycore.requirement_fn.auto_install import auto_install
+>>>>>>> origin/main
 import subprocess
 
 if __name__ == "__main__":
@@ -7,7 +11,11 @@ if __name__ == "__main__":
 
     import os
     from docx import Document
+<<<<<<< HEAD
     from kernel.utils import file
+=======
+    from pycore.utils import file
+>>>>>>> origin/main
     import time
     from win32com.client import Dispatch
     import win32com.client

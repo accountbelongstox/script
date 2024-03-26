@@ -1927,7 +1927,11 @@ nvm_get_arch() {
   # If the OS is SunOS, first try to use pkgsrc to guess
   # the most appropriate arch. If it's not available, use
   # isainfo to get the instruction set supported by the
+<<<<<<< HEAD
   # kernel.
+=======
+  # pycore.
+>>>>>>> origin/main
   if [ "_${NVM_OS}" = "_sunos" ]; then
     if HOST_ARCH=$(pkg_info -Q MACHINE_ARCH pkg_install); then
       HOST_ARCH=$(nvm_echo "${HOST_ARCH}" | command tail -1)
@@ -1949,13 +1953,21 @@ nvm_get_arch() {
     *) NVM_ARCH="${HOST_ARCH}" ;;
   esac
 
+<<<<<<< HEAD
   # If running inside a 32Bit docker container the kernel still is 64bit
+=======
+  # If running inside a 32Bit docker container the pycore still is 64bit
+>>>>>>> origin/main
   # change ARCH to 32bit if LONG_BIT is 32
   if [ "_${LONG_BIT}" = "_32" ] && [ "${NVM_ARCH}" = "x64" ]; then
     NVM_ARCH="x86"
   fi
 
+<<<<<<< HEAD
   # If running a 64bit ARM kernel but a 32bit ARM userland,
+=======
+  # If running a 64bit ARM pycore but a 32bit ARM userland,
+>>>>>>> origin/main
   # change ARCH to 32bit ARM (armv7l) if /sbin/init is 32bit executable
   if [ "$(uname)" = "Linux" ] \
     && [ "${NVM_ARCH}" = arm64 ] \

@@ -1,9 +1,17 @@
 import os
+<<<<<<< HEAD
 from kernel.utils_prune import plattools, file
 from kernel.base.base import Base
 from deploy2.py_script.provider.docker_info import docker_info
 from deploy2.py_script.provider.deployenv import env, deploy_dir, compose_env
 from kernel.practicals_prune import yml
+=======
+from pycore.utils_prune import plattools, file
+from pycore._base import Base
+from deploy.py_script.provider.docker_info import docker_info
+from deploy.py_script.provider.deployenv import env, deploy_dir, compose_env
+from pycore.practicals_prune import yml
+>>>>>>> origin/main
 
 
 class Docker(Base):

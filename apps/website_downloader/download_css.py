@@ -5,7 +5,11 @@ from urllib.parse import urlparse
 from urllib.parse import urljoin
 from downloader import Downloader
 downloader = Downloader()
+<<<<<<< HEAD
 from kernel.base.base import Base
+=======
+from pycore._base import Base
+>>>>>>> origin/main
 
 class CssUrlParser(Base):
     def __init__(self, baseUrl=None):

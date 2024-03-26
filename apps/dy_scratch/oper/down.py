@@ -2,11 +2,19 @@ import os.path
 import os
 from datetime import datetime
 import time
+<<<<<<< HEAD
 from kernel.utils import file,strtool
 from kernel.utils import screen,oper
 from apps.dy_scratch.provider.project_info import project_name
 from kernel.practicals import cv2
 from kernel.base.base import Base
+=======
+from pycore.utils import file,strtool
+from pycore.utils import screen,oper
+from apps.dy_scratch.provider.project_info import project_name
+from pycore.practicals import cv2
+from pycore._base import Base
+>>>>>>> origin/main
 
 class Down(Base):
 

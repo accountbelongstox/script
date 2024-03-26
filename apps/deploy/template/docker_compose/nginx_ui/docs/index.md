@@ -29,7 +29,11 @@ features:
         details: Get assistance from an AI-powered ChatGPT directly within the platform.
     -   icon: 🖱️
         title: One-Click Deployment and Automatic Renewal
+<<<<<<< HEAD
         details: Easily deploy2 and auto-renew Let's Encrypt certificates with just one click.
+=======
+        details: Easily deploy and auto-renew Let's Encrypt certificates with just one click.
+>>>>>>> origin/main
     -   icon: 🛠️
         title: Online Editing Websites Configurations
         details: Edit configurations using our NgxConfigEditor block editor or Ace Code Editor with nginx syntax highlighting.

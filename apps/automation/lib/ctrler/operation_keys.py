@@ -1,9 +1,18 @@
+<<<<<<< HEAD
 from kernel.utils import file
 from kernel.practicals import env
 from kernel.base.base import Base
 import os
 DEFAULT_THRESHOLD = 0.9
 autoEnv = env.load("apps/automation")
+=======
+from pycore.utils import file
+from pycore.practicals import env
+from pycore._base import Base
+import os
+DEFAULT_THRESHOLD = 0.9
+autoEnv = env.load("applications/automation")
+>>>>>>> origin/main
 evnfile = autoEnv.get_local_env_file()
 class OperCode(Base):
     icons_env_checked = False
@@ -37,7 +46,11 @@ class OperCode(Base):
         return self.find_key(mode, key)
 
     def find_key(self,mode, image_name):
+<<<<<<< HEAD
         image_dir = file.resolve_path(mode, "apps/automation/icons/")
+=======
+        image_dir = file.resolve_path(mode, "applications/automation/icons/")
+>>>>>>> origin/main
         self.check_icons_env(image_dir)
         if not os.path.exists(image_dir):
             self.info("The specified directory does not exist", image_dir)

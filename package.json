@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main
 {
   "dependencies": {
     "cors": "^2.8.5",
