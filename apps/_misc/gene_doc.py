@@ -1,5 +1,5 @@
 # from win32com import client as wc
-from pycore.requirement_fn.auto_installrequire import auto_install
+from pycore.requirement_fn.auto_install import auto_install
 import subprocess
 
 if __name__ == "__main__":

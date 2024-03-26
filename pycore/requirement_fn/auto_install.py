@@ -8,7 +8,7 @@ import uuid
 import socket
 from urllib.parse import urlparse
 
-class AutoInstallRequire():
+class AutoInstall():
     venv_dir = "venv"
     server_role = ""
     windows_package = ["pywin32", "pyautogui", "windows-curses"]
@@ -580,4 +580,4 @@ class AutoInstallRequire():
         return ""
 
 
-auto_install = AutoInstallRequire()
+auto_start = AutoInstall()

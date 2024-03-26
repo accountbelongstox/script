@@ -1,4 +1,4 @@
-from pycore.requirement_fn.auto_installrequire import auto_install
+from pycore.requirement_fn.auto_install import auto_start
 import sys
 
 def get_arg( name):
@@ -8,7 +8,7 @@ def get_arg( name):
         return None
 
 if __name__ == "__main__":
-    auto_install.install()
+    auto_start.install()
     from pycore.utils_prune import sysarg
     run_as = sysarg.get_arg(0)
     if run_as == "deploy":
