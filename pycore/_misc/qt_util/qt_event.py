@@ -1,4 +1,4 @@
-from pycore.base import *
+from pycore.base import Base
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
     QGridLayout, QLabel, QLineEdit, QPushButton, QSizePolicy, QTableWidget, QTableWidgetItem,
     QTextEdit, QVBoxLayout, QWidget, QMessageBox)

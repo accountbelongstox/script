@@ -1,4 +1,4 @@
-from pycore.base import *
+from pycore.base import Base
 import redis
 import json
 import threading

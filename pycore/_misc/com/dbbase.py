@@ -1,4 +1,4 @@
-from pycore.base import *
+from pycore.base import Base
 from pycore.db_baseclass.table_class import TableClass
 # import time
 # import json

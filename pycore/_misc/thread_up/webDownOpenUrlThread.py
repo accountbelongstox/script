@@ -1,4 +1,4 @@
-from pycore.base import *
+from pycore.base import Base
 import time
 import threading
 
