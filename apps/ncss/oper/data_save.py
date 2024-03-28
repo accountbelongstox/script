@@ -6,7 +6,7 @@ from pycore.utils import file,strtool
 from pycore.utils import screen,oper
 from apps.ncss.provider.project_info import project_name,app_name
 from pycore.practicals import cv2
-from pycore.base import Base
+from pycore.base.base import Base
 
 class DataSrc(Base):
 

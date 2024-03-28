@@ -2,7 +2,7 @@ from apps.prompt.bc.interface.prompt_analyze import PromptAnalyzeInterface
 import re
 # import pprint
 from pycore.utils import arr
-from pycore.base import Base
+from pycore.base.base import Base
 
 class pythonUsageCode(PromptAnalyzeInterface,Base):
     def __init__(self):

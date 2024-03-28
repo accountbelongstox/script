@@ -1,6 +1,6 @@
 import curses
 from pycore.utils_linux import strtool
-from pycore.base import Base
+from pycore.base.base import Base
 
 
 class Select(Base):

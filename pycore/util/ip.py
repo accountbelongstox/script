@@ -1,7 +1,7 @@
 import re
 import ipaddress
 import socket
-from pycore.base import Base
+from pycore.base.base import Base
 import requests
 
 threadQueue = None

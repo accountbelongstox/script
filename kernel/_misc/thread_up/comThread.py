@@ -1,5 +1,5 @@
 import threading
-from pycore.base import *
+from pycore.base.base import *
 
 
 # 多线程下载模块

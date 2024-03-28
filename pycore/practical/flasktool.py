@@ -1,4 +1,4 @@
-from pycore._base import *
+from pycore.base.base import Base
 from pycore.utils import strtool
 from flask_wtf import FlaskForm
 from datetime import datetime, timedelta

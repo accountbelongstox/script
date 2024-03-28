@@ -76,9 +76,9 @@ get_old_docker_root_dir() {
 echo "Checking sudo  file."
 PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
 echo "BasiDir ${PARENT_DIR}"
-py_script="$PARENT_DIR/py_script/main.py"
-DOCKER_DIR=$(sudo python3 "$py_script" env get_val "DOCKER_DIR")
-SNAP_DOCKER=$(sudo python3 "$py_script" env get_val "SNAP_DOCKER")
+pyscript="$PARENT_DIR/pyscript/main.py"
+DOCKER_DIR=$(sudo python3 "$pyscript" env get_val "DOCKER_DIR")
+SNAP_DOCKER=$(sudo python3 "$pyscript" env get_val "SNAP_DOCKER")
 # -----------------------------------------------------------------------
 if [ -z "$DOCKER_DIR" ]; then
     echo "DOCKER_DIR is empty. Aborting script."
@@ -105,7 +105,7 @@ else
     echo "docker.sock not found."
 fi
 echo "DOCKER_SOCK is set to: $DOCKER_SOCK"
-sudo python3 "$py_script" env set_val DOCKER_SOCK "$DOCKER_SOCK"
+sudo python3 "$pyscript" env set_val DOCKER_SOCK "$DOCKER_SOCK"
 # -----------------------------------------------------------------------
 old_docker_root_dir=""
 get_old_docker_root_dir
@@ -120,7 +120,7 @@ if [ "$SNAP_DOCKER" = "1" ]; then
     if ! grep -qs "$old_docker_root_dir" /etc/fstab; then
         stop_docker
         mount_function "$DOCKER_DIR" "$old_docker_root_dir" "normal"
-        sudo python3 "$py_script" docker update_docker_config "$DOCKER_CONFIG_FILE" False
+        sudo python3 "$pyscript" docker update_docker_config "$DOCKER_CONFIG_FILE" False
         start_docker
         echo "Docker configuration (snap) updated."
     else
@@ -142,8 +142,8 @@ else
     echo "SET DOCKER CONFIG: $DOCKER_SET_CONFIG"
     if [ "$DOCKER_SET_CONFIG" = "1" ]; then
         stop_docker
-        sudo python3 "$py_script" docker update_docker_config "$DOCKER_CONFIG_FILE" True
-        sudo python3 "$py_script" docker migrate_docker_data_rsync
+        sudo python3 "$pyscript" docker update_docker_config "$DOCKER_CONFIG_FILE" True
+        sudo python3 "$pyscript" docker migrate_docker_data_rsync
         start_docker
     fi
     echo "Configuration has been written to $DOCKER_CONFIG_FILE"

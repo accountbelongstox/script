@@ -8,7 +8,7 @@ from apps.automation.lib.flask.router import Router
 from apps.automation.lib.instance.handle import handle
 from apps.task.task import task
 
-from pycore.base import Base
+from pycore.base.base import Base
 from pycore.threads import FlaskThread
 from pycore.utils import file
 

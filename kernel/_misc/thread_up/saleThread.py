@@ -1,5 +1,5 @@
 import os.path,threading,re
-from pycore.base import *
+from pycore.base.base import *
 
 class SaleThread(threading.Thread, Base):
     def __init__(self):

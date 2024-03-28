@@ -1,4 +1,4 @@
-from pycore._base import *
+from pycore.base.base import Base
 from pycore.utils_linux import strtool,arr
 import re
 class Wdoc(Base):

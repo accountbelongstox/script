@@ -1,4 +1,4 @@
-from pycore.base import *
+from pycore.base.base import *
 import sys
 import os
 from PySide6 import QtCore, QtWidgets, QtGui

@@ -175,7 +175,7 @@ def create_assistant(client):
         tools=[
             {
 
-                "type": "retrieval"  # This adds the knowledge _base as curses.pyc tool
+                "type": "retrieval"  # This adds the knowledge base as curses.pyc tool
             },
             {
                 "type": "function",  # This adds the solar calculator as curses.pyc tool

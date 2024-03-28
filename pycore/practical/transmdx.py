@@ -1,4 +1,4 @@
-from pycore._base import *
+from pycore.base.base import Base
 import time
 import math
 from queue import Queue

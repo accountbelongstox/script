@@ -1,6 +1,6 @@
 # import os.path
 from flask import request as flask_request, render_template
-from pycore.base import Base
+from pycore.base.base import Base
 from apps.dy_scratch.oper.down import down
 from pycore.practicals import flasktool
 

@@ -23,7 +23,7 @@ fi
 echo "SCRIPT_DIR: $SCRIPT_DIR"
 
 if ! command -v sudo > /dev/null 2>&1; then
-    "$SCRIPT_DIR/deploy/common/before_public/0_public_install_sudo.sh"
+    "$SCRIPT_DIR/apps/deploy/common/before_public/0_public_install_sudo.sh"
 fi
 get_git(){
   cd "$SCRIPT_DIR" || exit
@@ -100,7 +100,7 @@ select_install_type() {
                 case "$install_type" in
                     "server"|"pve"|"local")
                         echo "Selected install type: $install_type"
-                        "$SCRIPT_DIR/deploy/exec_entry.sh" "$install_type/install.sh"
+                        "$SCRIPT_DIR/apps/deploy/exec_entry.sh" "$install_type/install.sh"
                         return
                         ;;
                     "cancel")
@@ -115,10 +115,10 @@ select_install_type() {
         done
         ;;
     "select_docker_compose")
-        "$SCRIPT_DIR/deploy/exec_entry.sh" "server/docker_compiler.sh"
+        "$SCRIPT_DIR/apps/deploy/exec_entry.sh" "server/docker_compiler.sh"
         ;;
     "enable_local_sharing")
-        "$SCRIPT_DIR/deploy/exec_entry.sh" "server/docker_compiler.sh"
+        "$SCRIPT_DIR/apps/deploy/exec_entry.sh" "server/docker_compiler.sh"
         ;;
     *)
         echo "Invalid script type: $script_type"

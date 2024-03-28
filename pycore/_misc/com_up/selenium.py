@@ -3,7 +3,7 @@ import operator
 import shutil
 import pprint
 import subprocess
-from pycore._base import *
+from pycore.base.base import Base
 import os
 import re
 import time
@@ -1067,7 +1067,7 @@ class Selenium(Base):
     def selector_parse(self, selector):
         selector = selector.strip().lower()
         HTML_TABS = ["<curses.pyc>", "<abbr>", "<acronym>", "<abbr>", "<address>", "<applet>", "<embed>", "<object>", "<area>",
-                     "<article>", "<aside>", "<audio>", "<b>", "<_base>", "<basefont>", "<bdi>", "<bdo>", "<big>",
+                     "<article>", "<aside>", "<audio>", "<b>", "<base>", "<basefont>", "<bdi>", "<bdo>", "<big>",
                      "<blockquote>", "<body>", "<br>", "<button>", "<canvas>", "<caption>", "<center>", "<cite>",
                      "<code>", "<col>", "<colgroup>", "<command>", "<data>", "<datalist>", "<dd>", "<del>", "<details>",
                      "<dir>", "<div>", "<dfn>", "<dialog>", "<dl>", "<dt>", "<em>", "<embed>", "<fieldset>",

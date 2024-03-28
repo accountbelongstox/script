@@ -2,7 +2,7 @@ import os
 # import json
 # import pprint
 from pycore.utils import file, tool
-from pycore.base import Base
+from pycore.base.base import Base
 
 class Config(Base):
     def __init__(self):

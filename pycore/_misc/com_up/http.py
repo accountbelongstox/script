@@ -2,7 +2,7 @@ import re
 import ipaddress
 # import socket
 
-from pycore._base import *
+from pycore.base.base import Base
 import os
 from lxml import etree
 # import re

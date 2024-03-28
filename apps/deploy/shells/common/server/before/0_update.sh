@@ -3,7 +3,7 @@ BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 OS_NAME=$(awk -F= '/^ID=/ { print $2 }' /etc/os-release | tr -d '"')
 OS_VERSION_ID=$(awk -F= '/^VERSION_ID=/ { print $2 }' /etc/os-release | tr -d '"')
 tmp_config="/tmp/deploy.env"
-py_script="$BASE_DIR/py_script/main.py"
+pyscript="$BASE_DIR/pyscript/main.py"
 
 echo "Running update..."
 sudo bash "$BASE_DIR/update.sh"
@@ -126,7 +126,7 @@ setup() {
     echo "DockerData default directory is set to $docker_data"
     sudo mkdir -p "$docker_data"
 
-    SAMBA_ENABLE=$(sudo python3 "$py_script" env get_val "SAMBA_ENABLE")
+    SAMBA_ENABLE=$(sudo python3 "$pyscript" env get_val "SAMBA_ENABLE")
     echo "Current value of SAMBA_ENABLE: $SAMBA_ENABLE"
     read -p "Do you want to modify SAMBA_ENABLE? (yes/no): " choice
     case "$choice" in
@@ -144,7 +144,7 @@ setup() {
             ;;
     esac
     if [ "$SAMBA_ENABLE" = "yes" ]; then
-        SAMBA_USER=$(sudo python3 "$py_script" env get_val "SAMBA_USER")
+        SAMBA_USER=$(sudo python3 "$pyscript" env get_val "SAMBA_USER")
         if [ -z "$SAMBA_USER" ]; then
             SAMBA_USER="root"
         fi
@@ -171,9 +171,9 @@ setup() {
 
     echo "MYSQL Root User: root"
 
-    MYSQL_ROOT_PASSWORD=$(sudo python3 "$py_script" env get_val "MYSQL_ROOT_PASSWORD")
+    MYSQL_ROOT_PASSWORD=$(sudo python3 "$pyscript" env get_val "MYSQL_ROOT_PASSWORD")
     if [ -z "$MYSQL_ROOT_PASSWORD" ]; then
-        MYSQL_ROOT_PASSWORD=$(sudo python3 "$py_script" tool genepwd)
+        MYSQL_ROOT_PASSWORD=$(sudo python3 "$pyscript" tool genepwd)
         echo "Generated MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD"
     fi
     echo "Generated MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD"
@@ -181,9 +181,9 @@ setup() {
     MYSQL_ROOT_PASSWORD=${input_root_password:-$MYSQL_ROOT_PASSWORD}
     echo "MYSQL_ROOT_PASSWORD is set to $MYSQL_ROOT_PASSWORD"
 
-    POSTGRES_PASSWORD=$(sudo python3 "$py_script" env get_val "POSTGRES_PASSWORD")
+    POSTGRES_PASSWORD=$(sudo python3 "$pyscript" env get_val "POSTGRES_PASSWORD")
     if [ -z "$POSTGRES_PASSWORD" ]; then
-        POSTGRES_PASSWORD=$(sudo python3 "$py_script" tool genepwd)
+        POSTGRES_PASSWORD=$(sudo python3 "$pyscript" tool genepwd)
         echo "Generated POSTGRES_PASSWORD: $POSTGRES_PASSWORD"
     fi
     echo "Generated POSTGRES_PASSWORD: $POSTGRES_PASSWORD"
@@ -192,7 +192,7 @@ setup() {
     echo "POSTGRES_PASSWORD is set to $POSTGRES_PASSWORD"
 
 
-    default_mysql_user=$(sudo python3 "$py_script" env get_val "MYSQL_USER")
+    default_mysql_user=$(sudo python3 "$pyscript" env get_val "MYSQL_USER")
     if [ -z "$default_mysql_user" ]; then
         default_mysql_user="mysql"
     fi
@@ -201,9 +201,9 @@ setup() {
     MYSQL_USER=${MYSQL_USER:-$default_mysql_user}
     echo "MYSQL_USER is set to $MYSQL_USER"
 
-    MYSQL_PASSWORD=$(sudo python3 "$py_script" env get_val "MYSQL_PASSWORD")
+    MYSQL_PASSWORD=$(sudo python3 "$pyscript" env get_val "MYSQL_PASSWORD")
     if [ -z "$MYSQL_PASSWORD" ]; then
-        MYSQL_PASSWORD=$(sudo python3 "$py_script" tool genepwd)
+        MYSQL_PASSWORD=$(sudo python3 "$pyscript" tool genepwd)
     fi
     echo "Generated MYSQL_PASSWORD: $MYSQL_PASSWORD"
     read -p "Enter new MYSQL_PASSWORD (press enter to keep it): " input_mysql_password
@@ -248,19 +248,19 @@ setup() {
           mount_function "$disk_path" "$MAIN_DIR" "uuid"
       fi
     fi
-    sudo python3 "$py_script" env set_val "SERVICE_DIR" "$SERVICE_DIR"
-    sudo python3 "$py_script" env set_val "MYSQL_ROOT_PASSWORD" "$MYSQL_ROOT_PASSWORD"
-    sudo python3 "$py_script" env set_val "MYSQL_USER" "$MYSQL_USER"
-    sudo python3 "$py_script" env set_val "MYSQL_PASSWORD" "$MYSQL_PASSWORD"
-    sudo python3 "$py_script" env set_val "MAIN_IP" "$server_ip"
-    sudo python3 "$py_script" env set_val "SNAP_DOCKER" "$SNAP_DOCKER"
-    sudo python3 "$py_script" env set_val "WEB_DIR" "$WEB_DIR"
-    sudo python3 "$py_script" env set_val "MAIN_DIR" "$MAIN_DIR"
-    sudo python3 "$py_script" env set_val "DOCKER_DIR" "$docker_dir"
-    sudo python3 "$py_script" env set_val "DOCKER_DATA" "$docker_data"
-    sudo python3 "$py_script" env set_val "SAMBA_USER" "$SAMBA_USER"
-    sudo python3 "$py_script" env set_val "SAMBA_ENABLE" "$SAMBA_ENABLE"
-    sudo python3 "$py_script" env set_val "POSTGRES_PASSWORD" "$POSTGRES_PASSWORD"
+    sudo python3 "$pyscript" env set_val "SERVICE_DIR" "$SERVICE_DIR"
+    sudo python3 "$pyscript" env set_val "MYSQL_ROOT_PASSWORD" "$MYSQL_ROOT_PASSWORD"
+    sudo python3 "$pyscript" env set_val "MYSQL_USER" "$MYSQL_USER"
+    sudo python3 "$pyscript" env set_val "MYSQL_PASSWORD" "$MYSQL_PASSWORD"
+    sudo python3 "$pyscript" env set_val "MAIN_IP" "$server_ip"
+    sudo python3 "$pyscript" env set_val "SNAP_DOCKER" "$SNAP_DOCKER"
+    sudo python3 "$pyscript" env set_val "WEB_DIR" "$WEB_DIR"
+    sudo python3 "$pyscript" env set_val "MAIN_DIR" "$MAIN_DIR"
+    sudo python3 "$pyscript" env set_val "DOCKER_DIR" "$docker_dir"
+    sudo python3 "$pyscript" env set_val "DOCKER_DATA" "$docker_data"
+    sudo python3 "$pyscript" env set_val "SAMBA_USER" "$SAMBA_USER"
+    sudo python3 "$pyscript" env set_val "SAMBA_ENABLE" "$SAMBA_ENABLE"
+    sudo python3 "$pyscript" env set_val "POSTGRES_PASSWORD" "$POSTGRES_PASSWORD"
 
     [ -f "$tmp_config" ] && sudo rm "$tmp_config"
     echo "main_dir=$MAIN_DIR" | sudo tee "$tmp_config"

@@ -6,7 +6,7 @@ import urllib
 from urllib.parse import *
 import http.cookiejar
 import time
-from pycore.base import Base
+from pycore.base.base import Base
 from pycore.utils import file, http
 from queue import Queue
 

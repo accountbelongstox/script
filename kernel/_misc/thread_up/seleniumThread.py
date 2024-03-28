@@ -1,6 +1,6 @@
 import json
 from queue import Queue
-from pycore.base import *
+from pycore.base.base import *
 import os
 import re
 import operator

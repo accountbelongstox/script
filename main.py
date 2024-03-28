@@ -12,7 +12,7 @@ if __name__ == "__main__":
     from pycore.utils_linux import sysarg
     run_as = sysarg.get_arg(0)
     if run_as == "deploy":
-        from apps.deploy.py_script.main import deploy
+        from apps.deploy.pyscript.main import deploy
         deploy.main()
     elif run_as == "prompt":
         from apps.prompt.main import prompt_main

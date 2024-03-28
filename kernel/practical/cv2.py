@@ -5,7 +5,7 @@ import os
 from pycore.utils import file
 from pycore.utils import screen
 # from apps.automation.lib.ctrler.operation_keys import get_operate_code
-from pycore.base import Base
+from pycore.base.base import Base
 
 class Cv2(Base):
     threshold = 0.9

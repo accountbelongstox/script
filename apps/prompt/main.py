@@ -11,7 +11,7 @@ from pycore.utils import arg
 from pycore.utils import file, arr, keyb, tool
 from pycore.threads import ComThread
 from pycore.practicals import watch
-from pycore.base import Base
+from pycore.base.base import Base
 from apps.prompt.mdous.analyze.config_weights import config_weights
 from apps.prompt.config.lang_config import lang_config
 from apps.prompt.mdous.resolve_prompt.create_prompt import create_prompt
