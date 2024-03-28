@@ -21,7 +21,7 @@ from urllib import request
 
 class Zip(Base):
     def __init__(self):
-        super().__init__()  # 调用父类的构造函数
+        super().__init__()
 
         # 类属性
         self.callbacks = {}
@@ -444,7 +444,7 @@ class Zip(Base):
         pass
 
 
-zip = Zip()  # 创建 Zip 类的对象实例
+zip_main = Zip()  # 创建 Zip 类的对象实例
 
 
 class Getnode(Base):
