@@ -1,6 +1,5 @@
 from pycore.requirement_fn.auto_install import auto_install
 import sys
-
 def get_arg( name):
     if len(sys.argv) > name:
         return sys.argv[name]

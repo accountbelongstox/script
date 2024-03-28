@@ -11,7 +11,6 @@ class File():
         with zipfile(file) as f:
             f.extract(member, o)
 
-
     def zip_extractall(self, file, odir=None, member=None):
         if odir == None:
             odir = os.path.dirname(file)

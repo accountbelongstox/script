@@ -6,7 +6,6 @@ from pycore.util.http import Http
 from pycore.util.ip import Ip
 from pycore.util.strtool import Strtool
 from pycore.util.tool import Tool
-from pycore.util.keyb import Keyboard
 from pycore.util.sysarg import SysArg
 from pycore.util.plattools import Plattools
 
@@ -17,7 +16,7 @@ file = File()
 http = Http()
 strtool = Strtool()
 tool = Tool()
-keyb = Keyboard()
+# keyb = Keyboard()
 ip = Ip()
 sysarg = SysArg()
 plattools = Plattools()

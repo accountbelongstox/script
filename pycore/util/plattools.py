@@ -2,6 +2,7 @@ from pycore._base import *
 import os,re
 import platform
 import subprocess
+from pycore.base import Base
 class Plattools(Base):
     def __init__(self):
         pass
