@@ -3,7 +3,7 @@ import random
 import string
 import time
 import asyncio
-from pycore.base import Base
+from kernel.base import base
 import subprocess
 import threading
 import sys
@@ -19,7 +19,7 @@ import tarfile
 from urllib import request
 
 
-class Zip(Base):
+class Zip(base):
     def __init__(self):
         super().__init__()  # 调用父类的构造函数
 
@@ -157,7 +157,7 @@ class Zip(Base):
     def success(self, msg):
         print(msg)  # 这里对成功信息的处理方式是打印出来，可以根据实际需要修改
 
-    async def compress_directory(self, src_dir, out_dir, token, callback):
+    def compress_directory(self, src_dir, out_dir, token, callback):
         # 解析绝对路径
         src_abs_path = os.path.abspath(src_dir)
         out_abs_path = os.path.abspath(out_dir)
@@ -173,10 +173,10 @@ class Zip(Base):
         for sub_dir_name in sub_directories:
             sub_dir_path = os.path.join(src_abs_path, sub_dir_name)
             # 将zip任务添加到队列（假设put_zip_queue_task是异步方法）
-            await self.put_zip_queue_task(sub_dir_path, out_dir, token, callback)
+            self.put_zip_queue_task(sub_dir_path, out_dir, token, callback)
 
     # 在这里定义你的put_zip_queue_task异步方法
-    async def put_zip_queue_task(self, sub_dir_path, out_dir, token, callback):
+    def put_zip_queue_task(self, sub_dir_path, out_dir, token, callback):
         # 实现压缩操作，可能涉及异步调用第三方库或自己的其他异步方法
         # 这里保留了一个示例方法调用
         pass
@@ -230,19 +230,19 @@ class Zip(Base):
             print('Error executing command:', err)
             return 10000
 
-    async def exec_task(self):
+    def exec_task(self):
         # 如果当前没有执行的任务事件，则开始执行
         if not self.exec_task_event:
-            await self.log('Background compaction task started', True)
+            self.log('Background compaction task started', True)
             self.exec_task_event = True
 
             while self.exec_task_event:
-                process_zip_count = await self.a7z_processes_count()
+                process_zip_count = self.a7z_processes_count()
                 if process_zip_count != 10000:
                     self.concurrent_tasks = process_zip_count
 
                 if self.concurrent_tasks >= self.max_tasks:
-                    await self.log(f'7zProcesse tasks is full. current tasks:{self.concurrent_tasks}, waiting...')
+                    self.log(f'7zProcesse tasks is full. current tasks:{self.concurrent_tasks}, waiting...')
                 elif len(self.pending_tasks) > 0:
                     task_object = self.pending_tasks.pop(0)  # 类似于 JS 中的 shift
                     command = task_object['command']
@@ -252,22 +252,22 @@ class Zip(Base):
                     zip_path = task_object['zip_path']
                     zip_name = os.path.basename(zip_path)  # 使用 os.path.basename 代替 path.basename
 
-                    if not await self.is_file_locked(zip_path):
-                        await self.log(f'Unzipping {zip_name}, background:{self.concurrent_tasks}', True)
+                    if not self.is_file_locked(zip_path):
+                        self.log(f'Unzipping {zip_name}, background:{self.concurrent_tasks}', True)
                         self.exec_count_tasks += 1
-                        await self.add_to_pending_tasks(command, token, is_queue)
+                        self.add_to_pending_tasks(command, token, is_queue)
                     else:
                         self.pending_tasks.append(task_object)
-                        await self.log(f'The file is in use, try again later, "{zip_path}"')
+                        self.log(f'The file is in use, try again later, "{zip_path}"')
                 else:
                     if self.exec_count_tasks < 1:
                         self.exec_task_event = False
-                        await self.log('There is currently no compression task, end monitoring.')
-                        await self.exec_task_queue_callback()
+                        self.log('There is currently no compression task, end monitoring.')
+                        self.exec_task_queue_callback()
                     else:
-                        await self.log(f'There are still {self.exec_count_tasks} compression tasks, waiting')
+                        self.log(f'There are still {self.exec_count_tasks} compression tasks, waiting')
 
-                await asyncio.sleep(1)  # 暂停一秒钟，然后继续循环
+                asyncio.sleep(1)  # 暂停一秒钟，然后继续循环
 
     def exec_task_queue_callback(self):
         # 遍历 zipQueTokens 中的所有 tokens
@@ -323,7 +323,7 @@ class Zip(Base):
         # You need to implement this function based on your requirements
         pass
 
-    async def put_unzip_task_promise(self, zip_file_path, target_directory):
+    def put_unzip_task_promise(self, zip_file_path, target_directory):
         # 使用event loop来等待异步任务的完成
         loop = asyncio.get_running_loop()
 
@@ -342,7 +342,7 @@ class Zip(Base):
 
         try:
             # 等待future完成
-            await future
+            future
         except Exception as error:
             # 处理异常
             print(f"An error occurred: {error}")
@@ -447,7 +447,7 @@ class Zip(Base):
 zip = Zip()  # 创建 Zip 类的对象实例
 
 
-class Getnode(Base):
+class Getnode(base):
     def __init__(self, tmp_dir=''):
         # 调用基类的构造方法
         super().__init__()
@@ -619,24 +619,24 @@ class Getnode(Base):
         from urllib.parse import unquote
         return unquote(url)
 
-    async def down_file(self, url, save_path):
+    def down_file(self, url, save_path):
         """
         异步下载文件。
 
         :param url: 要下载文件的URL。
         :param save_path: 文件保存在本地的路径。
         """
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url) as response:
+        with aiohttp.ClientSession() as session:
+            with session.get(url) as response:
                 if response.status == 200:
                     with open(save_path, 'wb') as f:
                         while True:
-                            chunk = await response.content.read(1024)
+                            chunk = response.content.read(1024)
                             if not chunk:
                                 break
                             f.write(chunk)
 
-    async def download(self, down_url, down_name=None):
+    def download(self, down_url, down_name=None):
         """
         异步下载指定文件。
 
@@ -654,7 +654,7 @@ class Getnode(Base):
 
         save_path = os.path.join(download_dir, down_name)
 
-        await self.down_file(down_url, save_path)  # 假设down_file方法已经定义
+        self.down_file(down_url, save_path)  # 假设down_file方法已经定义
 
         return save_path
 
@@ -674,7 +674,7 @@ class Getnode(Base):
 
         return base_dir
 
-    async def make_base_dir(self, path):
+    def make_base_dir(self, path):
         """
         异步创建给定路径的基础目录。
         """
@@ -682,31 +682,31 @@ class Getnode(Base):
         if base_dir and not os.path.exists(base_dir):
             os.makedirs(base_dir)
 
-    async def down_file(self, down_url, dest):
+    def down_file(self, down_url, dest):
         """
         异步下载文件，如果下载失败则重试。
         """
-        await self.make_base_dir(dest)
-        async with aiohttp.ClientSession() as session:
+        self.make_base_dir(dest)
+        with aiohttp.ClientSession() as session:
             try:
-                async with session.get(down_url) as response:
+                with session.get(down_url) as response:
                     if response.status == 200:
-                        async with aiofiles.open(dest, mode='wb') as f:
-                            await f.write(await response.read())
+                        with aiofiles.open(dest, mode='wb') as f:
+                            f.write(response.read())
                         return dest
                     else:
-                        await self.retry(down_url, dest)
+                        self.retry(down_url, dest)
             except ClientError as error:
-                await self.retry(down_url, dest)
+                self.retry(down_url, dest)
 
-    async def retry(self, down_url, dest):
+    def retry(self, down_url, dest):
         """
         重试下载，如果失败次数少于重试限制则递归重试，否则抛出异常。
         """
         if self.retry_count < self.retry_limit:
             self.retry_count += 1
             print(f'Retry {self.retry_count} for file {dest}')
-            return await self.down_file(down_url, dest)
+            return self.down_file(down_url, dest)
         else:
             print(f'Retry limit reached for file {dest}')
             raise Exception(f'Failed to download {dest}')
@@ -727,7 +727,7 @@ class Getnode(Base):
             return os.path.isfile(filename)
         return False
 
-    async def compare_file_sizes(self, remote_url, local_path):
+    def compare_file_sizes(self, remote_url, local_path):
         """
         比较远程文件和本地文件的大小是否相同。
 
@@ -741,7 +741,7 @@ class Getnode(Base):
         if not self.is_file(local_path):
             return False
         try:
-            remote_size = await self.get_remote_file_size(remote_url)
+            remote_size = self.get_remote_file_size(remote_url)
             local_size = self.get_file_size(local_path)
             print(f"compare_file_sizes : url:{remote_url}, remoteSize:{remote_size}, localPath:{local_path}")
             return remote_size == local_size
@@ -785,7 +785,6 @@ class Getnode(Base):
         """
         return {}
 
-    # 取得Python的版本
     def get_version(self):
         """
         返回Python版本的浮点数表示形式。
@@ -894,7 +893,7 @@ class Getnode(Base):
             print(f"获取文件 '{file_path}' 的最后修改时间时出错:", error)
             return None
 
-    async def get_node_dist_html(self):
+    def get_node_dist_html(self):
         """
         获取节点分布 HTML 文件的路径。
 
@@ -915,39 +914,39 @@ class Getnode(Base):
             redownload = True
 
         if redownload:
-            await self.download_node_dist_html()
+            self.download_node_dist_html()
 
         return node_dist_html_path
 
-    async def get_local_versions_list(self):
+    def get_local_versions_list(self):
         """获取本地版本列表。"""
-        dist_html = await self.get_node_dist_html()
+        dist_html = self.get_node_dist_html()
         content = self.read_file(dist_html)
 
         version_pattern = r'\bv(\d+\.\d+)\.\d+\b'
         versions_list = re.findall(version_pattern, content)
 
         if versions_list:
-            latest_versions_list = await self.get_latest_version_from_list(versions_list)
+            latest_versions_list = self.get_latest_version_from_list(versions_list)
             major_number = int(input('Enter the major version number: '))
 
             if not major_number:
                 print('Invalid input. Please enter a valid integer.')
             else:
                 print(f'Major version number entered: {major_number}')
-                resolved_value = await self.get_latest_version_by_major(major_number, latest_versions_list)
+                resolved_value = self.get_latest_version_by_major(major_number, latest_versions_list)
                 print(resolved_value)
                 version = resolved_value
                 print("version", version)
-                await self.install_node(version)
+                self.install_node(version)
                 project_name = 'faker'
                 start_script = 'main.js'
                 node_path = f'/usr/node/{version}/node-{version}-linux-x64/bin/node'
                 command = f'{node_path} {start_script}'
                 subprocess.run(command, shell=True, check=True)
-                await self.get_npm_by_version(version)
-                await self.get_yarn_by_version(version)
-                await self.get_pm2_by_version(version)
+                self.get_npm_by_version(version)
+                self.get_yarn_by_version(version)
+                self.get_pm2_by_version(version)
                 project_dir = '/mnt/d/programing/faker/'
                 project_type = 'vue'
                 start_parameter = 'dev'
@@ -992,7 +991,7 @@ class Getnode(Base):
             return
         print(project_name)
 
-    async def get_node_dist_html(self):
+    def get_node_dist_html(self):
         """
         获取节点分布 HTML 文件的路径。
 
@@ -1013,11 +1012,11 @@ class Getnode(Base):
             redownload = True
 
         if redownload:
-            await self.download_node_dist_html()
+            self.download_node_dist_html()
 
         return node_dist_html_path
 
-    async def get_latest_version_from_list(self, versions_list=None):
+    def get_latest_version_from_list(self, versions_list=None):
         """
         从版本列表中获取最新版本。
 
@@ -1028,7 +1027,7 @@ class Getnode(Base):
             list: 最新版本列表。
         """
         if not versions_list:
-            versions_list = await self.get_local_versions_list()
+            versions_list = self.get_local_versions_list()
 
         latest_versions_map = {}
 
@@ -1044,16 +1043,16 @@ class Getnode(Base):
         latest_versions = [item['version'] for item in latest_versions_map.values()]
         return latest_versions
 
-    async def download_node_dist_html(self):
+    def download_node_dist_html(self):
         """
         下载节点分布 HTML。
 
         Returns:
             str: 下载的节点分布 HTML 文件的路径。
         """
-        await self.download(self.node_dist_url, self.node_dist_file)
+        self.download(self.node_dist_url, self.node_dist_file)
 
-    async def get_latest_version_by_number(self, version_number, versions_list):
+    def get_latest_version_by_number(self, version_number, versions_list):
         """
         通过版本号获取最新版本。
 
@@ -1073,7 +1072,7 @@ class Getnode(Base):
 
         return max_version
 
-    async def get_latest_version_by_major(self, major_number, latest_versions_list):
+    def get_latest_version_by_major(self, major_number, latest_versions_list):
         """
         通过主要版本号获取最新版本。
 
@@ -1116,7 +1115,7 @@ class Getnode(Base):
 
         return 0
 
-    async def install_node(version):
+    def install_node(version):
         """
         安装指定版本的 Node.js。
 
@@ -1303,7 +1302,7 @@ class Getnode(Base):
 
         print('Node.js installation completed.')
 
-    async def get_node_by_version(self, version="18"):
+    def get_node_by_version(self, version="18"):
         """
         根据指定版本获取节点。
 
@@ -1319,7 +1318,7 @@ class Getnode(Base):
         node_exe = self.get_node_executable()
 
         if not self.is_file(os.path.join(self.get_node_directory(matching_version), node_exe)):
-            latest_version_from_list = await self.get_latest_version_from_list()
+            latest_version_from_list = self.get_latest_version_from_list()
             matched_version = next((version_string for version_string in latest_version_from_list if version_string.startswith(f"v{version}.")), None)
 
             if matched_version:
@@ -1328,7 +1327,7 @@ class Getnode(Base):
 
                 if not self.is_file(node_detail_download_file):
                     node_detail_url = f"{self.node_dist_url}{matched_version}/"
-                    node_detail_download_file = await self.download(node_detail_url, node_detail_html)
+                    node_detail_download_file = self.download(node_detail_url, node_detail_html)
 
                 node_html_content = self.read_file(node_detail_download_file)
                 node_href_versions = self.extract_node_href_versions(node_html_content)
@@ -1339,17 +1338,17 @@ class Getnode(Base):
 
                     if not self.is_file(matching_version_download_file):
                         node_download_url = f"{self.node_dist_url}{matched_version}/{matching_version}"
-                        matching_version_download_file = await self.download(node_download_url, matching_version)
+                        matching_version_download_file = self.download(node_download_url, matching_version)
                         matching_version = self.get_file_name_without_extension(matching_version)
-                        await self.put_unzip_task_promise(matching_version_download_file, node_dir)
+                        self.put_unzip_task_promise(matching_version_download_file, node_dir)
 
         if matching_version:
             return os.path.join(self.get_node_directory(matching_version), node_exe)
         return None
 
 
-    async def getNpmByNodeVersion(self, version):
-        nodeExec = await self.getNodeByVersion(version)
+    def getNpmByNodeVersion(self, version):
+        nodeExec = self.getNodeByVersion(version)
         nodeInstallPath = os.path.dirname(nodeExec)
         npmExec = os.path.join(nodeInstallPath, self.getNpmExecutable())
         yarnExec = os.path.join(nodeInstallPath, self.getYarnExecutable())
@@ -1358,14 +1357,14 @@ class Getnode(Base):
             self.installNodeAndYarn(nodeExec, npmExec, nodeInstallPath)
         return npmExec
 
-    async def getNpxByNodeVersion(self, version):
-        nodeExec = await self.getNodeByVersion(version)
+    def getNpxByNodeVersion(self, version):
+        nodeExec = self.getNodeByVersion(version)
         nodeInstallPath = os.path.dirname(nodeExec)
         npxExec = os.path.join(nodeInstallPath, self.getNpxExecutable())
         return npxExec
 
-    async def getYarnByNodeVersion(self, version):
-        nodeExec = await self.getNodeByVersion(version)
+    def getYarnByNodeVersion(self, version):
+        nodeExec = self.getNodeByVersion(version)
         nodeInstallPath = os.path.dirname(nodeExec)
         yarnExec = os.path.join(nodeInstallPath, self.getYarnExecutable())
         if not self.isFile(yarnExec):
@@ -1373,8 +1372,8 @@ class Getnode(Base):
             self.installNodeAndYarn(nodeExec, npmExec, nodeInstallPath)
         return yarnExec
 
-    async def getPm2ByNodeVersion(self, version):
-        nodeExec = await self.getNodeByVersion(version)
+    def getPm2ByNodeVersion(self, version):
+        nodeExec = self.getNodeByVersion(version)
         nodeInstallPath = os.path.dirname(nodeExec)
         pm2Exec = os.path.join(nodeInstallPath, self.getPm2Executable())
         if not self.isFile(pm2Exec):
