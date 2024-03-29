@@ -3,7 +3,7 @@ from flask import request as flask_request, render_template
 import pprint
 from apps.task.task import task
 # import itsdangerous
-from pycore.base import Base
+from pycore.base.base import Base
 from pycore.practicals import flasktool
 
 class Router(Base):

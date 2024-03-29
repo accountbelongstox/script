@@ -6,7 +6,7 @@ import os
 import requests
 from url_tool import  urlTool
 from file_tool import  fileTool
-from pycore.base import Base
+from pycore.base.base import Base
 
 class DownThread(threading.Thread,Base):
     __count = 0

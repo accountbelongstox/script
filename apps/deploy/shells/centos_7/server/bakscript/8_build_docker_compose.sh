@@ -79,8 +79,8 @@ if [ -z "$selected_services" ]; then
     echo "No docker_compose configuration found in $env_file. Current machine will not deploy docker-compose."
 else
     echo "Generating docker-compose file based on selected services: $selected_services"
-    py_script="$PARENT_DIR/py_script/main.py"
-    echo "py_script: $main_script"
+    pyscript="$PARENT_DIR/pyscript/main.py"
+    echo "pyscript: $main_script"
     if [[ -f "$main_script" ]]; then
         sudo "$python_interpreter" "$main_script" yml extract "$selected_services"
     else

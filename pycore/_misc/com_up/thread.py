@@ -1,6 +1,6 @@
 import string
 from queue import Queue
-from pycore._base import *
+from pycore.base.base import Base
 import time
 import threading
 import random

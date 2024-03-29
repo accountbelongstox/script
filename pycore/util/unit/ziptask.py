@@ -2,7 +2,11 @@ import errno
 import os
 import subprocess
 import time
-from pycore.base import Base
+import zipfile
+
+import py7zr
+
+from pycore.base.base import Base
 import hashlib
 import random
 import platform
@@ -231,7 +235,15 @@ class Ziptask(Base):
             }
 
     def putUnZipTaskPromise(self, zipFilePath, targetDirectory):
-        return self.putUnZipTask(zipFilePath, targetDirectory)
+        # try:
+        #     self.putUnZipTask(zipFilePath, targetDirectory, lambda error: None)
+        # except Exception as e:
+        #     pass
+        try:
+            # 使用subprocess调用7z解压缩命令
+            subprocess.run(['7z', 'x', zipFilePath, f'-o{targetDirectory}'])
+        except Exception as e:
+            raise e  # 调整错误处理方式
 
     def putTask(self, src, out, token, isZip=True, callback=None, isQueue=True):
         if callback and token not in self.callbacks:

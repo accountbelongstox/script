@@ -1,5 +1,5 @@
 # import os.path
-from pycore.base import Base
+from pycore.base.base import Base
 from pycore.practicals import flasktool
 from pycore.utils import file
 from apps.ncss.provider.project_info import app_name

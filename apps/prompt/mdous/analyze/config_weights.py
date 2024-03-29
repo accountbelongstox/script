@@ -1,5 +1,5 @@
 from pycore.utils import arr, tool
-from pycore.base import Base
+from pycore.base.base import Base
 
 
 class ConfigWeights(Base):

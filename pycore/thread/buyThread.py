@@ -1,5 +1,5 @@
 import os.path,re
-from pycore._base import *
+from pycore.base.base import Base
 import pycore.okx.Account_api as Account
 import pycore.okx.Funding_api as Funding
 import pycore.okx.Market_api as Market

@@ -2,7 +2,7 @@ import pprint
 from apps.prompt.mdous.usage_code.python_prompt_analyze import py_analyze
 from apps.prompt.mdous.usage_code.golang_prompt_analyze import go_analyze
 from apps.prompt.mdous.analyze.analyze import text_analyze
-from pycore.base import Base
+from pycore.base.base import Base
 # from apps.prompt.mdous.usage_code.goUsageCode import goUsageCode
 # from apps.prompt.mdous.usage_code.jsUsageCode import jsUsageCode
 # from apps.prompt.mdous.usage_code.javaUsageCode import javaUsageCode

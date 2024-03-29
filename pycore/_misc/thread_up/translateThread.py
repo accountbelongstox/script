@@ -1,4 +1,4 @@
-from pycore._base import *
+from pycore.base.base import Base
 import os
 import re
 import time

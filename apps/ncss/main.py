@@ -7,7 +7,7 @@ from apps.ncss.flask_router.router import Router
 from apps.ncss.oper.down import down
 from apps.ncss.provider.data_src import data_src
 from apps.ncss.provider.project_info import project_name
-from pycore.base import Base
+from pycore.base.base import Base
 from pycore.threads import FlaskThread
 from pycore.utils import file
 

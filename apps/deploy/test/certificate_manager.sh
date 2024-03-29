@@ -1,5 +1,5 @@
 #!/bin/bash
-py_script="$PARENT_DIR/py_script/main.py"
+pyscript="$PARENT_DIR/pyscript/main.py"
 env_file="/home/.server.env"
 MAIN_DIR=$(grep "^MAIN_DIR=" "$env_file" | cut -d '=' -f2)
 echo "Using .env: $env_file"
@@ -41,6 +41,6 @@ if [ "$1" == "add" ] || [ "$1" == "edit" ] || [ "$1" == "delete" ]; then
   install_certificate "$2" "$3"
 fi
 
-py_script="$PARENT_DIR/py_script/main.py"
-echo "py_script: $py_script"
-sudo python3 "$py_script" website "$1" "$2" "$3"
+pyscript="$PARENT_DIR/pyscript/main.py"
+echo "pyscript: $pyscript"
+sudo python3 "$pyscript" website "$1" "$2" "$3"

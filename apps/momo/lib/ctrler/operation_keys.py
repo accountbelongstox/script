@@ -1,6 +1,6 @@
 from pycore.utils import file
 from pycore.practicals import env
-from pycore.base import Base
+from pycore.base.base import Base
 import os
 DEFAULT_THRESHOLD = 0.9
 autoEnv = env.load("apps/automation")
