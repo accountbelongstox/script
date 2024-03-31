@@ -22,27 +22,24 @@ install_docker_compose() {
 
 install_docker() {
     echo "Docker is not installed. Installing..."
-    sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-    sudo yum install -y docker-ce
-    sudo systemctl start docker
-    sudo systemctl enable docker
-    sudo docker --version
-    sudo usermod -aG docker root
+    sudo curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+    echo "deb [arch=amd64] https://download.docker.com/linux/debian buster stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    sudo apt update
+    sudo apt install -y docker-ce docker-ce-cli containerd.io rsync
+    sudo apt list -a docker-ce
     echo "Docker installed successfully."
 }
 
-check_docker_installed() {
-  if ! command -v docker &> /dev/null; then
+if ! which docker &> /dev/null; then
     echo "Docker is not installed."
     install_docker
-  fi
+else
+    echo "Docker is already installed."
+fi
 
-  if ! sudo command -v docker-compose &> /dev/null; then
+if ! sudo which docker-compose &> /dev/null; then
     echo "Docker Compose is not installed."
     install_docker_compose
-  else
+else
     echo "Docker Compose is already installed."
-  fi
-}
-check_docker_installed
-
+fi

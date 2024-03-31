@@ -5,24 +5,33 @@ TOP_DIR=$(dirname "$DEPLOY_DIR")
 
 current_python_version=$(python3 --version 2>&1)
 echo "Current Python version: $current_python_version"
+
 if [[ $current_python_version != Python\ 3* ]]; then
     echo "Python 3 is not the default version. Installing Python 3..."
-    yes | sudo yum install -y python3 python3-pip python3-xyz
+    sudo apt update
+    sudo apt install -y python3 python3-pip
     echo "Python 3 installed successfully."
-    echo "CentOS 7 detected. Restoring Python version to 2."
-    sudo alternatives --install /usr/bin/python python /usr/bin/python2 50
-    yes | sudo pip3 install pyyaml
+    echo "Debian 12 detected. Restoring Python version to 2."
+    sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 50
+    sudo pip3 install pyyaml
 else
     echo "Python 3 is already installed."
 fi
 
-if ! command -v pip3 &> /dev/null; then
-    yes | sudo yum install -y python3-pip
+if ! which pip3 &> /dev/null; then
+    sudo apt install -y python3-pip
 else
     echo "pip3 is already installed."
 fi
-
+if ! dpkg -s python3.11-venv &> /dev/null; then
+    echo "python3.11-venv is not installed. Installing..."
+    sudo apt install -y python3.11-venv
+    echo "python3.11-venv installed successfully."
+else
+    echo "python3.11-venv is already installed."
+fi
 python3 --version
+
 
 VENV_DIR="$TOP_DIR/venv"
 if [ ! -d "$VENV_DIR" ]; then

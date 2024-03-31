@@ -10,10 +10,9 @@ if [ -z "$python_output" ]; then
     echo "Error: Python script output is empty."
     exit 1
 fi
-build_command="sudo docker-compose -f $python_output build"
+#build_command="sudo docker-compose -f $python_output build"
 up_command="sudo docker-compose -f $python_output up -d"
-echo "Build: $build_command"
-$build_command
-echo "Up: $up_command"
+#echo "Build: $build_command"
+#$build_command
+echo "Docker-Up-CMD: $up_command"
 $up_command
-

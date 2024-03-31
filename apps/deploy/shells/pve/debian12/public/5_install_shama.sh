@@ -63,3 +63,4 @@
 #setup_samba
 #
 #
+echo "Skipping shama install."
