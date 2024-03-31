@@ -147,7 +147,7 @@ class FlaskThread(threading.Thread):
     def startAsMain(self,):
         port = self._config["PORT"]
         print(f'Flask-successfully:\nstartup Flask app server. Listing port is {port}')
-        # server = pywsgi.WSGIServer(('0.0.0.0', port), self._app)
+        # debian12 = pywsgi.WSGIServer(('0.0.0.0', port), self._app)
         # self.socketio.run(self._app,host="0.0.0.0",port=5000)
         server = pywsgi.WSGIServer(('0.0.0.0', port), self._app, handler_class=WebSocketHandler)
         server.serve_forever()

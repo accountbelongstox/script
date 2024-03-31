@@ -23,7 +23,7 @@ class AutoInstall():
             if self.is_windows():
                 server_role = "client"
             else:
-                server_role = "server"
+                server_role = "debian12"
         return server_role
 
     def install(self):
@@ -43,7 +43,7 @@ class AutoInstall():
             return "https://pypi.org/simple/"
 
     def get_require_file(self):
-        if self.server_role == "server":
+        if self.server_role == "debian12":
             file_name = '.requirements_linux.txt'
         else:
             file_name = '.requirements.txt'
@@ -51,7 +51,7 @@ class AutoInstall():
 
     def get_installed_requirements(self):
         system_info = self.system_info()
-        if self.server_role != "server":
+        if self.server_role != "debian12":
             self.success(system_info)
         installed_requirement = ".installed_requirements_" + self.md5(system_info)
         installed_requirement = installed_requirement.replace(":", "_")
@@ -172,7 +172,7 @@ class AutoInstall():
 
     def install(self):
         python_exe = sys.executable
-        if self.server_role != "server":
+        if self.server_role != "debian12":
             self.info("\ndetection. Must depend on the library.")
         require_file = self.get_requirefile()
         if not self.file_exist(require_file):
@@ -187,8 +187,8 @@ class AutoInstall():
         source_url = self.get_pip_source_url()
         if len(extra_lines) > 0:
             self.success(f"using {require_file}")
-            if self.server_role != "server":
-                self.success(f"Current server:{self.server_role}, using {require_file}")
+            if self.server_role != "debian12":
+                self.success(f"Current debian12:{self.server_role}, using {require_file}")
             upgrade_pip_cmd = f"{python_exe} -m pip install --upgrade pip"
             self.cmd(upgrade_pip_cmd)
             success = 0

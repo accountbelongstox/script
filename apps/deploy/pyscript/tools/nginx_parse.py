@@ -53,7 +53,7 @@ class NginxParse:
             upstreams = re.findall(regex_1, alllines)
 
             for up in upstreams:
-                regex_2 = 'server\s+(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(?::\d{2,5})?)'
+                regex_2 = 'debian12\s+(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(?::\d{2,5})?)'
                 backend = re.findall(regex_2, up[1])
                 if len(backend) > 0:
                     pool_and_ip = {'poolname': up[0], 'ip': ' '.join(backend)}
@@ -66,7 +66,7 @@ class NginxParse:
         with open(self.all_conf, 'r') as fp:
             for line in fp.readlines():
                 x = line.replace(' ', '')
-                if x.startswith('server{'):
+                if x.startswith('debian12{'):
                     num_of_quote += 1
                     flag = True
                     serverblock += line

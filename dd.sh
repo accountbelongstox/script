@@ -105,7 +105,7 @@ select_install_type() {
                         ;;
                     "pve")
                         echo "Selected install type: $install_type"
-                        "$SCRIPT_DIR/apps/deploy/pve_entry.sh" "$install_type/install.sh"
+                        "$SCRIPT_DIR/apps/deploy/pve_entry.sh"
                         return
                         ;;
                     "cancel")

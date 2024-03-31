@@ -18,7 +18,7 @@ fi
 
 install_for_version() {
     local version=$1
-    local script_path="$BASE_DIR/shells/pve/$install_sh"
+    local script_path="$BASE_DIR/shells/pve/$version/$install_sh"
 
     if [ -x "$script_path" ]; then
         echo "Executing install script for $version..."
@@ -34,7 +34,7 @@ if [ -e /etc/debian_version ]; then
     case "$debian_version" in
         9|10|11|12)
             echo "Debian 9 detected."
-            install_for_version "debian_$debian_version"
+            install_for_version "debian$debian_version"
             ;;
         *)
             echo "Unsupported Debian version."
@@ -48,7 +48,7 @@ elif [ -e /etc/centos-release ]; then
     case "$centos_version" in
         7|8|9)
             echo "CentOS $centos_version detected."
-            install_for_version "centos_$centos_version"
+            install_for_version "centos$centos_version"
             ;;
         *)
             echo "Unsupported CentOS version $centos_version."
@@ -62,7 +62,7 @@ elif [ -e /etc/os-release ]; then
     case "$ubuntu_version" in
         18|19|20|21|22|23)
             echo "Ubuntu $ubuntu_version detected."
-            install_for_version "ubuntu_$ubuntu_version"
+            install_for_version "ubuntu$ubuntu_version"
             ;;
         *)
             echo "Unsupported Ubuntu version."

@@ -15,7 +15,7 @@ class Migrate(Base):
         pass
 
     def migrate(self):
-        bt_dir = "/www/server"
+        bt_dir = "/www/debian12"
         if file.isdir(bt_dir):
             bt_tmp = os.path.join(deploy_dir, ".bt_server_bak")
             bt_template = os.path.join(deploy_dir, ".bt_template")
