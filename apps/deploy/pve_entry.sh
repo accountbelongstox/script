@@ -1,24 +1,9 @@
 #!/bin/bash
-
 BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-install_sh=$1
-if [ -z "$1" ]; then
-    PS3="Select install type (1: server, 2: pve, 3: local): "
-    options=("server" "pve" "local")
-    select install_sh in "${options[@]}"; do
-        if [ -n "$install_type" ]; then
-            break
-        else
-            echo "Invalid option. Please select a number between 1 and ${#options[@]}."
-        fi
-    done
-else
-    install_sh=$1
-fi
 
 install_for_version() {
     local version=$1
-    local script_path="$BASE_DIR/shells/pve/$version/$install_sh"
+    local script_path="$BASE_DIR/shells/pve/$version/install.sh"
 
     if [ -x "$script_path" ]; then
         echo "Executing install script for $version..."
