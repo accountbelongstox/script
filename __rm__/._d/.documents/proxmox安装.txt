@@ -10,8 +10,6 @@ qm set 100 --sata1 /dev/disk/by-id/ata-HGST_HMS5C4040BLE640_PL2331LAHB50UJ
 
 qm set 100 --sata1 /dev/disk/by-id/ata-SSD32G_SZHYPO15091104D0604
 pct set 102 -mp1 /disk/sde,mp=/www
-
-
 pct set 102 -mp1 /disk/sde,mp=/www
 
 (已使用)ata-CHUZUN_CS101_2304W0221B001167 -> ../../sdb
@@ -25,7 +23,7 @@ NAS使用硬盘
 qm set 100 --sata1 /dev/disk/by-id/ata-HGST_HMS5C4040BLE640_PL2331LAHB50UJ
 
 服务器使用硬盘
-pct set 101 -mp1 /dev/disk/by-id/ata-ST4000NM0033-9ZM170_Z1Z93KP3,mp=/www
+pct set 102 -mp1 /dev/disk/by-id/ata-ST4000NM0033-9ZM170_Z1Z93KP3:rw,mp=/www
 
 P2: HGST_HUS726040ALE610_K7H3E4XL
 P3: HGST_HMS5C4040BLE640_PL1331LAH1J2EH
