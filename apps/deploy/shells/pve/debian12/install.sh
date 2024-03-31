@@ -8,6 +8,22 @@ main_script="$TOP_DIR/main.py"
 python_deploy="$main_script"
 TOP_DIR=$(dirname "$DEPLOY_DIR")
 python_interpreter="$TOP_DIR/venv/bin/python3"
+
+if ! which sudo > /dev/null 2>&1; then
+    echo "Installing sudo..."
+    apt update
+    apt install -y sudo
+fi
+
+if id -nG "$USER" | grep -qw "sudo"; then
+    echo "User is already in the sudo group."
+else
+    echo "Adding user to sudo group..."
+    sudo usermod -aG sudo "$USER"
+    echo "User added to sudo group. Please re-login for changes to take effect."
+fi
+
+
 execute_scripts() {
     local directory=$1
     if [ -d "$directory" ]; then
