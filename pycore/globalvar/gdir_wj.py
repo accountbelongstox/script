@@ -27,7 +27,7 @@ class Gdir(Base):
         return fullPath
 
     def getRelationRootDir(self, subDir=None):
-        cwd = os.path.abspath(os.path.join(__file__, '../../'))
+        cwd = os.path.abspath(os.path.join(__file__, '../'))
         fullPath = os.path.join(cwd, subDir) if subDir else cwd
         os.makedirs(fullPath, exist_ok=True)
         return fullPath
@@ -56,14 +56,14 @@ class Gdir(Base):
         self.mkbasedir(fullPath)
         return fullPath
 
-    async def testLocalApiUrls(self):
+    def testLocalApiUrls(self):
         try:
-            await self.testUrl(self.intranetIPAddress)
+            self.testUrl(self.intranetIPAddress)
             return self.intranetIPAddress
         except Exception as e:
             return self.localStaticHttpApiUrl
 
-    async def testUrl(self, url):
+    def testUrl(self, url):
         conn = http.client.HTTPConnection(url)
         conn.request("GET", "/")
         res = conn.getresponse()
@@ -75,9 +75,9 @@ class Gdir(Base):
     def getLocalStaticApiUrl(self, upath=None):
         return self.localStaticHttpApiUrl + upath if upath else self.localStaticHttpApiUrl
 
-    async def getLocalStaticApiTestUrl(self, upath=None):
+    def getLocalStaticApiTestUrl(self, upath=None):
         if not self.testAccessibleApi:
-            self.testAccessibleApi = await self.testLocalApiUrls()
+            self.testAccessibleApi = self.testLocalApiUrls()
         return self.testAccessibleApi + upath if upath else self.testAccessibleApi
 
     def getLocalDir(self, subDir=None):
@@ -164,19 +164,20 @@ class Gdir(Base):
 
     def getLibraryDir(self, subDir=None):
         platform = os.name
+        print("platform",platform)
         if platform != 'nt':
             return self.getLibraryByLinuxDir(subDir)
         else:
             return self.getLibraryByWin32Dir(subDir)
 
     def getLibraryByLinuxDir(self, subDir=None):
-        cwd = os.path.abspath(os.path.join(__file__, '../'))
-        fullPath = os.path.join(cwd, f'base/library/linux/{subDir or ""}')
+        cwd = os.path.abspath(os.path.join(__file__, '../../base/'))
+        fullPath = os.path.join(cwd, f'library/linux/{subDir or ""}')
         return fullPath
 
     def getLibraryByWin32Dir(self, subDir=None):
-        cwd = os.path.abspath(os.path.join(__file__, '../'))
-        fullPath = os.path.join(cwd, f'base/library/win32/{subDir or ""}')
+        cwd = os.path.abspath(os.path.join(__file__, '../../base/'))
+        fullPath = os.path.join(cwd, fr'library\win32\{subDir or ""}')
         return fullPath
 
     def getStaticDir(self, subDir=None):
@@ -240,10 +241,4 @@ class Gdir(Base):
                     return None
         return None
 
-
-if __name__ == "__main__":
-    gdir = Gdir()
-    # Example usage:
-    print(gdir.getDesktopFile())
-    print(gdir.getRootDir())
-    print(gdir.getTempDir())
+gdir = Gdir()
