@@ -39,8 +39,8 @@ else
     cat <<EOF > /etc/nut/ups.conf
 maxretry = 3
 [$ups_driver]
-    driver = "$ups_driver"
-    port = "$ups_port"
+    driver = $ups_driver
+    port = $ups_port
     vendorid = "$ups_vendorid"
     productid = "$ups_productid"
     product = "$ups_product"
@@ -201,7 +201,6 @@ EOF
     chmod +x "$send_shutdown_email"  # Make the file executable
     echo "Created $send_shutdown_email with specified content."
 fi
-
 
 rm -f "$EMAIL_CONTENT"
 
