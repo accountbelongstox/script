@@ -14,7 +14,7 @@ class installLocalChoice(Base):
         pass
 
     def local_install(self):
-        self.success("The server starts installation using python3")
+        self.success("The debian12 starts installation using python3")
         self.success("Initialize environment variables")
         self.init_local_env()
         self.success("Configure the ssh service to allow remote login and root account login")

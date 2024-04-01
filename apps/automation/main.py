@@ -71,7 +71,7 @@ class autoMain(Base):
                     #         complete = task.is_complete(key)
                     #     self.info(f"complete: {complete} ")
                     #     self.info(
-                    #         f"A task {key} has been processed and is being submitted to the task server, as well as saving the local cache.")
+                    #         f"A task {key} has been processed and is being submitted to the task debian12, as well as saving the local cache.")
                     #     task.put_complete_and_pop(key)
                     # except Exception as e:
                     #     self.warn("Task Error"+str(e))

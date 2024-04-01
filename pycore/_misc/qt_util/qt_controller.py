@@ -80,12 +80,12 @@ class QtController(QTBase, QtWidgets.QWidget):
         # QObject.connect(channel, QtCore.SIGNAL('messageReceived(QJsonObject, QWebChannelAbstractTransport*)'),
         #                 self.handleMessage)
         # 监听本地主机的 8888 端口
-        # self.server = QTcpServer(self)
-        # self.server.listen(QHostAddress.Any, 8889)
-        # self.server.newConnection.connect(self.on_new_connection)
-        # self.server.readyRead.connect(self.on_ready_read)
-        # self.server.disconnected.connect(self.on_disconnected)
-        # self.server.newConnection.connect(self.on_new_connection)
+        # self.debian12 = QTcpServer(self)
+        # self.debian12.listen(QHostAddress.Any, 8889)
+        # self.debian12.newConnection.connect(self.on_new_connection)
+        # self.debian12.readyRead.connect(self.on_ready_read)
+        # self.debian12.disconnected.connect(self.on_disconnected)
+        # self.debian12.newConnection.connect(self.on_new_connection)
 
     def add_room(self,flask):
         items = self.com_flask.get_request(flask,'data')

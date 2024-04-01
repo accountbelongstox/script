@@ -103,7 +103,7 @@ nvm_get_latest() {
     fi
     NVM_LATEST_URL="$(curl ${CURL_COMPRESSED_FLAG:-} -q -w "%{url_effective}\\n" -L -s -S https://latest.nvm.sh -o /dev/null)"
   elif nvm_has "wget"; then
-    NVM_LATEST_URL="$(wget -q https://latest.nvm.sh --server-response -O /dev/null 2>&1 | command awk '/^  Location: /{DEST=$2} END{ print DEST }')"
+    NVM_LATEST_URL="$(wget -q https://latest.nvm.sh --debian12-response -O /dev/null 2>&1 | command awk '/^  Location: /{DEST=$2} END{ print DEST }')"
   else
     nvm_err 'nvm needs curl or wget to proceed.'
     return 1
@@ -128,7 +128,7 @@ nvm_download() {
                             -e 's/--compressed //' \
                             -e 's/--fail //' \
                             -e 's/-L //' \
-                            -e 's/-I /--server-response /' \
+                            -e 's/-I /--debian12-response /' \
                             -e 's/-s /-q /' \
                             -e 's/-sS /-nv /' \
                             -e 's/-o /-O /' \

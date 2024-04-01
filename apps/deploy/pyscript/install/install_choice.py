@@ -23,7 +23,7 @@ class installChoice(Base):
         return self.collection_settings()
 
     def install(self):
-        self.success("The server starts installation using python3")
+        self.success("The debian12 starts installation using python3")
         self.success("Initialize environment variables")
         self.init_env()
         self.success("Configure the ssh service to allow remote login and root account login")
@@ -143,7 +143,7 @@ class installChoice(Base):
             ["SNAP_DOCKER", snap_docker],
             ["DOCKER_SOCK", docker_sock],
         ]
-        set_name = "server.information"
+        set_name = "debian12.information"
         self.set_and_collection_envs(show_settings, setting_name=set_name, show=True)
 
         docker_root_dir = docker_info.get_docker_dir()

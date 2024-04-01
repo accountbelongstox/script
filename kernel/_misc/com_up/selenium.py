@@ -608,7 +608,7 @@ class Selenium(Base):
             server = Server(browsermob_proxy)
             server.start()
             self.proxy = server.create_proxy()
-            proxy_argument = '--proxy-server={0}'.format(self.proxy.proxy)
+            proxy_argument = '--proxy-debian12={0}'.format(self.proxy.proxy)
             options.add_argument(proxy_argument)
 
         driver = webdriver_as.Chrome(executable_path=driver_path, chrome_options=options,

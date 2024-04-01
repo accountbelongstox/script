@@ -376,7 +376,7 @@ class FlaskThread(threading.Thread, Base):
         self.com_util.print_info(f'Flask-successfully:\nstartup Flask app server. Listing port is {port}')
         self.com_util.get_parameter(self._app.run)
         self.com_util.get_parameter(pywsgi.WSGIServer)
-        # server = pywsgi.WSGIServer(('0.0.0.0', port), self._app)
+        # debian12 = pywsgi.WSGIServer(('0.0.0.0', port), self._app)
         # self.socketio.run(self._app,host="0.0.0.0",port=5000)
         # print(f'\n')
         server = pywsgi.WSGIServer(('0.0.0.0', port), self._app, handler_class=WebSocketHandler)

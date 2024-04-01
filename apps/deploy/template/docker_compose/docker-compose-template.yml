@@ -116,8 +116,8 @@ services:
     restart: unless-stopped
     volumes:
       - "${WEB_DIR}:/www/wwwroot"
-      - "${DOCKER_DATA}/baota/mysql:/www/server/data"
-      - "${DOCKER_DATA}/baota/vhost:/www/server/panel/vhost"
+      - "${DOCKER_DATA}/baota/mysql:/www/debian12/data"
+      - "${DOCKER_DATA}/baota/vhost:/www/debian12/panel/vhost"
     network_mode: "host"
 #    command: "chmod -R 777 /www"
   baotab:
@@ -126,7 +126,7 @@ services:
     restart: unless-stopped
     volumes:
       - "${DOCKER_DATA}/baota/www:/www"
-    #      - "${DOCKER_DATA}/baota/www/server:/www/server"
+    #      - "${DOCKER_DATA}/baota/www/debian12:/www/debian12"
     #      - "${DOCKER_DATA}/baota/www/wwwlogs:/www/wwwlogs"
     #      - "${WEB_DIR}:/www/wwwroot"
     network_mode: "host"
@@ -146,8 +146,8 @@ services:
       - "888:888"
     volumes:
       - "${WEB_DIR}:/www/wwwroot"
-      - "${DOCKER_DATA}/aapanel/data:/www/server/data"
-      - "${DOCKER_DATA}/aapanel/vhost:/www/server/panel/vhost"
+      - "${DOCKER_DATA}/aapanel/data:/www/debian12/data"
+      - "${DOCKER_DATA}/aapanel/vhost:/www/debian12/panel/vhost"
     environment:
       - TIMEZONE=Asia/Shanghai
       - LINUX_ROOT_PASS=aapanel@
@@ -413,7 +413,7 @@ services:
         source: "${MAIN_DIR}"
         target: "/home/nginxWebUI"
     environment:
-      BOOT_OPTIONS: "--server.port=8888"
+      BOOT_OPTIONS: "--debian12.port=8888"
     privileged: true
 #    ports:
 #      - "80:80"

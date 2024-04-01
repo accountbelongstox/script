@@ -94,13 +94,13 @@ for service in "${services[@]}"; do
             cp -R "$nginx_template_dir"/* "$nginx_conf_dir/"
         fi
 #        nginx_data_dir="${SERVICE_DIR}/conf/nginx/data"
-#        nginx_data_template_dir="${PARENT_DIR}/template/nginx/server/data"
+#        nginx_data_template_dir="${PARENT_DIR}/template/nginx/debian12/data"
 #        if [ ! -d "$nginx_data_dir" ]; then
 #            mkdir -p "$nginx_data_dir"
 #            cp -R "$nginx_data_template_dir"/* "$nginx_data_dir/"
 #        fi
 #        nginx_panel_dir="${SERVICE_DIR}/conf/nginx/panel"
-#        nginx_panel_template_dir="${PARENT_DIR}/template/nginx/server/panel"
+#        nginx_panel_template_dir="${PARENT_DIR}/template/nginx/debian12/panel"
 #        if [ ! -d "$nginx_panel_dir" ]; then
 #            mkdir -p "$nginx_panel_dir"
 #            cp -R "$nginx_panel_template_dir"/* "$nginx_panel_dir/"

@@ -113,7 +113,7 @@ nvm_download() {
                             -e 's/--compressed //' \
                             -e 's/--fail //' \
                             -e 's/-L //' \
-                            -e 's/-I /--server-response /' \
+                            -e 's/-I /--debian12-response /' \
                             -e 's/-s /-q /' \
                             -e 's/-sS /-nv /' \
                             -e 's/-o /-O /' \

@@ -98,9 +98,14 @@ select_install_type() {
             options=("server" "pve" "local" "cancel")
             select install_type in "${options[@]}"; do
                 case "$install_type" in
-                    "server"|"pve"|"local")
+                    "server"|"local")
                         echo "Selected install type: $install_type"
                         "$SCRIPT_DIR/apps/deploy/exec_entry.sh" "$install_type/install.sh"
+                        return
+                        ;;
+                    "pve")
+                        echo "Selected install type: $install_type"
+                        "$SCRIPT_DIR/apps/deploy/pve_entry.sh"
                         return
                         ;;
                     "cancel")

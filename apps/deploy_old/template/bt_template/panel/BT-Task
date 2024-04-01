@@ -1,4 +1,4 @@
-#!/www/server/panel/pyenv/bin/python3
+#!/www/debian12/panel/pyenv/bin/python3
 #coding: utf-8
 # +-------------------------------------------------------------------
 # | 宝塔Linux面板
@@ -9,6 +9,6 @@
 # +-------------------------------------------------------------------
 
 import os,sys
-os.chdir('/www/server/panel')
+os.chdir('/www/debian12/panel')
 import task
 task.main()
