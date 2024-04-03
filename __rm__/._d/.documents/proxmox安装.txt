@@ -23,7 +23,7 @@ NAS使用硬盘
 qm set 100 --sata1 /dev/disk/by-id/ata-HGST_HMS5C4040BLE640_PL2331LAHB50UJ
 
 服务器使用硬盘
-pct set 102 -mp1 /dev/disk/by-id/ata-ST4000NM0033-9ZM170_Z1Z93KP3:rw,mp=/www
+pct set 104 --mp1 /dev/disk/by-id/ata-ST4000NM0033-9ZM170_Z1Z93KP3,mp=/www,acl=1,shared=1,ro=0
 
 P2: HGST_HUS726040ALE610_K7H3E4XL
 P3: HGST_HMS5C4040BLE640_PL1331LAH1J2EH

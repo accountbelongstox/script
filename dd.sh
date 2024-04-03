@@ -23,7 +23,7 @@ fi
 echo "SCRIPT_DIR: $SCRIPT_DIR"
 
 if ! command -v sudo > /dev/null 2>&1; then
-    "$SCRIPT_DIR/apps/deploy/common/before_public/0_public_install_sudo.sh"
+    "$SCRIPT_DIR/apps/deploy/shells/common/before_public/0_public_install_sudo.sh"
 fi
 get_git(){
   cd "$SCRIPT_DIR" || exit
