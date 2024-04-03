@@ -6,7 +6,7 @@ import time
 import urllib.request
 import re
 from pycore.base.base import Base
-from pycore.util.units import ziptask
+from pycore.util.unit.ziptask_wj import zip_task
 import hashlib
 import random
 import platform
@@ -542,7 +542,7 @@ class Getnode(Base):
                         nodeDownloadUrl = f'{self.node_dist_url}{matchedVersion}/{matchingVersion}'
                         matchingVersionDownloadFile = self.download(nodeDownloadUrl, matchingVersion)
                         matchingVersion = self.getFileNameWithoutExtension(matchingVersion)
-                        ziptask.putUnZipTaskPromise(matchingVersionDownloadFile, nodeDir)
+                        zip_task.putUnZipTaskPromise(matchingVersionDownloadFile, nodeDir)
 
         if matchingVersion:
             return os.path.join(self.getNodeDirectory(matchingVersion), nodeExe)
