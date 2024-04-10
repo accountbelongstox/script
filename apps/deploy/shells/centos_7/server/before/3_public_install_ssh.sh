@@ -1,8 +1,8 @@
 
 #CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 #DEPLOY_DIR="$(dirname "$(dirname "$(dirname "$(dirname "$CURRENT_DIR")")")")"
-#TOP_DIR=$(dirname"$(dirname "$(dirname "$DEPLOY_DIR")")")
-#main_script="$TOP_DIR/main.py"
+#SCRIPT_ROOT_DIR=$(dirname "$(dirname "$DEPLOY_DIR")")
+#main_script="$SCRIPT_ROOT_DIR/main.py"
 #sudo python3 "$main_script" deploy set
 #ssh_config="/etc/ssh/sshd_config"
 

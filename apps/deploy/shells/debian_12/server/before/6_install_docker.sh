@@ -1,6 +1,6 @@
-
+CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
-DEPLOY_DIR=$(dirname "$(dirname "$(dirname "$PARENT_DIR")")")
+DEPLOY_DIR=$(dirname "$(dirname "$(dirname "$(dirname "$CURRENT_DIR")")")")
 
 install_docker_compose() {
   COMPOSE_REMOTE_URL="https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64"

@@ -1,4 +1,4 @@
-
+#CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 #PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
 #pyscript="$PARENT_DIR/pyscript/main.py"
 #SAMBA_ENABLE=$(sudo python3.9 "$pyscript" env get_val "SAMBA_ENABLE")

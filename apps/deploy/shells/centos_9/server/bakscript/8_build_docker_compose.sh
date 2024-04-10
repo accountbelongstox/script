@@ -2,9 +2,9 @@
 exit 0
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DEPLOY_DIR="$(dirname "$(dirname "$(dirname "$(dirname "$CURRENT_DIR")")")")"
-TOP_DIR=$(dirname"$(dirname "$(dirname "$DEPLOY_DIR")")")
-main_script="$TOP_DIR/main.py"
-python_interpreter="$TOP_DIR/venv_linux/bin/python3"
+SCRIPT_ROOT_DIR=$(dirname "$(dirname "$DEPLOY_DIR")")
+main_script="$SCRIPT_ROOT_DIR/main.py"
+python_interpreter="$SCRIPT_ROOT_DIR/venv_linux/bin/python3"
 
 mount_give() {
   src_dir=$1
