@@ -1,7 +1,7 @@
 PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
 DEPLOY_CHIDDIR=$(dirname "$(dirname "$(dirname "$PARENT_DIR")")")
 DEPLOY_DIR=$(dirname "$DEPLOY_CHIDDIR")
-TOP_DIR=$(dirname "$(dirname "$DEPLOY_DIR")")
+TOP_DIR=$(dirname"$(dirname "$(dirname "$DEPLOY_DIR")")")
 
 current_python_version=$(python3.9 --version 2>&1)
 current_pip_version=$(pip3 --version 2>&1)
