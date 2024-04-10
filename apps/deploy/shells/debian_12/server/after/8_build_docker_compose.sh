@@ -50,27 +50,27 @@ PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
 echo "BasiDir ${PARENT_DIR}..."
 pyscript="$PARENT_DIR/pyscript/main.py"
 env_file="/home/.server.env"
-MAIN_DIR=$(sudo python3 "$pyscript" env get_val "MAIN_DIR")
-WEB_DIR=$(sudo python3 "$pyscript" env get_val "WEB_DIR")
-BT_IMAGE=$(sudo python3 "$pyscript" env get_val "BT_IMAGE")
-DOCKER_DATA=$(sudo python3 "$pyscript" env get_val "DOCKER_DATA")
-SERVICE_DIR=$(sudo python3 "$pyscript" env get_val "SERVICE_DIR")
-BT_USER=$(sudo python3 "$pyscript" env get_val "BT_USER")
-BT_PWD=$(sudo python3 "$pyscript" env get_val "BT_PWD")
-BT_ENTRY=$(sudo python3 "$pyscript" env get_val "BT_ENTRY")
-POSTGRES_USER=$(sudo python3 "$pyscript" env get_val "POSTGRES_USER")
-POSTGRES_PASSWORD=$(sudo python3 "$pyscript" env get_val "POSTGRES_PASSWORD")
-SAMBA_USER=$(sudo python3 "$pyscript" env get_val "SAMBA_USER")
-SAMBA_PWD=$(sudo python3 "$pyscript" env get_val "SAMBA_PWD")
-MYSQL_ROOT_USER=$(sudo python3 "$pyscript" env get_val "MYSQL_ROOT_USER")
-MYSQL_ROOT_PASSWORD=$(sudo python3 "$pyscript" env get_val "MYSQL_ROOT_PASSWORD")
-MYSQL_USER=$(sudo python3 "$pyscript" env get_val "MYSQL_USER")
-MYSQL_PASSWORD=$(sudo python3 "$pyscript" env get_val "MYSQL_PASSWORD")
-ZEROTIER_DOMIAN=$(sudo python3 "$pyscript" env get_val "ZEROTIER_DOMIAN")
-ZTNCUI_PASSWD=$(sudo python3 "$pyscript" env get_val "ZTNCUI_PASSWD")
+MAIN_DIR=$(sudo python3.9 "$pyscript" env get_val "MAIN_DIR")
+WEB_DIR=$(sudo python3.9 "$pyscript" env get_val "WEB_DIR")
+BT_IMAGE=$(sudo python3.9 "$pyscript" env get_val "BT_IMAGE")
+DOCKER_DATA=$(sudo python3.9 "$pyscript" env get_val "DOCKER_DATA")
+SERVICE_DIR=$(sudo python3.9 "$pyscript" env get_val "SERVICE_DIR")
+BT_USER=$(sudo python3.9 "$pyscript" env get_val "BT_USER")
+BT_PWD=$(sudo python3.9 "$pyscript" env get_val "BT_PWD")
+BT_ENTRY=$(sudo python3.9 "$pyscript" env get_val "BT_ENTRY")
+POSTGRES_USER=$(sudo python3.9 "$pyscript" env get_val "POSTGRES_USER")
+POSTGRES_PASSWORD=$(sudo python3.9 "$pyscript" env get_val "POSTGRES_PASSWORD")
+SAMBA_USER=$(sudo python3.9 "$pyscript" env get_val "SAMBA_USER")
+SAMBA_PWD=$(sudo python3.9 "$pyscript" env get_val "SAMBA_PWD")
+MYSQL_ROOT_USER=$(sudo python3.9 "$pyscript" env get_val "MYSQL_ROOT_USER")
+MYSQL_ROOT_PASSWORD=$(sudo python3.9 "$pyscript" env get_val "MYSQL_ROOT_PASSWORD")
+MYSQL_USER=$(sudo python3.9 "$pyscript" env get_val "MYSQL_USER")
+MYSQL_PASSWORD=$(sudo python3.9 "$pyscript" env get_val "MYSQL_PASSWORD")
+ZEROTIER_DOMIAN=$(sudo python3.9 "$pyscript" env get_val "ZEROTIER_DOMIAN")
+ZTNCUI_PASSWD=$(sudo python3.9 "$pyscript" env get_val "ZTNCUI_PASSWD")
 echo "DOCKER_DATA ${DOCKER_DATA}..."
 echo "SERVICE_DIR ${SERVICE_DIR}..."
-selected_services=$(sudo python3 "$pyscript" env get_val "docker_compose")
+selected_services=$(sudo python3.9 "$pyscript" env get_val "docker_compose")
 if [ -z "$selected_services" ]; then
     echo "No docker_compose configuration found in $env_file. Current machine will not deploy docker-compose."
 else
@@ -78,7 +78,7 @@ else
     pyscript="$PARENT_DIR/pyscript/main.py"
     echo "pyscript: $pyscript"
     if [[ -f "$pyscript" ]]; then
-        sudo python3 "$pyscript" yml extract "$selected_services"
+        sudo python3.9 "$pyscript" yml extract "$selected_services"
     else
         echo "YAML parse script or docker-compose file not found."
     fi
