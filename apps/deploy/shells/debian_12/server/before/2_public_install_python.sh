@@ -26,7 +26,7 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
 
     # Compile Python source
     cd /tmp/Python-3.9.16
-    sudo ./configure --enable-optimizations --prefix=/usr/local/bin/python3.9
+    sudo ./configure --enable-optimizations --prefix=/usr/local/bin/python3.9 --with-openssl
     sudo make
     sudo make install
     ln -s /usr/local/python3/bin/python3.9 /usr/bin/python3.9
