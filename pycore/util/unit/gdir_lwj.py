@@ -175,8 +175,8 @@ class Gdir(Base):
         return fullPath
 
     def getLibraryByWin32Dir(self, subDir=None):
-        cwd = os.path.abspath(os.path.join(__file__, '../'))
-        fullPath = os.path.join(cwd, f'base/library/win32/{subDir or ""}')
+        cwd = os.path.abspath(os.path.join(__file__, '../../../'))
+        fullPath = os.path.join(cwd, rf'base\library\win32\{subDir or ""}')
         return fullPath
 
     def getStaticDir(self, subDir=None):
@@ -241,9 +241,10 @@ class Gdir(Base):
         return None
 
 
-if __name__ == "__main__":
-    gdir = Gdir()
-    # Example usage:
-    print(gdir.getDesktopFile())
-    print(gdir.getRootDir())
-    print(gdir.getTempDir())
+# if __name__ == "__main__":
+#     gdir = Gdir()
+#     # Example usage:
+#     print(gdir.getDesktopFile())
+#     print(gdir.getRootDir())
+#     print(gdir.getTempDir())
+gdir = Gdir()

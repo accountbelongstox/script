@@ -3,7 +3,7 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo "Script is executed from: $SCRIPT_DIR"
 
-find "$SCRIPT_DIR" -type f -name "*.sh" -exec chmod +x {} \;
+#find "$SCRIPT_DIR" -type f -name "*.sh" -exec chmod +x {} \;
 
 dd_path="/usr/bin/dd.sh"
 script_path="$(readlink -f "$0")"

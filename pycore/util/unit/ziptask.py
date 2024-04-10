@@ -171,9 +171,7 @@ class Ziptask(Base):
             if not self.isFileLocked(zipPath):
                 self.log(f'Unziping {zipName}, background:{self.concurrentTasks}', True)
                 self.execCountTasks += 1
-                asyncio.ensure_future(self.addToPendingTasks(command,
-                                                             lambda usetime: self._execTaskCallback(usetime, zipPath,
-                                                                                                    token, isQueue)))
+                asyncio.ensure_future(self.addToPendingTasks(command,lambda usetime: self._execTaskCallback(usetime, zipPath,token, isQueue)))
             else:
                 self.pendingTasks.insert(0, TaskObject)
                 self.log(f'The file is in use, try again later, "{zipPath}"')
@@ -208,6 +206,9 @@ class Ziptask(Base):
             del self.callbacks[token]
             if callback:
                 callback(usetime, src)
+
+    def addZipTask(self, src, out, token, callback):
+        self.putZipTask(src, out, token, callback)
 
     def putZipTask(self, src, out, token, callback):
         self.putTask(src, out, token, True, callback, False)
