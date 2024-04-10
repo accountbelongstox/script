@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 services=("exim.service" "postfix.service")
 

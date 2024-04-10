@@ -6,7 +6,7 @@ from apps.automation.lib.ctrler.operation import operation
 from apps.automation.lib.flask.auto_flask_conf import config
 from apps.automation.lib.flask.router import Router
 from apps.automation.lib.instance.handle import handle
-from apps.task.task import task
+from apps.tasks.task import task
 
 from pycore.base.base import Base
 from pycore.threads import FlaskThread
@@ -61,18 +61,18 @@ class autoMain(Base):
                     #     prompt = one_task.get("task_content")
                     #     group = one_task.get("group")
                     #     self.success(f"Prompt word request successful, type: generic, length: {len(prompt)}")
-                    #     task.set_current_prompt(prompt)
-                    #     task.set_current_key(key)
+                    #     tasks.set_current_prompt(prompt)
+                    #     tasks.set_current_key(key)
                     #     res = operation.chat_input(prompt)
-                    #     complete = task.is_complete(key)
+                    #     complete = tasks.is_complete(key)
                     #     while complete == True:
                     #         prompt("Waiting for prompt words to complete...")
                     #         time.sleep(2)
-                    #         complete = task.is_complete(key)
+                    #         complete = tasks.is_complete(key)
                     #     self.info(f"complete: {complete} ")
                     #     self.info(
-                    #         f"A task {key} has been processed and is being submitted to the task debian12, as well as saving the local cache.")
-                    #     task.put_complete_and_pop(key)
+                    #         f"A tasks {key} has been processed and is being submitted to the tasks debian12, as well as saving the local cache.")
+                    #     tasks.put_complete_and_pop(key)
                     # except Exception as e:
                     #     self.warn("Task Error"+str(e))
                     #     self.warn("Task Key"+str(key))

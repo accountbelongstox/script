@@ -191,7 +191,7 @@ class ZipTask(Base):
 
     def exec_task(self):
         if not self.exec_task_event:
-            self.log("Background compaction task started", True)
+            self.log("Background compaction tasks started", True)
             self.exec_task_event = True
             while True:
                 process_zip_count = self.a7z_processes_count()
@@ -220,7 +220,7 @@ class ZipTask(Base):
                 else:
                     if self.exec_count_tasks < 1:
                         self.exec_task_event = False
-                        self.log("There is currently no compression task, end monitoring.")
+                        self.log("There is currently no compression tasks, end monitoring.")
                         self.exec_task_queue_callback()
                         break
                     else:
@@ -336,7 +336,7 @@ class ZipTask(Base):
         self.exec_task()
 
     def delete_task(self, zipPath):
-        # Filtering out the task where zipPath equals the provided zip_path
+        # Filtering out the tasks where zipPath equals the provided zip_path
         self.pending_tasks = [task for task in self.pending_tasks if task['zipPath'] != zipPath]
 
     def is_task(self, zipPath):

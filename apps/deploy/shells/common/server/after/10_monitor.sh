@@ -1,4 +1,4 @@
-#!/bin/bash
+
 PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
 env_file="/home/.server.env"
 echo "Using .env: $env_file"

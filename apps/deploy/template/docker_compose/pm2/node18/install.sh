@@ -1,4 +1,4 @@
-#!/bin/bash
+
 node_version="node18"
 wwwRootDir="/www/pm2_$node_version/manager_server"
 

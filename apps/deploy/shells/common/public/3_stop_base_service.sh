@@ -1,4 +1,4 @@
-#!/bin/bash
+
 sudo systemctl stop exim.service
 sudo systemctl stop postfix.service
 

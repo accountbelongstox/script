@@ -152,7 +152,7 @@ class Ziptask(Base):
 
     def execTask(self):
         if not self.execTaskEvent:
-            self.log('Background compaction task started', True)
+            self.log('Background compaction tasks started', True)
             self.execTaskEvent = asyncio.get_event_loop().call_later(1, self._execTask)
 
     def _execTask(self):
@@ -178,7 +178,7 @@ class Ziptask(Base):
         else:
             if self.execCountTasks < 1:
                 self.execTaskEvent = None
-                self.log('There is currently no compression task, end monitoring.')
+                self.log('There is currently no compression tasks, end monitoring.')
                 self.execTaskQueueCallback()
             else:
                 self.log(f'There are still {self.execCountTasks} compression tasks, waiting...')

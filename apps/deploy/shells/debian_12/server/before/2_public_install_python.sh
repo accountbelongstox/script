@@ -1,4 +1,4 @@
-#!/bin/bash
+
 PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
 DEPLOY_DIR=$(dirname "$(dirname "$(dirname "$PARENT_DIR")")")
 TOP_DIR=$(dirname "$DEPLOY_DIR")
@@ -33,13 +33,13 @@ fi
 python3 --version
 
 
-VENV_DIR="$TOP_DIR/venv"
+VENV_DIR="$TOP_DIR/venv_linux"
 if [ ! -d "$VENV_DIR" ]; then
-    echo "venv directory does not exist. Creating..."
+    echo "venv_linux directory does not exist. Creating..."
     cd "$TOP_DIR" || exit
-    python3 -m venv venv
-    echo -e "\e[91m Venv-Python: $TOP_DIR/venv/bin/python3\e[0m"
+    python3 -m venv venv_linux
+    echo -e "\e[91m Venv-Python: $TOP_DIR/venv_linux/bin/python3\e[0m"
 else
-    echo -e "\e[91m Venv-Python: $TOP_DIR/venv/bin/python3\e[0m"
-    echo "venv directory already exists."
+    echo -e "\e[91m Venv-Python: $TOP_DIR/venv_linux/bin/python3\e[0m"
+    echo "venv_linux directory already exists."
 fi

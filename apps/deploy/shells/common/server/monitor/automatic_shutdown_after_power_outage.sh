@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 websites=("www.baidu.com" "192.168.2.1")
 timeout_seconds=60

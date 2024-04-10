@@ -1,4 +1,4 @@
-#!/bin/bash
+
 OS_NAME=$(awk -F= '/^ID=/ { print $2 }' /etc/os-release | tr -d '"')
 OS_VERSION_ID=$(awk -F= '/^VERSION_ID=/ { print $2 }' /etc/os-release | tr -d '"')
 current_python_version=$(python3 --version 2>&1)

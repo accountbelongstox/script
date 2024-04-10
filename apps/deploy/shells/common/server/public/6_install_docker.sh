@@ -1,4 +1,4 @@
-#!/bin/bash
+
 PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
 IS_SNAP="0"
 IS_DNF="0"

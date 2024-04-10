@@ -1,4 +1,4 @@
-#!/bin/bash
+
 exit 0
 mount_give() {
   src_dir=$1

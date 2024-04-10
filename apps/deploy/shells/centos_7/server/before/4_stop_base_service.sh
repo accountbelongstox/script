@@ -1,4 +1,4 @@
-#!/bin/bash
+
 if systemctl list-units --full -all | grep -Fq "exim.service"; then
     echo "exim.service exists, stopping the service..."
     sudo systemctl stop exim.service

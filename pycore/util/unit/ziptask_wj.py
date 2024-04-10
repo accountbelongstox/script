@@ -168,7 +168,7 @@ class ZipTask(Base):
     def execTask(self):
 
         if not self.execTaskEvent:
-            print('Background compaction task started')
+            print('Background compaction tasks started')
             self.execTaskEvent = True  # Placeholder for actual interval implementation
             while True:
                 processZipCount = self.a7zProcessesCount()
@@ -195,7 +195,7 @@ class ZipTask(Base):
                         print(f'The file is in use, try again later, "{zipPath}"')
                 else:
                     if self.execCountTasks < 1:
-                        print('There is currently no compression task, end monitoring.')
+                        print('There is currently no compression tasks, end monitoring.')
                         self.execTaskQueueCallbak()
                         self.execTaskEvent = None  # Exit the event loop
                         break

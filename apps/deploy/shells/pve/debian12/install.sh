@@ -1,4 +1,4 @@
-#!/bin/bash
+
 BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 OS_NAME=$(awk -F= '/^ID=/ { print $2 }' /etc/os-release | tr -d '"')
 OS_VERSION_ID=$(awk -F= '/^VERSION_ID=/ { print $2 }' /etc/os-release | tr -d '"')
@@ -7,7 +7,7 @@ TOP_DIR=$(dirname "$DEPLOY_DIR")
 main_script="$TOP_DIR/main.py"
 python_deploy="$main_script"
 TOP_DIR=$(dirname "$DEPLOY_DIR")
-python_interpreter="$TOP_DIR/venv/bin/python3"
+python_interpreter="$TOP_DIR/venv_linux/bin/python3"
 
 if ! which sudo > /dev/null 2>&1; then
     echo "Installing sudo..."

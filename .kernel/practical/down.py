@@ -53,7 +53,7 @@ class Down(Base):
         headless = False
         debug = True
         args = {
-            "task": webdownQueue,
+            "tasks": webdownQueue,
             # "save_db":True,
             "info": True,
             "headless": headless,

@@ -1,4 +1,4 @@
-#!/bin/bash
+
 #CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 #DEPLOY_DIR="$(dirname "$(dirname "$(dirname "$(dirname "$CURRENT_DIR")")")")"
 #TOP_DIR="$(dirname "$DEPLOY_DIR")"

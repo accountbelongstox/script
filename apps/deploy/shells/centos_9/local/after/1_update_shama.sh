@@ -1,10 +1,10 @@
-#!/bin/bash
+
 
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DEPLOY_DIR="$(dirname "$(dirname "$(dirname "$(dirname "$CURRENT_DIR")")")")"
 TOP_DIR="$(dirname "$DEPLOY_DIR")"
 main_script="$TOP_DIR/main.py"
-python_interpreter="$TOP_DIR/venv/bin/python3"
+python_interpreter="$TOP_DIR/venv_linux/bin/python3"
 
 SAMBA_ENABLE=$(sudo "$python_interpreter" "$main_script" deploy env get_env SAMBA_ENABLE)
 echo "SAMBA_ENABLE is: $SAMBA_ENABLE"

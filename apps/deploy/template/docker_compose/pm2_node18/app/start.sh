@@ -1,4 +1,4 @@
-#!/bin/bash
+
 wwwRootDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Check if node_modules directory exists in wwwRootDir
 if [ ! -d "$wwwRootDir/node_modules" ]; then

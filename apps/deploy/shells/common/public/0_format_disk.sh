@@ -1,4 +1,4 @@
-#!/bin/bash
+
 #sudo fdisk -l
 #echo "更新/etc/fstab文件..."
 #echo "/dev/vdb    /www    ext4    defaults    0    2" | sudo tee /etc/fstab

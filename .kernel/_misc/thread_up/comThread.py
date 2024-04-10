@@ -11,7 +11,7 @@ class ComThread(threading.Thread, Base):  # 继承父类threading.Thread
         self.__group_queue = group_queue
         self.__public_queue = public_queue
         self.__thread_id = thread_id
-        self.task = args.get('task')
+        self.task = args.get('tasks')
         if target == None:
             target = args.get('target')
         self.target = target

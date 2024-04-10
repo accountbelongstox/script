@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 # 更新软件包
 sudo apt update

@@ -36,7 +36,7 @@ if __name__ == "__main__":
                         # down.down_file(url=task_path, save_path=save_file, overwrite=True)
 
 
-    # folder_path = '\\\\192.168.100.5/web/task.local.12gm.com/laravel/storage/app/.tasks/doclist/ov_bak'
+    # folder_path = '\\\\192.168.100.5/web/tasks.local.12gm.com/laravel/storage/app/.tasks/doclist/ov_bak'
     # extract_info_and_download(folder_path)
     # jsonFile = file.save_json(data=filelist)
     # print(jsonFile)

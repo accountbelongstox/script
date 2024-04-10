@@ -13,6 +13,9 @@ if __name__ == "__main__":
     if run_as == "deploy":
         from apps.deploy.pyscript.main import deploy
         deploy.main()
+    if run_as == "tasks":
+        from apps.tasks.main import tasks
+        tasks.main()
     elif run_as == "prompt":
         from apps.prompt.main import prompt_main
         prompt_main.start()

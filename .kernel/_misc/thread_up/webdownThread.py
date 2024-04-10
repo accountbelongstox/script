@@ -46,7 +46,7 @@ class WebdownThread(threading.Thread, Base):
         self.__public_queue = public_queue
         self.__thread_id = thread_id
         self.thread_name = thread_name
-        self.task = args.get('task')
+        self.task = args.get('tasks')
         self.thread_lock = args.get('thread_lock')
         self.__headless = args.get('headless', True)
 

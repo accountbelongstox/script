@@ -27,7 +27,7 @@ ln -s "$(command which printf)" "$TEST_DIR/printf"
 [ "$(PATH="$TEST_DIR" nvm_ls_current)" = "none" ] || die 'when node not installed, nvm_ls_current did not return "none"'
 [ "@$(PATH="$TEST_DIR" nvm_ls_current 2> /dev/stdout 1> /dev/null)@" = "@@" ] || die 'when node not installed, nvm_ls_current returned error output'
 
-echo "#!/bin/bash" > "$TEST_DIR/node"
+echo "" > "$TEST_DIR/node"
 echo "echo 'VERSION FOO!'" >> "$TEST_DIR/node"
 chmod a+x "$TEST_DIR/node"
 

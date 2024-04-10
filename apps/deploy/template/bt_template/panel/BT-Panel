@@ -124,7 +124,7 @@ def run_task():
 
 def daemon_task():
     cycle = 60
-    task_pid_file = "{}/logs/task.pid".format(_PATH)
+    task_pid_file = "{}/logs/tasks.pid".format(_PATH)
     while 1:
         time.sleep(cycle)
 

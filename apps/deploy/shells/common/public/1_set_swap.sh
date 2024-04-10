@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 # Convert 1GB to KB for comparison
 GB_IN_KB=1048576
