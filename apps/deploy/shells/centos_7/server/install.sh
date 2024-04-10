@@ -3,10 +3,10 @@ BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 OS_NAME=$(awk -F= '/^ID=/ { print $2 }' /etc/os-release | tr -d '"')
 OS_VERSION_ID=$(awk -F= '/^VERSION_ID=/ { print $2 }' /etc/os-release | tr -d '"')
 DEPLOY_DIR=$(dirname "$( dirname "$( dirname "$BASE_DIR")")")
-SCRIPT_ROOT_DIR=$(dirname "$DEPLOY_DIR")
+SCRIPT_ROOT_DIR=$(dirname "$(dirname "$DEPLOY_DIR")")
 main_script="$SCRIPT_ROOT_DIR/main.py"
 python_deploy="$main_script"
-SCRIPT_ROOT_DIR=$(dirname "$DEPLOY_DIR")
+SCRIPT_ROOT_DIR=$(dirname "$(dirname "$DEPLOY_DIR")")
 python_interpreter="$SCRIPT_ROOT_DIR/venv_linux/bin/python3"
 execute_scripts() {
     local directory=$1
