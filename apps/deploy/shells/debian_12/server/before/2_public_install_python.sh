@@ -1,7 +1,8 @@
-
 PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
-DEPLOY_DIR=$(dirname "$(dirname "$(dirname "$PARENT_DIR")")")
+DEPLOY_CHIDDIR=$(dirname "$(dirname "$(dirname "$PARENT_DIR")")")
+DEPLOY_DIR=$(dirname "$DEPLOY_CHIDDIR")
 TOP_DIR=$(dirname "$DEPLOY_DIR")
+
 
 current_python_version=$(python3 --version 2>&1)
 echo "Current Python version: $current_python_version"
@@ -23,15 +24,14 @@ if ! which pip3 &> /dev/null; then
 else
     echo "pip3 is already installed."
 fi
-if ! dpkg -s python3.11-venv &> /dev/null; then
-    echo "python3.11-venv is not installed. Installing..."
-    sudo apt install -y python3.11-venv
-    echo "python3.11-venv installed successfully."
+if ! dpkg -s python3.9-venv &> /dev/null; then
+    echo "python3.9-venv is not installed. Installing..."
+    sudo apt install -y python3.9-venv
+    echo "python3.9-venv installed successfully."
 else
-    echo "python3.11-venv is already installed."
+    echo "python3.9-venv is already installed."
 fi
 python3 --version
-
 
 VENV_DIR="$TOP_DIR/venv_linux"
 if [ ! -d "$VENV_DIR" ]; then
