@@ -4,7 +4,7 @@ DEPLOY_DIR=$(dirname "$DEPLOY_CHIDDIR")
 TOP_DIR=$(dirname "$(dirname "$DEPLOY_DIR")")
 
 current_python_version=$(python3.9 --version 2>&1)
-current_pip_version=$(pip3.9 --version 2>&1)
+current_pip_version=$(pip3 --version 2>&1)
 echo "Current Python version: $current_python_version"
 echo "Current Pip version: $current_pip_version"
 
@@ -29,14 +29,26 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
     sudo ./configure --enable-optimizations --prefix=/usr/local/bin/python3.9
     sudo make
     sudo make install
-    ln -s /usr/local/python3/bin/python3.9 /usr/bin/python3.9
-    ln -s /usr/local/python3/bin/pip3.9 /usr/bin/pip3.9
+    ln -s /usr/local/python3/bin/python3.9 /usr/bin/python3
+    ln -s /usr/local/python3/bin/pip3.9 /usr/bin/pip3
     echo "Python 3.9 installed successfully."
+
+    # Move Python 3.9 executable to /usr/bin/python3.9
+    sudo mv /usr/local/bin/python3.9 /usr/bin/python3.9
+
+    echo "Python 3.9 set as default version."
 else
     echo "Python 3.9 is already installed."
 fi
 
-python3.9 --version
+
+if ! which pip3 &> /dev/null; then
+    sudo apt install -y python3-pip
+else
+    echo "pip3 is already installed."
+fi
+
+/python3.9 --version
 
 VENV_DIR="$TOP_DIR/venv_linux"
 if [ ! -d "$VENV_DIR" ]; then
