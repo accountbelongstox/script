@@ -12,7 +12,6 @@ supervisor
 readmdict
 filetype
 pysubs2
-pykeyboard
 cmake
 chardet
 psutil
