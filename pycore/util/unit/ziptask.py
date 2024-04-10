@@ -54,7 +54,8 @@ class Ziptask(Base):
         return self.getCurrentOS() == 'windows'
 
     def get7zExeName(self):
-        exeFile = '7zz' if not self.isWindows() else '7z.exe'
+        exeFile = '7zz' if not self.isWindows() else
+
         return exeFile
 
     def get7zExe(self):
