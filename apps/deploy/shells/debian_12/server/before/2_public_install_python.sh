@@ -31,11 +31,12 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
     sudo make install
 
     # Check if /usr/bin/python3.9 and /usr/bin/pip3.9 exist
-    if [ -f /usr/bin/python3.9 ]; then
+    # Check if /usr/bin/python3.9 and /usr/bin/pip3.9 exist
+    if [ -e /usr/bin/python3.9 ]; then
         sudo rm /usr/bin/python3.9
     fi
 
-    if [ -f /usr/bin/pip3.9 ]; then
+    if [ -e /usr/bin/pip3.9 ]; then
         sudo rm /usr/bin/pip3.9
     fi
 
