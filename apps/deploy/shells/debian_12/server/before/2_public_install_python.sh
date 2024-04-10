@@ -1,22 +1,40 @@
 PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
 DEPLOY_CHIDDIR=$(dirname "$(dirname "$(dirname "$PARENT_DIR")")")
 DEPLOY_DIR=$(dirname "$DEPLOY_CHIDDIR")
-TOP_DIR=$(dirname "$DEPLOY_DIR")
+TOP_DIR=$(dirname "$(dirname "$DEPLOY_DIR")")
 
-
-current_python_version=$(python3 --version 2>&1)
+current_python_version=$(python3.9 --version 2>&1)
 echo "Current Python version: $current_python_version"
 
-if [[ $current_python_version != Python\ 3* ]]; then
-    echo "Python 3 is not the default version. Installing Python 3..."
-    sudo apt update
-    sudo apt install -y python3 python3-pip
-    echo "Python 3 installed successfully."
-    echo "Debian 12 detected. Restoring Python version to 2."
-    sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 50
-    sudo pip3 install pyyaml
+if [[ $current_python_version != Python\ 3.9* ]]; then
+    echo "Python 3.9 is not the default version. Installing Python 3.9..."
+
+    # Install prerequisites
+    sudo apt update && sudo apt upgrade
+    sudo apt install -y wget build-essential libreadline-gplv2-dev libncursesw5-dev \
+         libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
+
+    # Download Python source code
+    wget -P /tmp https://www.python.org/ftp/python/3.9.16/Python-3.9.16.tgz
+
+    # Extract archive
+    tar xzf /tmp/Python-3.9.16.tgz -C /tmp
+
+    # Compile Python source
+    cd /tmp/Python-3.9.16
+    ./configure --enable-optimizations
+    make altinstall
+
+    echo "Python 3.9 installed successfully."
+
+    # Move Python 3.9 executable to /usr/bin/python3.9
+    sudo mv /usr/local/bin/python3.9 /usr/bin/python3.9
+
+    echo "Python 3.9 set as default version."
 else
-    echo "Python 3 is already installed."
+    echo "Python 3.9 is already installed."
+
+    echo "Python 3.9 is already installed."
 fi
 
 if ! which pip3 &> /dev/null; then
@@ -24,22 +42,16 @@ if ! which pip3 &> /dev/null; then
 else
     echo "pip3 is already installed."
 fi
-if ! dpkg -s python3.9-venv &> /dev/null; then
-    echo "python3.9-venv is not installed. Installing..."
-    sudo apt install -y python3.9-venv
-    echo "python3.9-venv installed successfully."
-else
-    echo "python3.9-venv is already installed."
-fi
+
 python3 --version
 
 VENV_DIR="$TOP_DIR/venv_linux"
 if [ ! -d "$VENV_DIR" ]; then
     echo "venv_linux directory does not exist. Creating..."
     cd "$TOP_DIR" || exit
-    python3 -m venv venv_linux
-    echo -e "\e[91m Venv-Python: $TOP_DIR/venv_linux/bin/python3\e[0m"
+    python3.9 -m venv venv_linux
+    echo -e "\e[91m Venv-Python: $TOP_DIR/venv_linux/bin/python3.9\e[0m"
 else
-    echo -e "\e[91m Venv-Python: $TOP_DIR/venv_linux/bin/python3\e[0m"
+    echo -e "\e[91m Venv-Python: $TOP_DIR/venv_linux/bin/python3.9\e[0m"
     echo "venv_linux directory already exists."
 fi
