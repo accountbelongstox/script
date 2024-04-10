@@ -8,7 +8,7 @@ current_pip_version=$(pip3.9 --version 2>&1)
 echo "Current Python version: $current_python_version"
 echo "Current Pip version: $current_pip_version"
 
-if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != pip\ 21* ]]; then
+if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != pip* ]]; then
     echo "Python 3.9 or Pip 21 is not the default version. Installing Python 3.9 and Pip 21..."
 
     # Install prerequisites
