@@ -29,8 +29,20 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
     sudo ./configure --enable-optimizations --prefix=/usr/local/bin/python3.9 --with-openssl
     sudo make
     sudo make install
-    ln -s /usr/local/bin/python3.9/bin/python3 /usr/bin/python3.9
+
+    # Check if /usr/bin/python3.9 and /usr/bin/pip3.9 exist
+    if [ -f /usr/bin/python3.9 ]; then
+        sudo rm /usr/bin/python3.9
+    fi
+
+    if [ -f /usr/bin/pip3.9 ]; then
+        sudo rm /usr/bin/pip3.9
+    fi
+
+    # Create symbolic links
+    ln -s /usr/local/bin/python3.9/bin/python3.9 /usr/bin/python3.9
     ln -s /usr/local/bin/python3.9/bin/pip3.9 /usr/bin/pip3.9
+
     echo "Python 3.9 installed successfully."
 else
     echo "Python 3.9 is already installed."
