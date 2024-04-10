@@ -48,7 +48,7 @@ class Ziptask(Base):
         return _id
 
     def getCurrentOS(self):
-        return platform.system().lower()
+        return platform.system()
 
     def isWindows(self):
         return self.getCurrentOS() == 'windows'
@@ -58,7 +58,7 @@ class Ziptask(Base):
         return exeFile
 
     def get7zExe(self):
-        folder = 'linux' if not self.isWindows() else 'win32'
+        folder = 'linux' if not self.isWindows() else 'windows'
         exeFile = self.get7zExeName()
         return os.path.join(self.libraryDir, f'{folder}/{exeFile}')
 
@@ -236,15 +236,15 @@ class Ziptask(Base):
             }
 
     def putUnZipTaskPromise(self, zipFilePath, targetDirectory):
-        # try:
-        #     self.putUnZipTask(zipFilePath, targetDirectory, lambda error: None)
-        # except Exception as e:
-        #     pass
         try:
-            # 使用subprocess调用7z解压缩命令
-            subprocess.run(['7z', 'x', zipFilePath, f'-o{targetDirectory}'])
+            self.putUnZipTask(zipFilePath, targetDirectory, lambda error: None)
         except Exception as e:
             raise e  # 调整错误处理方式
+        # try:
+        #     # 使用subprocess调用7z解压缩命令
+        #     subprocess.run(['7z', 'x', zipFilePath, f'-o{targetDirectory}'])
+        # except Exception as e:
+        #     raise e  # 调整错误处理方式
 
     def putTask(self, src, out, token, isZip=True, callback=None, isQueue=True):
         if callback and token not in self.callbacks:

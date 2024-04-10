@@ -14,7 +14,6 @@ class FlaskTool(Base, FlaskForm):
 
     def __init__(self):
         pass
-
     def set_cookie(self, flask, user_info, rend_html=None, rend_str='Success logged.'):
         serializer = Serializer(flask.config['SECRET_KEY'])
         token = serializer.dumps(user_info)  # .decode('utf-8')
@@ -43,10 +42,8 @@ class FlaskTool(Base, FlaskForm):
             return user_info
         except:
             return None
-
     def get_session(self, flask):
         return flask.session
-
     def qual_browser(self, flask):
         session = flask.session
         request = flask.request

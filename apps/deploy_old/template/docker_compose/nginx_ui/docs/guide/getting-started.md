@@ -89,7 +89,7 @@ We recommend configuring it as a daemon or using the [installation script](./ins
 ### Config
 
 ```shell
-echo '[server]\nHttpPort = 9000' > app.ini
+echo '[debian12]\nHttpPort = 9000' > app.ini
 ```
 
 ::: tip

@@ -487,7 +487,12 @@ class Getnode(Base):
                         node_download_url = f"{self.node_dist_url}{matched_version}/{matching_version}"
                         matching_version_download_file = self.download(node_download_url, matching_version)
                         matching_version = self.get_file_name_without_extension(matching_version)
+<<<<<<< HEAD
                     zip_task_instance.put_unzip_task_promise(matching_version_download_file, node_dir)
+=======
+
+                    zip.put_unzip_task_promise(matching_version_download_file, node_dir)
+>>>>>>> 16afe55a4ded6735f7097615a68eed0dda782e55
 
         if matching_version:
             return os.path.join(self.get_node_directory(matching_version), node_exe)

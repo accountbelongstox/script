@@ -1,15 +1,15 @@
-import errno
+import subprocess
 import os
 import sys
-import subprocess
-import shutil
 import hashlib
 import random
-import string
-from pycore.util.unit.gdir_lwj import gdir
+import time
+
 from pycore.base.base import Base
+from pycore.globalvar.gdir_wj import gdir
 class ZipTask(Base):
     def __init__(self):
+        super().__init__()
         self.callbacks = {}
         self.maxTasks = 10
         self.pendingTasks = []
@@ -19,20 +19,22 @@ class ZipTask(Base):
         self.zipQueueTokens = []
 
     def get_md5(self, value):
-        hash_md5 = hashlib.md5()
-        hash_md5.update(value.encode('utf-8'))
-        return hash_md5.hexdigest()
+        hash_object = hashlib.md5(value.encode())
+        return hash_object.hexdigest()
 
     def createString(self, length=10):
-        return ''.join(random.choices(string.ascii_lowercase, k=length))
+        letters = 'abcdefghijklmnopqrstuvwxyz'
+        return ''.join(random.choice(letters) for i in range(length))
 
     def create_id(self, value=None):
-        if value is None:
+        if not value:
             value = self.createString(128)
-        return self.get_id(value)
+        _id = self.get_id(value)
+        return _id
 
-    def get_id(self, value, pre=''):
-        md5 = self.get_md5(str(value))
+    def get_id(self, value, pre=None):
+        value = str(value)
+        md5 = self.get_md5(value)
         _id = f'id{md5}'
         if pre:
             _id = pre + _id
@@ -45,21 +47,24 @@ class ZipTask(Base):
         return self.getCurrentOS() == 'win32'
 
     def get7zExeName(self):
-        exeFile = '7zz'
-        if self.isWindows():
-            exeFile = '7z.exe'
+        exeFile = '7zz' if not self.isWindows() else '7z.exe'
         return exeFile
 
     def get7zExe(self):
         exeFile = self.get7zExeName()
-        libraryDir = gdir.getLibraryDir()  # assuming gdir is defined elsewhere
+        print("exeFile",exeFile)
+        libraryDir = gdir.getLibraryDir()
+        print("libraryDir",libraryDir)
         return os.path.join(libraryDir, exeFile)
+
+        # return r"D:\programing\script\pycore\globalvar\util\base\library\win32\7z.exe"
 
     def mkdirSync(self, directoryPath):
         return self.mkdir(directoryPath)
 
     def mkdir(self, dirPath):
-        os.makedirs(dirPath, exist_ok=True)
+        if not os.path.exists(dirPath):
+            os.makedirs(dirPath)
 
     def isFileLocked(self, filePath):
         if not os.path.exists(filePath):
@@ -68,8 +73,8 @@ class ZipTask(Base):
             with open(filePath, 'r+'):
                 pass
             return False
-        except IOError as e:
-            if e.errno in (errno.EBUSY, errno.EPERM):
+        except Exception as e:
+            if isinstance(e, (IOError, OSError)):
                 return True
             return False
 
@@ -95,7 +100,7 @@ class ZipTask(Base):
     def setMode(self, mode):
         self.mode = mode
 
-    def log(self, msg, event=None):
+    def log(self, msg, event):
         if event:
             self.success(msg)
 
@@ -106,10 +111,8 @@ class ZipTask(Base):
             return
         if not os.path.exists(outAbsPath):
             self.mkdirSync(outAbsPath)
-        subDirectories = [entry.name for entry in os.scandir(srcAbsPath) if entry.is_dir()]
+        subDirectories = [entry for entry in os.listdir(srcAbsPath) if os.path.isdir(os.path.join(srcAbsPath, entry)) and not entry.startswith('.')]
         for subDirName in subDirectories:
-            if subDirName.startswith('.'):
-                continue
             subDirPath = os.path.join(srcAbsPath, subDirName)
             self.putZipQueueTask(subDirPath, outDir, token, callback)
 
@@ -124,20 +127,24 @@ class ZipTask(Base):
         self.execBySpawn(command, callback, processCallback)
 
     def execBySpawn(self, command, callback, processCallback):
-        startTime = os.times()
+        start_time = time.time()
         process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         stdout, stderr = process.communicate()
         if stdout:
-            data = stdout.decode('utf-8')
+            stdout_str = stdout.decode('utf-8')
             if processCallback:
-                processCallback(data)
+                processCallback(stdout_str)
         if stderr:
-            data = stderr.decode('utf-8')
-            print(f'Error: {data}')
+            stderr_str = stderr.decode('utf-8')
+            print(f'Error: {stderr_str}')
             if processCallback:
                 processCallback(-1)
+            # 更新 self.concurrentTasks 的值为 0
+            self.concurrentTasks = 0
+        exit_code = process.returncode
+        print(f'child process exited with code {exit_code}')
         if callback:
-            callback(os.times() - startTime)
+            callback(int((time.time() - start_time) * 1000))
 
     def processesCount(self, processName):
         normalizedProcessName = processName.lower()
@@ -158,11 +165,12 @@ class ZipTask(Base):
         processZipCount = self.processesCount(processName)
         return processZipCount
 
-    async def execTask(self):
+    def execTask(self):
+
         if not self.execTaskEvent:
             print('Background compaction task started')
-            self.execTaskEvent = True  # Placeholder for setInterval functionality
-            while self.execTaskEvent:
+            self.execTaskEvent = True  # Placeholder for actual interval implementation
+            while True:
                 processZipCount = self.a7zProcessesCount()
                 if processZipCount != 10000:
                     self.concurrentTasks = processZipCount
@@ -174,24 +182,31 @@ class ZipTask(Base):
                     isQueue = taskObject['isQueue']
                     token = taskObject['token']
                     processCallback = taskObject['processCallback']
-
                     zipPath = taskObject['zipPath']
                     zipName = os.path.basename(zipPath)
                     if not self.isFileLocked(zipPath):
                         print(f'Unziping {zipName}, background: {self.concurrentTasks}')
-                        self.success(f'Unzip-Command: {command}')
+                        print(f'Unzip-Command: {command}')
                         self.execCountTasks += 1
-                        self.addToPendingTasks(command, lambda usetime: self.log(f'{zipName} Compressed.runtime: {usetime / 1000}s', True), processCallback)
+                        self.addToPendingTasks(command, lambda usetime: self.log(
+                            f'{zipName} Compressed.runtime: {usetime / 1000}s', True), processCallback)
                     else:
                         self.pendingTasks.append(taskObject)
                         print(f'The file is in use, try again later, "{zipPath}"')
                 else:
                     if self.execCountTasks < 1:
-                        self.execTaskEvent = None
                         print('There is currently no compression task, end monitoring.')
                         self.execTaskQueueCallbak()
+                        self.execTaskEvent = None  # Exit the event loop
+                        break
                     else:
                         print(f'There are still {self.execCountTasks} compression tasks, waiting')
+                # 检查是否满足退出循环的条件
+                if not self.pendingTasks and self.concurrentTasks == 0:
+                    print('No pending tasks and no concurrent tasks, exiting...')
+                    self.execTaskEvent = None
+                    break
+                time.sleep(1)  # Add a sleep to avoid busy waiting
 
     def execTaskQueueCallbak(self):
         for token in self.zipQueueTokens:
@@ -212,15 +227,15 @@ class ZipTask(Base):
     def putZipQueueTask(self, src, out, token, callback):
         self.putTask(src, out, token, True, callback)
 
-    def putUnZipTask(self, src, out, callback, processCallback=None):
+    def putUnZipTask(self, src, out, callback, processCallback):
         token = self.get_id(src)
         self.putTask(src, out, token, False, callback, False, processCallback)
 
-    def putUnZipQueueTask(self, src, out, callback, processCallback=None):
+    def putUnZipQueueTask(self, src, out, callback, processCallback):
         token = self.get_id(src)
         self.putTask(src, out, token, False, callback, True, processCallback)
 
-    def putQueueCallback(self, callback, token=None):
+    def putQueueCallback(self, callback, token):
         if callback and token not in self.callbacks:
             if not token:
                 token = self.create_id()
@@ -231,11 +246,8 @@ class ZipTask(Base):
                 'src': ''
             }
 
-    async def putUnZipTaskPromise(self, zipFilePath, targetDirectory):
-        try:
-            self.putUnZipTask(zipFilePath, targetDirectory, lambda error: None)
-        except Exception as e:
-            pass
+    def putUnZipTaskPromise(self, zipFilePath, targetDirectory):
+        return self.putUnZipTask(zipFilePath, targetDirectory, lambda error: None, lambda data: None)
 
     def putTask(self, src, out, token, isZip=True, callback=None, isQueue=True, processCallback=None):
         if callback and token not in self.callbacks:
@@ -246,30 +258,8 @@ class ZipTask(Base):
             }
         if isQueue:
             self.zipQueueTokens.append(token)
-        if isZip:
-            zipPath = self.getZipPath(src, out)
-            if os.path.exists(zipPath):
-                if not self.mode:
-                    return
-                if self.mode.update:
-                    srcModiTime = self.getModificationTime(src)
-                    zipPathModiTime = self.getModificationTime(zipPath)
-                    difTime = srcModiTime - zipPathModiTime
-                    if difTime < 1000 * 60:
-                        return
-                    os.unlink(zipPath)
-                elif self.mode.override:
-                    os.unlink(zipPath)
-                else:
-                    return
-            zipSize = self.getFileSize(zipPath)
-            if zipSize == 0:
-                os.unlink(zipSize)
-            command = self.createZipCommand(src, out)
-        else:
-            zipPath = src
-            command = self.createUnzipCommand(src, out)
-
+        zipPath = src if not isZip else self.getZipPath(src, out)
+        command = self.createZipCommand(src, out) if isZip else self.createUnzipCommand(src, out)
         if not self.isTask(zipPath) and isinstance(zipPath, str):
             zipAct = 'compression' if isZip else 'unzip'
             zipName = os.path.basename(zipPath)
@@ -307,16 +297,13 @@ class ZipTask(Base):
 
     def test(self, archivePath):
         try:
-            subprocess.check_output(f'{self.get7zExe()} t "{archivePath}"', shell=True, stderr=subprocess.STDOUT)
+            subprocess.check_output(f'{self.get7zExe()} t "{archivePath}"', stderr=subprocess.PIPE)
             return True
         except Exception as e:
             print("Error testing the archive:", e)
             return False
 
-    @staticmethod
-    def success(message):
-        print(message)
+    def __str__(self):
+        return '[class ZipTask]'
 
-# Assuming gdir is defined elsewhere
-ZipTask.toString = lambda: '[class ZipTask]'
 zip_task = ZipTask()

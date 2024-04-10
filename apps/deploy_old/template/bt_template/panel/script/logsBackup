@@ -8,7 +8,7 @@ import os
 import shutil
 import time
 import glob
-os.chdir("/www/server/panel")
+os.chdir("/www/debian12/panel")
 sys.path.append('class/')
 import public
 print ('==================================================================')
@@ -16,7 +16,7 @@ print( '★['+time.strftime("%Y/%m/%d %H:%M:%S")+']，切割日志')
 print ('==================================================================')
 print ('|--当前保留最新的['+sys.argv[2]+']份')
 logsPath = '/www/wwwlogs/'
-is_gzip = not os.path.exists('/www/server/panel/data/log_not_gzip.pl')
+is_gzip = not os.path.exists('/www/debian12/panel/data/log_not_gzip.pl')
 
 def split_log(siteName,num):
     global logsPath,is_gzip
