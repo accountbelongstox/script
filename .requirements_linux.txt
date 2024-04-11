@@ -19,3 +19,4 @@ keyboard
 colorama
 cryptography
 pyyaml
+flask_wtf
