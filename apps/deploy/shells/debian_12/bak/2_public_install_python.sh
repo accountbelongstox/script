@@ -1,15 +1,15 @@
-CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
+CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DEPLOY_CHIDDIR=$(dirname "$(dirname "$(dirname "$PARENT_DIR")")")
 DEPLOY_DIR=$(dirname "$(dirname "$(dirname "$(dirname "$CURRENT_DIR")")")")
 SCRIPT_ROOT_DIR=$(dirname "$(dirname "$DEPLOY_DIR")")
 
 current_python_version=$(python3.9 --version 2>&1)
-current_pip_version=$(pip3.9 --version 2>&1)
+current_pip_version=$(pip3 --version 2>&1)
 echo "Current Python version: $current_python_version"
 echo "Current Pip version: $current_pip_version"
 
-if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != pip* ]]; then
+if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != pip\ 21* ]]; then
     echo "Python 3.9 or Pip 21 is not the default version. Installing Python 3.9 and Pip 21..."
 
     # Install prerequisites
@@ -27,37 +27,35 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
 
     # Compile Python source
     cd /tmp/Python-3.9.16
-    sudo ./configure --enable-optimizations --prefix=/usr/local/bin/python3.9 --with-openssl
+    sudo ./configure --enable-optimizations --prefix=/usr/local/bin/python3.9
     sudo make
     sudo make install
-
-    # Check if /usr/bin/python3.9 and /usr/bin/pip3.9 exists as symbolic links, if yes, remove them
-    if [ -L /usr/bin/python3.9 ]; then
-        sudo rm /usr/bin/python3.9
-    fi
-
-    if [ -L /usr/bin/pip3.9 ]; then
-        sudo rm /usr/bin/pip3.9
-    fi
-
-    # Create symbolic links
-    ln -s /usr/local/bin/python3.9/bin/python3.9 /usr/bin/python3.9
-    ln -s /usr/local/bin/python3.9/bin/pip3.9 /usr/bin/pip3.9
-    ln -s /usr/local/bin/python3.9/bin/python3.9 /usr/local/bin/python3.9
-    ln -s /usr/local/bin/python3.9/bin/pip3.9 /usr/local/bin/pip3.9
-
+    ln -s /usr/local/python3/bin/python3.9 /usr/bin/python3
+    ln -s /usr/local/python3/bin/pip3.9 /usr/bin/pip3
     echo "Python 3.9 installed successfully."
+
+    # Move Python 3.9 executable to /usr/bin/python3.9
+    sudo mv /usr/local/bin/python3.9 /usr/bin/python3.9
+
+    echo "Python 3.9 set as default version."
 else
     echo "Python 3.9 is already installed."
 fi
 
-/usr/local/bin/python3.9/bin/python3 --version
+
+if ! which pip3 &> /dev/null; then
+    sudo apt install -y python3-pip
+else
+    echo "pip3 is already installed."
+fi
+
+/python3.9 --version
 
 VENV_DIR="$SCRIPT_ROOT_DIR/venv_linux"
 if [ ! -d "$VENV_DIR" ]; then
     echo "venv_linux directory does not exist. Creating..."
     cd "$SCRIPT_ROOT_DIR" || exit
-    /usr/local/bin/python3.9/bin/python3 -m venv venv_linux
+    python3.9 -m venv venv_linux
     echo -e "\e[91m Venv-Python: $SCRIPT_ROOT_DIR/venv_linux/bin/python3.9\e[0m"
 else
     echo -e "\e[91m Venv-Python: $SCRIPT_ROOT_DIR/venv_linux/bin/python3.9\e[0m"

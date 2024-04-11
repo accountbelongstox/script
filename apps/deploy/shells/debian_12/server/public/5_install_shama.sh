@@ -1,10 +1,10 @@
-
+#CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 #PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
 #pyscript="$PARENT_DIR/pyscript/main.py"
-#SAMBA_ENABLE=$(sudo python3 "$pyscript" env get_val "SAMBA_ENABLE")
-#SAMBA_SHARE_NAME=$(sudo python3 "$pyscript" env get_val "SAMBA_SHARE_NAME")
-#MAIN_DIR=$(sudo python3 "$pyscript" env get_val "MAIN_DIR")
-#SAMBA_SHARE_NAME=$(sudo python3 "$pyscript" env get_val "SAMBA_SHARE_NAME")
+#SAMBA_ENABLE=$(sudo python3.9 "$pyscript" env get_val "SAMBA_ENABLE")
+#SAMBA_SHARE_NAME=$(sudo python3.9 "$pyscript" env get_val "SAMBA_SHARE_NAME")
+#MAIN_DIR=$(sudo python3.9 "$pyscript" env get_val "MAIN_DIR")
+#SAMBA_SHARE_NAME=$(sudo python3.9 "$pyscript" env get_val "SAMBA_SHARE_NAME")
 #
 #install_samba() {
 #  if ! dpkg -l | grep -q "samba"; then

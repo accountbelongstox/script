@@ -34,7 +34,7 @@ class AutoInstall():
 
     def get_pip_source(self):
         if self.pip_source_name == "tencent":
-            return "https://mirrors.cloud.tencent.com/pypi/simple/"
+            return "http://mirrors.cloud.tencent.com/pypi/simple/"
         elif self.pip_source_name == "aliyun":
             return "https://mirrors.aliyun.com/pypi/simple/"
         elif self.pip_source_name == "netease":

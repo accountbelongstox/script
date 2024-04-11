@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo "Script is executed from: $SCRIPT_DIR"
@@ -13,6 +13,7 @@ if [ -L "$0" ] && [ "$0" -ef "$dd_path" ]; then
   SCRIPT_DIR="$(dirname "$original_source")"
   echo "Updating SCRIPT_DIR to: $SCRIPT_DIR"
 fi
++
 
 if [ ! -e "$dd_path" ]; then
   ln -s "$script_path" "$dd_path"

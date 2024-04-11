@@ -363,7 +363,7 @@ location / {
 
 File Services -> FTP -> Enable
 
-#!/bin/bash
+#/bin/bash
 
 # 网卡名称, 在你的系统中是 bond0
 NETCARD="bond0"
