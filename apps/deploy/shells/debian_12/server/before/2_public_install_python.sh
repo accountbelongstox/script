@@ -2,7 +2,7 @@ CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
 DEPLOY_CHIDDIR=$(dirname "$(dirname "$(dirname "$PARENT_DIR")")")
 DEPLOY_DIR=$(dirname "$(dirname "$(dirname "$(dirname "$CURRENT_DIR")")")")
-SCRIPT_ROOT_DIR=$(dirname "$DEPLOY_DIR")
+SCRIPT_ROOT_DIR=$(dirname "$(dirname "$DEPLOY_DIR")")
 
 current_python_version=$(python3.9 --version 2>&1)
 current_pip_version=$(pip3.9 --version 2>&1)
