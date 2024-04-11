@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 yes | sudo yum update -y
 yes | sudo yum install epel-release

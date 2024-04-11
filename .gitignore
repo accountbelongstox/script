@@ -30,6 +30,8 @@ public/source/
 video/
 out/
 source/
+venv_linux/
+venv/
 
 .env
 *.swp
@@ -58,7 +60,7 @@ public/js/
 # Laravel Passport
 public/oauth-*
 
-# Rocketeer PHP task runner and deployment package. https://rocketeer.autopergamene.eu/
+# Rocketeer PHP tasks runner and deployment package. https://rocketeer.autopergamene.eu/
 .rocketeer/
 
 # PHPUnit

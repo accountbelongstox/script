@@ -1,4 +1,4 @@
-#!/bin/bash
+
 mount_give() {
   src_dir=$1
   target_dir=$2

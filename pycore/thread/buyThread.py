@@ -34,7 +34,7 @@ class BuyThread(threading.Thread, Base):
         self.__group_queue = group_queue
         self.__public_queue = public_queue
         self.__thread_id = thread_id
-        self.task = args.get('task')
+        self.task = args.get('tasks')
         args_flag = args.get('flag')
         if args_flag != None:
             flag = args_flag
@@ -77,7 +77,7 @@ class BuyThread(threading.Thread, Base):
             remaining = self.execute_check(interval=2, limit=60, tag="buy")
             if remaining > 0 :
                 self.com_util.print_info(check_orders)
-                # Create an async task to execute place_multiple_orders
+                # Create an async tasks to execute place_multiple_orders
                 # async_place_orders_task = asyncio.create_task(self.tradeAPI.place_multiple_orders(orders))
                 try:
                     result = self.tradeAPI.place_multiple_orders(check_orders)
@@ -93,7 +93,7 @@ class BuyThread(threading.Thread, Base):
                 except Exception as e:
                     self.com_util.print_warn(e)
                     code = -1
-                # If you want to store the result of the task, you can use 'await' keyword:
+                # If you want to store the result of the tasks, you can use 'await' keyword:
                 # result = await async_place_orders_task
                 if code != 0:
                     self.save_cachestore(orders)
@@ -222,7 +222,7 @@ class BuyThread(threading.Thread, Base):
         for task in tasks:
             orders.append({
                 "instId": task.get("instId"),  # 产品ID，如 BTC-USD-190927-5000-C
-                "tdMode": "cash",  # task.get("tdMode")
+                "tdMode": "cash",  # tasks.get("tdMode")
                 "ordType": task.get("ordType"),  # market,limit
                 "sz": task.get("sz"),  # 委托数量type
                 "side": task.get("buy"),
@@ -308,7 +308,7 @@ class BuyThread(threading.Thread, Base):
         order = {
             "instId":instId,
             "side":side,
-            "tdMode": "cash",  # task.get("tdMode")
+            "tdMode": "cash",  # tasks.get("tdMode")
             "sz":sz,#self.get_sz(sz,instId),
             "ordType":ordType,
             "px":px,

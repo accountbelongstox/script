@@ -1215,7 +1215,7 @@ class Translate(Base):
         if tasks_per_thread < min_processing_per_thread:
             tasks_per_thread = min_processing_per_thread
         thread_args = {
-            "task": threadQueue,
+            "tasks": threadQueue,
             "save_db": save_db,
             # "save_db":False,
             "info": False,

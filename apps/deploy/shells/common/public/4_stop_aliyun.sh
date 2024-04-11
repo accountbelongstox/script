@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 # Check if aliyun.service is running
 if systemctl is-active --quiet aliyun.service; then

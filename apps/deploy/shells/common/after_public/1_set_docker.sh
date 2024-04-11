@@ -1,4 +1,4 @@
-#!/bin/bash
+
 stop_docker() {
     if [ "$SNAP_DOCKER" = "1" ]; then
         sudo snap stop docker

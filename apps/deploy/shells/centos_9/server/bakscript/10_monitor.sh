@@ -1,4 +1,4 @@
-#!/bin/bash
+
 exit 0
 PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
 env_file="/home/.server.env"

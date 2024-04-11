@@ -67,7 +67,7 @@ class FlaskThread(threading.Thread, Base):
         self.__group_queue = group_queue
         self.__public_queue = public_queue
         self.__thread_id = thread_id
-        self.task = args.get('task')
+        self.task = args.get('tasks')
         # self.__module = args.get('module')
         setattr(self, "control", args.get('module'))
         self.target = target

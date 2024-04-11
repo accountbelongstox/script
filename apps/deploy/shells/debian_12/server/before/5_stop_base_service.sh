@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 if systemctl list-units --full -all | grep -Fq "exim4.service"; then
     echo "exim4.service exists, stopping the service..."

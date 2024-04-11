@@ -1,4 +1,4 @@
-#!/bin/bash
+
 if ! command -v iptables &> /dev/null; then
     sudo yum install iptables -y
 fi

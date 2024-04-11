@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 if [ "$(ls -A /etc/nginx)" = "" ]; then
     echo "Initialing Nginx config dir"

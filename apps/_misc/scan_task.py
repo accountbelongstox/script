@@ -12,7 +12,7 @@ class PathScanner:
         self.last_file_directory_tree = []
         self.adjust_file_suffix_array = []
 
-        self.extract_file_suffix_array = [".Task",".task"]
+        self.extract_file_suffix_array = [".Task",".tasks"]
         self.skip_folder_array = ["node_modules","provider"]
         self.skip_file_ext_array = [".png",".pak",".bin"]
         self.toaster = ToastNotifier()
@@ -189,7 +189,7 @@ class PathScanner:
         while True:
             self.monitor_distribute_tasks()
             time.sleep(interval)
-    #@task
+    #@tasks
     #@code
     #@promptbend
     #@---------------------------------------------
@@ -218,6 +218,6 @@ class PathScanner:
 
 if __name__ == "__main__":
     local_file_path = "D:/programing"
-    remote_folder_path ="\\\\192.168.100.6/programing/task/"
+    remote_folder_path ="\\\\192.168.100.6/programing/tasks/"
     PathScanner = PathScanner(local_file_path,remote_folder_path)
     path_tree = PathScanner.start_monitoring()

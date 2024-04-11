@@ -1,4 +1,3 @@
-#!/bin/bash
 
 BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 install_sh=$1

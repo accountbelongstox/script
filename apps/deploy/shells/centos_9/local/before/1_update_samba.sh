@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 commands_executed=false
 execute_commands_once() {

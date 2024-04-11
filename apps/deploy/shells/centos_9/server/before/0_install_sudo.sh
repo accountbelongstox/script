@@ -1,4 +1,4 @@
-#!/bin/bash
+
 OS=$(awk -F= '/^ID=/ { print $2 }' /etc/os-release | tr -d '"')
 echo "Updating and installing packages for $OS..."
 if ! command -v sudo > /dev/null 2>&1; then

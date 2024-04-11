@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 if ! sudo systemctl is-active --quiet firewalld; then
     sudo systemctl start firewalld

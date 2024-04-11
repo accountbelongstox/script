@@ -26,7 +26,7 @@ class TranslateThread(threading.Thread, Base):
         self.__group_queue = group_queue
         self.__public_queue = public_queue
         self.__thread_id = thread_id
-        self.task = args.get('task')
+        self.task = args.get('tasks')
         self.result = args.get('result')
         self.thread_lock = args.get('thread_lock')
         if type(args) == dict:
@@ -75,7 +75,7 @@ class TranslateThread(threading.Thread, Base):
     def translate_word(self, worditem):
         word = worditem.strip()
         qsize = self.task.qsize()
-        self.com_util.print_info(f"task: {qsize},thread-id:{self.__thread_id}, word: {word} ")
+        self.com_util.print_info(f"tasks: {qsize},thread-id:{self.__thread_id}, word: {word} ")
         self.com_selenium.send_keys('#sb_form_q', word)
         self.com_selenium.click('#sb_form_go')
         time.sleep(0.2)

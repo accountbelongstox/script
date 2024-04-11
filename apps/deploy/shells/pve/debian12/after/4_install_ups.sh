@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 # doc https://www.cnblogs.com/LandWind/articles/pve-nut-config.html
 
@@ -99,7 +99,7 @@ specific_line="send_shutdown_email.sh"
 if [ ! -f "$upssched_cmd" ]; then
     # Create upssched-cmd file
     cat <<EOF > "$upssched_cmd"
-#!/bin/bash
+
 
 case \$1 in
     onbatt)
@@ -131,7 +131,7 @@ EOF
 fi
 
 
-#!/bin/bash
+
 case $1 in
     onbatt)
         logger -t upssched-cmd "UPS running on battery"
@@ -179,7 +179,7 @@ send_shutdown_email="/etc/nut/send_shutdown_email.sh"
 if [ ! -f "$send_shutdown_email" ]; then
     # Create send_shutdown_email.sh file
     cat <<EOF > "$send_shutdown_email"
-#!/bin/bash
+
 
 if ! command -v ssmtp &> /dev/null; then
     echo "Installing ssmtp..."

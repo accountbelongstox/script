@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 # 检查是否有SSH服务
 if ! command -v ssh > /dev/null 2>&1; then
