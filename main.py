@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 
 from pycore.base.requirement_fn.auto_install import auto_install
 
+=======
+from pycore.base.requirement_fn.auto_install import auto_install
+>>>>>>> 0dc90a94e79ba082f5cdec923f012e58e3c739e6
 import sys
 import os
 def get_arg( name):
