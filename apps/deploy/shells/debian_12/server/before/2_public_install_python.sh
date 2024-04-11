@@ -51,13 +51,13 @@ else
     echo "Python 3.9 is already installed."
 fi
 
-/usr/local/bin/python3.9/bin/python3 --version
+/usr/local/bin/python3.9 --version
 
 VENV_DIR="$SCRIPT_ROOT_DIR/venv_linux"
 if [ ! -d "$VENV_DIR" ]; then
     echo "venv_linux directory does not exist. Creating..."
     cd "$SCRIPT_ROOT_DIR" || exit
-    /usr/local/bin/python3.9/bin/python3 -m venv venv_linux
+    /usr/local/bin/python3.9 -m venv venv_linux
     echo -e "\e[91m Venv-Python: $SCRIPT_ROOT_DIR/venv_linux/bin/python3.9\e[0m"
 else
     echo -e "\e[91m Venv-Python: $SCRIPT_ROOT_DIR/venv_linux/bin/python3.9\e[0m"
