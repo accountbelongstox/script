@@ -1,21 +1,26 @@
-from pycore.requirement_fn.auto_install import auto_install
+from pycore.base.requirement_fn.auto_install import auto_install
 import sys
+import os
 def get_arg( name):
     if len(sys.argv) > name:
         return sys.argv[name]
     else:
         return None
 
+
+
+
+
 if __name__ == "__main__":
     auto_install.install()
     from pycore.utils_linux import sysarg
-    run_as = sysarg.get_arg(0)
+    run_as = sysarg.get_arg(0) or os.environ.get('APP')
     if run_as == "deploy":
         from apps.deploy.pyscript.main import deploy
         deploy.main()
     if run_as == "tasks":
         from apps.tasks.main import tasks
-        tasks.main()
+        tasks.start()
     elif run_as == "prompt":
         from apps.prompt.main import prompt_main
         prompt_main.start()

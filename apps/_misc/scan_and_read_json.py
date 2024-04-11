@@ -1,14 +1,11 @@
-from pycore.requirement_fn.auto_install import auto_install
+from pycore.base.requirement_fn.auto_install import auto_install
 
 if __name__ == "__main__":
     auto_install.start()
 
     import os
-    import json
-    import re
-    import pprint
 
-    from pycore.practicals import down, wdoc
+    from pycore.practicals import wdoc
     from pycore.utils import file
 
     filelist = {}
