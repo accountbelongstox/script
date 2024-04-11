@@ -2,7 +2,7 @@
 
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DEPLOY_DIR="$(dirname "$(dirname "$(dirname "$(dirname "$CURRENT_DIR")")")")"
-SCRIPT_ROOT_DIR=$(dirname "$(dirname "$DEPLOY_DIR")")
+SCRIPT_ROOT_DIR=$(dirname "$DEPLOY_DIR")
 main_script="$SCRIPT_ROOT_DIR/main.py"
 python_interpreter="$SCRIPT_ROOT_DIR/venv_linux/bin/python3"
 

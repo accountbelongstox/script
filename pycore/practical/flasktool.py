@@ -1,5 +1,5 @@
 from pycore.base.base import Base
-from pycore.utils import strtool
+from pycore.utils_linux import strtool
 from flask_wtf import FlaskForm
 from datetime import datetime, timedelta
 import os

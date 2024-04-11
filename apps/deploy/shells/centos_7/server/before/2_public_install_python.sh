@@ -1,7 +1,7 @@
 
 PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
 DEPLOY_DIR=$(dirname "$(dirname "$(dirname "$PARENT_DIR")")")
-SCRIPT_ROOT_DIR=$(dirname "$(dirname "$DEPLOY_DIR")")
+SCRIPT_ROOT_DIR=$(dirname "$DEPLOY_DIR")
 
 current_python_version=$(python3 --version 2>&1)
 echo "Current Python version: $current_python_version"
