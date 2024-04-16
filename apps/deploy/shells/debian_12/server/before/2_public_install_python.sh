@@ -43,8 +43,8 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
     # Create symbolic links
     ln -s /usr/local/bin/python3.9/bin/python3.9 /usr/bin/python3.9
     ln -s /usr/local/bin/python3.9/bin/pip3.9 /usr/bin/pip3.9
-#    ln -s /usr/local/bin/python3.9/bin/python3.9 /usr/local/bin/python3.9
-#    ln -s /usr/local/bin/python3.9/bin/pip3.9 /usr/local/bin/pip3.9
+    ln -s /usr/local/bin/python3.9/bin/python3.9 /usr/local/bin/python3.9
+    ln -s /usr/local/bin/python3.9/bin/pip3.9 /usr/local/bin/pip3.9
 
     echo "Python 3.9 installed successfully."
 else
@@ -58,6 +58,7 @@ if [ ! -d "$VENV_DIR" ]; then
     echo "venv_linux directory does not exist. Creating..."
     cd "$SCRIPT_ROOT_DIR" || exit
     /usr/local/bin/python3.9 -m venv venv_linux
+
     echo -e "\e[91m Venv-Python: $SCRIPT_ROOT_DIR/venv_linux/bin/python3.9\e[0m"
 else
     echo -e "\e[91m Venv-Python: $SCRIPT_ROOT_DIR/venv_linux/bin/python3.9\e[0m"

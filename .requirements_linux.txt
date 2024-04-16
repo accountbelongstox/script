@@ -20,3 +20,4 @@ colorama
 cryptography
 pyyaml
 Flask-WTF
+pywin32_bootstrap

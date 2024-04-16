@@ -1,3 +1,4 @@
+
 import hashlib
 import os, re
 import platform
@@ -9,7 +10,7 @@ import socket
 from urllib.parse import urlparse
 
 class AutoInstall():
-    venv_dir = "venv_linux"
+    venv_dir = "venv"
     server_role = ""
     windows_package = ["pywin32", "pyautogui", "windows-curses"]
 
