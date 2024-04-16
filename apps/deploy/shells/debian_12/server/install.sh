@@ -6,8 +6,8 @@ DEPLOY_DIR=$(dirname "$( dirname "$( dirname "$BASE_DIR")")")
 SCRIPT_ROOT_DIR=$(dirname "$(dirname "$DEPLOY_DIR")")
 main_script="$SCRIPT_ROOT_DIR/main.py"
 python_deploy="$main_script"
-SCRIPT_ROOT_DIR=$(dirname "$(dirname "$DEPLOY_DIR")")
-python_interpreter="$SCRIPT_ROOT_DIR/venv_linux/bin/python3"
+#SCRIPT_ROOT_DIR=$(dirname "$(dirname "$DEPLOY_DIR")")
+python_interpreter="$SCRIPT_ROOT_DIR/venv_linux/bin/python3.9"
 execute_scripts() {
     local directory=$1
     if [ -d "$directory" ]; then
