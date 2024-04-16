@@ -9,7 +9,7 @@ from sqlalchemy import and_, literal
 # from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, DECIMAL, BigInteger, \
 #     SmallInteger, LargeBinary, Float, Numeric, Date
 from sqlalchemy.ext.declarative import declarative_base
-
+from pycore.dbmode.baseclass.com_util import ComUtil
 # from sqlalchemy.sql.expression import in_, like
 
 SqlalchemyBase = declarative_base()
@@ -19,7 +19,14 @@ class DBCommon(Base, DBBase):
     def __init__(self, session, engine):
         self.session = session
         self.engine = engine
+
+        self.com_util = ComUtil()
+        self.com_dbbase = DBBase()  # 添加 com_dbbase 属性并初始化
+
+        # 初始化 tablemaps 属性为空字典
+        self.tablemaps = {}
         pass
+
 
     def main(self, args):
         pass
@@ -71,6 +78,7 @@ class DBCommon(Base, DBBase):
         inspector = inspect(self.engine)
         columns = inspector.get_columns(tabname)
         columns = [c.get('name') for c in columns]
+        print("columns",columns)
         return columns
 
     def get_tables(self):
@@ -92,12 +100,14 @@ class DBCommon(Base, DBBase):
 
     def get_tablemaps(self):
         if not self.tablemaps:
-            self.tablemaps = self.com_dbbase.get_tablemaps()
+            # 使用 com_dbbase 获取表映射
+            self.tablemaps = self.com_dbbase.get_tablemaps(self.engine)
         return self.tablemaps
 
     def save(self, tabname=None, data=None, result_id=True):
         tablemaps = self.get_tablemaps()
         table_class = tablemaps.get(tabname)
+        print(table_class)
         if not table_class:
             self.com_util.print_warn("save tabname must be provided")
             return
@@ -105,8 +115,10 @@ class DBCommon(Base, DBBase):
             self.com_util.print_warn("save data must be provided")
             return
         session = self.get_session()
-        data = self.com_dbbase.escape_andsetdate(tabname, data)
+        # data = self.com_dbbase.escape_andsetdate(tabname, data)
+
         if isinstance(data, list):
+
             for index in range(len(data)):
                 item = data[index]
                 if isinstance(item, dict):
@@ -116,8 +128,43 @@ class DBCommon(Base, DBBase):
                             item['id'] = _id
                         del item['_id']
                         data[index] = item
+
+        if isinstance(data, list):
+            # print("data", data)
+            try:
+                session.bulk_insert_mappings(table_class, data)
+            except IntegrityError as e:
+                session.rollback()
+                for item in data:
+                    try:
+                        stmt = insert(table_class).prefix_with("OR IGNORE").values(item)
+                        session.execute(stmt)
+                    except Exception as e_inner:
+                        self.com_util.print_warn(self.com_dbbase.trim_data(item))
+                        self.com_util.print_warn(e_inner)
+                        session.rollback()
+        elif isinstance(data, dict):
+            print("table_class")
+            print(table_class)
+            del data["id"]
+            print(data)
+            stmt = insert(table_class).prefix_with("OR IGNORE").values(data)
+
+            session.execute(stmt)
+            # record = table_class(**data)
+            # session.add(record)
+            # new_id = getattr(record, record.__mapper__.primary_key[0].name)
+            # session.commit()
+        else:
+
+            self.com_util.print_warn("save Invalid data type for 'data' parameter. Expected list or dict.")
+            return
+
+        session.commit()
+        return
         try:
             if isinstance(data, list):
+                # print("data", data)
                 try:
                     session.bulk_insert_mappings(table_class, data)
                 except IntegrityError as e:
@@ -131,22 +178,30 @@ class DBCommon(Base, DBBase):
                             self.com_util.print_warn(e_inner)
                             session.rollback()
             elif isinstance(data, dict):
+                print("table_class")
+                print(table_class)
+                print(data)
                 stmt = insert(table_class).prefix_with("OR IGNORE").values(data)
+
                 session.execute(stmt)
                 # record = table_class(**data)
                 # session.add(record)
                 # new_id = getattr(record, record.__mapper__.primary_key[0].name)
                 # session.commit()
             else:
+
                 self.com_util.print_warn("save Invalid data type for 'data' parameter. Expected list or dict.")
                 return
+
             session.commit()
         except Exception as e:
+
             self.com_util.print_warn(self.com_dbbase.trim_data(data))
             self.com_util.print_warn("db_save Exception")
             self.com_util.print_warn(e)
             session.rollback()
         finally:
+
             session.close()
 
     def extract_dict_values(self, d):

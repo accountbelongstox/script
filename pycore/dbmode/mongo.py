@@ -1,5 +1,5 @@
 # import html
-from pycore.db_baseclass.dbbase import *
+from pycore.dbmode.baseclass.dbbase import *
 from mongoengine import (Document, StringField, IntField, LongField, FloatField, DecimalField, BooleanField,
                          DateTimeField, DateField, BinaryField, FileField)
 # import time

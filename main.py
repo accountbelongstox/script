@@ -22,7 +22,7 @@ if __name__ == "__main__":
         deploy.main()
     if run_as == "tasks":
         from apps.tasks.main import tasks
-        tasks.start()
+        tasks.test_sql()
     elif run_as == "prompt":
         from apps.prompt.main import prompt_main
         prompt_main.start()
