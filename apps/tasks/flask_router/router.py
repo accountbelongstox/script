@@ -7,6 +7,9 @@ from pycore.practicals_linux import flasktool
 from datetime import datetime
 from apps.tasks.provider.mock_data import mock
 from pycore.dbmode.mysql import Mysql
+from apps.tasks.provider.db_mysql import db
+import json
+
 
 class Router(Base):
     likeFlaskApp = None
@@ -35,15 +38,11 @@ class Router(Base):
 
         @likeFlaskApp.route('/get_data', methods=['GET', 'POST'])
         def provider():
-            # title = data_src.get_item()
-            test_mysql = Mysql()
-            test_mysql.connect()
-            session = test_mysql.session
-            assert session is not None, "Database connection failed!"
-            print("Database connection test passed.")
-            result_dict = test_mysql.read()
 
-            return result_dict
+            json_data = json.dumps(db.read("duijie"))
+            print(json_data)
+            return json_data
+
 
 
 

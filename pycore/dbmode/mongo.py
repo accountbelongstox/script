@@ -1,5 +1,5 @@
 # import html
-from pycore.dbmode.baseclass.dbbase import *
+from pycore.dbmode.baseclass.abs.dbcommon import *
 from mongoengine import (Document, StringField, IntField, LongField, FloatField, DecimalField, BooleanField,
                          DateTimeField, DateField, BinaryField, FileField)
 # import time
@@ -9,9 +9,7 @@ import re
 # import pymongo
 # from pymongo import ASCENDING, DESCENDING, MongoClient
 from mongoengine.queryset.visitor import Q
-from mongoengine.errors import NotUniqueError
 from mongoengine import connect
-from pymongo.errors import DuplicateKeyError
 
 
 class Mongo(DBBase):

@@ -213,6 +213,10 @@ class Base(Log):
             else:
                 self.easy_log(msg, "info")
 
+    def pprint(self, data):
+        blue_color = '\033[94m'
+        self._print_formatted(blue_color, data)
+
     def _print_formatted(self, color_code, msg):
         end_color = '\033[0m'
         if isinstance(msg, (list, dict, tuple)):

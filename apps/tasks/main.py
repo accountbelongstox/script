@@ -46,12 +46,10 @@ class Tasks(Base):
         # }  # 你的字段名和类型
         # mysql_instance.create_table(tabname, fields)
         # mysql_instance.save("test",mock.get_mock())
-        print(db)
-        db.connect()
-        db.get_columns('test')
+        # result = db.read('test')
+        # print(result)
+        db
 
-
-        db.create_table(tabname,fields)
 
 
 #         for task in mock.get_mock():

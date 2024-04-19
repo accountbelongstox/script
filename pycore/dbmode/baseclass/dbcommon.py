@@ -1,5 +1,9 @@
-from pycore.base.base import Base
-from pycore.dbmode.baseclass.dbbase import *
+from pycore.dbmode.baseclass.abs.dbcommon import DBCommon
+from pycore.dbmode.baseclass.base.dbbase import DBBase
+from pycore.dbmode.baseclass.init_database import dbinit
+from pycore.dbmode.baseclass.operate_table import operate_table
+from pycore.dbmode.baseclass.provider.common import SqlalchemyBase
+from pycore.utils_linux import arr
 # from sqlalchemy import create_engine
 # from sqlalchemy.orm import sessionmaker
 from sqlalchemy import asc, desc, inspect
@@ -9,81 +13,32 @@ from sqlalchemy import and_, literal
 # from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, DECIMAL, BigInteger, \
 #     SmallInteger, LargeBinary, Float, Numeric, Date
 from sqlalchemy.ext.declarative import declarative_base
-from pycore.dbmode.baseclass.com_util import ComUtil
 # from sqlalchemy.sql.expression import in_, like
+from apps.tasks.provider.mock_data import mock
 
-SqlalchemyBase = declarative_base()
-
-
-class DBCommon(Base, DBBase):
-    def __init__(self, session, engine):
+class DBCommon(DBBase,DBCommon):
+    def __init__(self, session, engine,tables):
         self.session = session
-        self.engine = engine
-
-        self.com_util = ComUtil()
-        self.com_dbbase = DBBase()  # 添加 com_dbbase 属性并初始化
-
-        # 初始化 tablemaps 属性为空字典
         self.tablemaps = {}
-        pass
 
-
-    def main(self, args):
+    def main(self):
         pass
 
     def init_database(self):
         self.connect()
-        SqlalchemyBase.metadata.create_all(self.engine)
+        dbinit.init_database()
+        # self.save("test2",{'test':'李虎'})
+        # for data in mock.get_mock():
+        #     self.save("duijie",data)
 
-    def exist_table(self, tabname):
-        tablemaps = self.get_tablemaps()
-        return tabname in tablemaps
+        # self.read("duijie")
 
-    def exist_field(self, tabname, field_name):
-        tablemaps = self.get_tablemaps()
-        if self.exist_table(tabname):
-            table_class = tablemaps[tabname]
-            return hasattr(table_class, field_name)
-        return False
+        # self.update(tabname="test2", data={"test": "尺寸"}, conditions={"id": 3})
+        # self.delete_physical("test2",conditions={"id": 3})
+        # t=self.count("test2",{"test":"你好"})
+        # print(t)
+        # SqlalchemyBase.metadata.create_all(self.engine)
 
-    def modify_field(self, tabname, fields):
-        tablemaps = self.get_tablemaps()
-        session = self.get_session()
-        if self.exist_table(tabname):
-            table_class = tablemaps[tabname]
-            for field_name, new_value in fields.items():
-                if self.exist_field(tabname, field_name):
-                    session.query(table_class).update({getattr(table_class, field_name): new_value})
-                    session.commit()
-                    session.close()
-
-    def create_table(self, tabname, fields):
-        tablemaps = self.get_tablemaps()
-        if isinstance(fields, list):
-            fields = fields[0]
-        if not self.exist_table(tabname):
-            table_class = self.com_dbbase.create_table_class(tabname, fields)
-            SqlalchemyBase.metadata.create_all(self.engine, [table_class.__table__])
-            tablemaps[tabname] = table_class
-
-    def query_table_info(self, tabname):
-        inspector = inspect(self.engine)
-        return {
-            "columns": inspector.get_columns(tabname),
-            "indexes": inspector.get_indexes(tabname),
-            "foreign_keys": inspector.get_foreign_keys(tabname),
-        }
-
-    def get_columns(self, tabname):
-        inspector = inspect(self.engine)
-        columns = inspector.get_columns(tabname)
-        columns = [c.get('name') for c in columns]
-        print("columns",columns)
-        return columns
-
-    def get_tables(self):
-        inspector = inspect(self.engine)
-        return inspector.get_table_names()
 
     def commit(self):
         session = self.get_session()
@@ -96,29 +51,25 @@ class DBCommon(Base, DBBase):
     def get_session(self):
         if not self.session:
             self.connect()
+            self.session = self.get_globl_session()
         return self.session
 
     def get_tablemaps(self):
         if not self.tablemaps:
-            # 使用 com_dbbase 获取表映射
-            self.tablemaps = self.com_dbbase.get_tablemaps(self.engine)
+            self.tablemaps = dbinit.get_tablemaps()
         return self.tablemaps
 
     def save(self, tabname=None, data=None, result_id=True):
         tablemaps = self.get_tablemaps()
         table_class = tablemaps.get(tabname)
-        print(table_class)
         if not table_class:
-            self.com_util.print_warn("save tabname must be provided")
+            self.warn("save tabname must be provided")
             return
         if not data:
-            self.com_util.print_warn("save data must be provided")
+            self.warn("save data must be provided")
             return
         session = self.get_session()
-        # data = self.com_dbbase.escape_andsetdate(tabname, data)
-
         if isinstance(data, list):
-
             for index in range(len(data)):
                 item = data[index]
                 if isinstance(item, dict):
@@ -128,43 +79,8 @@ class DBCommon(Base, DBBase):
                             item['id'] = _id
                         del item['_id']
                         data[index] = item
-
-        if isinstance(data, list):
-            # print("data", data)
-            try:
-                session.bulk_insert_mappings(table_class, data)
-            except IntegrityError as e:
-                session.rollback()
-                for item in data:
-                    try:
-                        stmt = insert(table_class).prefix_with("OR IGNORE").values(item)
-                        session.execute(stmt)
-                    except Exception as e_inner:
-                        self.com_util.print_warn(self.com_dbbase.trim_data(item))
-                        self.com_util.print_warn(e_inner)
-                        session.rollback()
-        elif isinstance(data, dict):
-            print("table_class")
-            print(table_class)
-            del data["id"]
-            print(data)
-            stmt = insert(table_class).prefix_with("OR IGNORE").values(data)
-
-            session.execute(stmt)
-            # record = table_class(**data)
-            # session.add(record)
-            # new_id = getattr(record, record.__mapper__.primary_key[0].name)
-            # session.commit()
-        else:
-
-            self.com_util.print_warn("save Invalid data type for 'data' parameter. Expected list or dict.")
-            return
-
-        session.commit()
-        return
         try:
             if isinstance(data, list):
-                # print("data", data)
                 try:
                     session.bulk_insert_mappings(table_class, data)
                 except IntegrityError as e:
@@ -174,34 +90,26 @@ class DBCommon(Base, DBBase):
                             stmt = insert(table_class).prefix_with("OR IGNORE").values(item)
                             session.execute(stmt)
                         except Exception as e_inner:
-                            self.com_util.print_warn(self.com_dbbase.trim_data(item))
-                            self.com_util.print_warn(e_inner)
+                            self.warn(self.com_dbbase.trim_data(item))
+                            self.warn(e_inner)
                             session.rollback()
             elif isinstance(data, dict):
-                print("table_class")
-                print(table_class)
-                print(data)
-                stmt = insert(table_class).prefix_with("OR IGNORE").values(data)
-
+                stmt = insert(table_class).values(data)
                 session.execute(stmt)
                 # record = table_class(**data)
                 # session.add(record)
                 # new_id = getattr(record, record.__mapper__.primary_key[0].name)
                 # session.commit()
             else:
-
-                self.com_util.print_warn("save Invalid data type for 'data' parameter. Expected list or dict.")
+                self.warn("save Invalid data type for 'data' parameter. Expected list or dict.")
                 return
-
             session.commit()
         except Exception as e:
-
-            self.com_util.print_warn(self.com_dbbase.trim_data(data))
-            self.com_util.print_warn("db_save Exception")
-            self.com_util.print_warn(e)
+            self.warn(dbinit.trim_data(data))
+            self.warn("db_save Exception")
+            self.warn(e)
             session.rollback()
         finally:
-
             session.close()
 
     def extract_dict_values(self, d):
@@ -214,7 +122,7 @@ class DBCommon(Base, DBBase):
             record = lst[i]
             record = self.extract_dict_values(record)
             lst[i] = record
-        lst = self.com_util.list_tojson(lst)
+        lst = arr.list_tojson(lst)
         return lst
 
     def filter_query(self, query_obj, table_class, conditions=None):
@@ -229,7 +137,7 @@ class DBCommon(Base, DBBase):
             if isinstance(value, list):
                 condition_clauses.append(field_obj.in_(value))
             elif isinstance(value, str):
-                check_like = self.com_dbbase.check_like(value)
+                check_like = self.check_like(value)
                 if check_like == 'both':
                     condition_clauses.append(field_obj.like(value))
                 elif check_like == 'beginning':
@@ -276,7 +184,7 @@ class DBCommon(Base, DBBase):
         # Apply conditions
         query_obj = self.filter_query(query_obj, table_class, conditions=conditions)
         # Apply limit
-        limit = self.com_dbbase.gen_limit_sql(limit)
+        limit = self.gen_limit_sql(limit)
         offset = limit[1]
         query_len = limit[0]
         # return records
@@ -290,7 +198,7 @@ class DBCommon(Base, DBBase):
                 elif order.upper() == 'DESC':
                     query_obj = query_obj.order_by(desc(getattr(table_class, field)))
                 else:
-                    self.com_util.print_warn(f"Unsupported sort order: {order}")
+                    self.warn(f"Unsupported sort order: {order}")
         if limit:
             # print('offset', offset, 'query_len', query_len)
             query_obj = query_obj.offset(offset).limit(query_len)
@@ -303,11 +211,12 @@ class DBCommon(Base, DBBase):
 
         if isinstance(records, list):
             records = [item[0] if (isinstance(item, list) and len(item) == 1) else item for item in records]
+        print(records)
         return records
 
     def delete(self, tabname=None, conditions=None, physical=False):
         data = {
-            self.com_dbbase.get_delete_token(): 1
+            dbinit.get_delete_token(): 1
         }
         if not physical:
             return self.update(tabname=tabname, data=data, conditions=conditions)
@@ -327,7 +236,7 @@ class DBCommon(Base, DBBase):
             finally:
                 session.close()
         else:
-            self.com_util.print_warn(f"No table_class found for tabname: {tabname}")
+            self.warn(f"No table_class found for tabname: {tabname}")
             return 0
 
     def count(self, tabname=None, conditions=None, select="*", print_sql=False):
@@ -345,12 +254,12 @@ class DBCommon(Base, DBBase):
             finally:
                 session.close()
         else:
-            self.com_util.print_warn(f"No table_class found for tabname: {tabname}")
+            self.warn(f"No table_class found for tabname: {tabname}")
             return 0
 
     def delete_physical(self, tabname, conditions=None, not_execute=False):
         if not conditions:
-            self.com_util.print_warn(f"{tabname} delete must need conditions")
+            self.warn(f"{tabname} delete must need conditions")
             return 0
         tablemaps = self.get_tablemaps()
         table_class = tablemaps.get(tabname)
@@ -370,9 +279,9 @@ class DBCommon(Base, DBBase):
 
     def update(self, tabname=None, data=None, conditions=None, not_execute=False, print_sql=False):
         if not conditions:
-            self.com_util.print_warn(f"{tabname} update must need conditions")
+            self.warn(f"{tabname} update must need conditions")
             return 0
-        data = self.com_util.dict_escape(data)
+        data = arr.dict_escape(data)
         tablemaps = self.get_tablemaps()
         table_class = tablemaps.get(tabname)
         session = self.get_session()
@@ -385,12 +294,14 @@ class DBCommon(Base, DBBase):
             if not not_execute:
                 affected_rows = query.update(data)
                 session.commit()
-                if len(affected_rows) == 1:
-                    return affected_rows[0]
-                else:
-                    return affected_rows
+                #
+                # if len(affected_rows) == 1:
+                #     return affected_rows
+                # else:
+                #     return affected_rows
         finally:
             session.close()
+
 
     def connect(self):
         raise NotImplementedError("Subclass must implement connect method")
