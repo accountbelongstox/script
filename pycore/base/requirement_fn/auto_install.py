@@ -10,13 +10,19 @@ import socket
 from urllib.parse import urlparse
 
 class AutoInstall():
-    venv_dir = "venv"
     server_role = ""
     windows_package = ["pywin32", "pyautogui", "windows-curses"]
 
     def __init__(self):
+        self.venv_dir = self.read_dynamic_dir()
+        print(f"Venv_Dir: {self.venv_dir}")
         self.pip_source_name = self.get_env("PIP_SOURCE")
         self.server_role = self.get_server_role()
+
+    def read_dynamic_dir(self):
+        with open('/tmp/venv_dir.txt', 'r') as f:
+            venv_dir = f.read().strip()
+        return venv_dir
 
     def get_server_role(self):
         server_role = self.get_env("SERVER_ROLE")
@@ -56,6 +62,7 @@ class AutoInstall():
             self.success(system_info)
         installed_requirement = ".installed_requirements_" + self.md5(system_info)
         installed_requirement = installed_requirement.replace(":", "_")
+        installed_requirement = os.path.join(self.venv_dir,installed_requirement)
         return installed_requirement
 
     def md5(self, input_string):
@@ -173,6 +180,7 @@ class AutoInstall():
 
     def install(self):
         python_exe = sys.executable
+        print(f"Python_Executable: {python_exe}")
         if self.server_role != "linux":
             self.info("\ndetection. Must depend on the library.")
         require_file = self.get_requirefile()
@@ -201,7 +209,9 @@ class AutoInstall():
                     #     self.info(f"Skipping Windows-specific package on Linux: {package}")
                     continue
                 # is_installed = self.is_package_installed(package)
-                install_cmd = f"{python_exe} -m pip install {package} {source_url}"
+                target_dir = f"{self.venv_dir}/lib/python3.9/site-packages"
+                install_cmd = f"pip install {package} --target {target_dir} {source_url}"
+                #install_cmd = f"{python_exe} -m pip install {package} {source_url}"
                 # if not is_installed:
                 #     install_commands.append(install_cmd)
                 self.success("package", package)
@@ -239,7 +249,8 @@ class AutoInstall():
             return True
 
     def getcwd(self):
-        return os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        return os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
 
     def join_file(self, file,dir=None):
         up_up_dir = self.getcwd()

@@ -4,7 +4,7 @@ CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DEPLOY_DIR="$(dirname "$(dirname "$(dirname "$(dirname "$CURRENT_DIR")")")")"
 SCRIPT_ROOT_DIR=$(dirname "$(dirname "$DEPLOY_DIR")")
 main_script="$SCRIPT_ROOT_DIR/main.py"
-python_interpreter="$SCRIPT_ROOT_DIR/venv_linux/bin/python3"
+python_interpreter="$SCRIPT_ROOT_DIR/venv_linux_$OS_NAME/bin/python3"
 
 SAMBA_ENABLE=$(sudo "$python_interpreter" "$main_script" deploy env get_env SAMBA_ENABLE)
 echo "SAMBA_ENABLE is: $SAMBA_ENABLE"

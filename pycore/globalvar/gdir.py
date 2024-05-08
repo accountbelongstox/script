@@ -3,16 +3,29 @@ import shutil
 import errno
 import http.client
 from pycore.base.base import Base
-
-
+import platform
 class Gdir(Base):
     intranetIPAddress = "http://192.168.100.5/"
     localStaticHttpsApiUrl = "https://static.local.12gm.com:905/"
     localStaticHttpApiUrl = "http://static.local.12gm.com:805/"
     testAccessibleApi = None
+    tmp_dir = "/tmp/"
+    tmp_globle_settings = "/tmp/.globle_settings"
+    tmp_dd_settings_dir = "/tmp/.dd_settings"
 
     def __init__(self):
         super().__init__()
+        self._mkdir(self.tmp_dd_settings_dir)
+
+    def _mkdir(self,dir):
+        if os.path.exists(dir) and os.path.isdir(dir):
+            return False
+        else:
+            try:
+                os.makedirs(dir, exist_ok=True)
+            except Exception as e:
+                self.warn(e)
+            return True
 
     def getDesktopFile(self, param=None):
         desktopPath = os.path.join(os.path.expanduser("~"), 'Desktop')
@@ -117,9 +130,19 @@ class Gdir(Base):
         return fullPath
 
     def getTempDir(self, subDir=None):
-        fullPath = os.path.join(os.path.abspath(os.sep), 'tmp', subDir) if subDir else os.path.join(os.path.abspath(os.sep), 'tmp')
-        os.makedirs(fullPath, exist_ok=True)
-        return fullPath
+        os_name = platform.system()
+        if os_name == 'Linux':
+            base_dir = '/tmp'
+        elif os_name == 'Windows':
+            base_dir = os.environ.get('TEMP', '')
+        else:
+            return None
+
+        if subDir is not None:
+            temp_dir = os.path.join(base_dir, subDir)
+            os.makedirs(temp_dir, exist_ok=True)
+            return temp_dir
+        return base_dir
 
     def getTempFile(self, subDir=None):
         tempDir = self.getTempDir()

@@ -19,6 +19,9 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
          libffi-dev zlib1g-dev openssl libssl-dev libbz2-dev libreadline-dev \
          libsqlite3-dev llvm libncurses5-dev xz-utils tk-dev
 
+    # Install the curses library
+    sudo apt-get -y install libncurses5-dev libncursesw5-dev
+
     # Download Python source code
     sudo wget -P /tmp https://www.python.org/ftp/python/3.9.16/Python-3.9.16.tgz
 
@@ -27,9 +30,11 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
 
     # Compile Python source
     cd /tmp/Python-3.9.16
-    sudo ./configure --enable-optimizations --prefix=/usr/local/bin/python3.9 --with-openssl
+    sudo ./configure --enable-optimizations --prefix=/usr/local/bin/python3.9 --with-openssl --with-curses
     sudo make
     sudo make install
+
+    sudo apt install -y libncurses5-dev
 
     # Check if /usr/bin/python3.9 and /usr/bin/pip3.9 exists as symbolic links, if yes, remove them
     if [ -L /usr/bin/python3.9 ]; then
@@ -53,14 +58,19 @@ fi
 
 /usr/local/bin/python3.9 --version
 
-VENV_DIR="$SCRIPT_ROOT_DIR/venv_linux"
+OS_NAME=$(awk -F= '/^ID=/ { print $2 }' /etc/os-release | tr -d '"')
+export VENV_DIR="$SCRIPT_ROOT_DIR/venv_linux_$OS_NAME"
+echo "Venv_Dir:$VENV_DIR"
+echo $VENV_DIR > /tmp/venv_dir.txt
+s
 if [ ! -d "$VENV_DIR" ]; then
-    echo "venv_linux directory does not exist. Creating..."
+    echo "venv_linux_$OS_NAME directory does not exist. Creating..."
     cd "$SCRIPT_ROOT_DIR" || exit
-    /usr/local/bin/python3.9 -m venv venv_linux
+    /usr/local/bin/python3.9 -m venv "$VENV_DIR"
 
-    echo -e "\e[91m Venv-Python: $SCRIPT_ROOT_DIR/venv_linux/bin/python3.9\e[0m"
+    echo -e "\e[91m Venv-Python: $VENV_DIR/bin/python3.9\e[0m"
 else
-    echo -e "\e[91m Venv-Python: $SCRIPT_ROOT_DIR/venv_linux/bin/python3.9\e[0m"
-    echo "venv_linux directory already exists."
+    echo -e "\e[91m Venv-Python: $VENV_DIR/bin/python3.9\e[0m"
+    echo "venv_linux_$OS_NAME directory already exists."
 fi
+

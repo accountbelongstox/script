@@ -6,7 +6,7 @@ import random
 import time
 
 from pycore.base.base import Base
-from pycore.globalvar.gdir_wj import gdir
+from pycore.globalvar.gdir import gdir
 class ZipTask(Base):
     def __init__(self):
         super().__init__()

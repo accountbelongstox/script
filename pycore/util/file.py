@@ -296,7 +296,7 @@ class File(Base):
                 else:
                     content = f.readlines()
                 if info == True:
-                    self.com_util.print_info(f"Successfully mode {encoding} to {file_name}")
+                    self.success(f"Successfully mode {encoding} to {file_name}")
                 f.close()
                 result = {
                     "encoding": encoding,

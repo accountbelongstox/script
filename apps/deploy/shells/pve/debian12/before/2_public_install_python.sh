@@ -33,13 +33,13 @@ fi
 python3 --version
 
 
-VENV_DIR="$SCRIPT_ROOT_DIR/venv_linux"
+VENV_DIR="$SCRIPT_ROOT_DIR/venv_linux_$OS_NAME"
 if [ ! -d "$VENV_DIR" ]; then
-    echo "venv_linux directory does not exist. Creating..."
+    echo "venv_linux_$OS_NAME directory does not exist. Creating..."
     cd "$SCRIPT_ROOT_DIR" || exit
-    python3 -m venv venv_linux
-    echo -e "\e[91m Venv-Python: $SCRIPT_ROOT_DIR/venv_linux/bin/python3\e[0m"
+    python3 -m venv venv_linux_$OS_NAME
+    echo -e "\e[91m Venv-Python: $SCRIPT_ROOT_DIR/venv_linux_$OS_NAME/bin/python3\e[0m"
 else
-    echo -e "\e[91m Venv-Python: $SCRIPT_ROOT_DIR/venv_linux/bin/python3\e[0m"
-    echo "venv_linux directory already exists."
+    echo -e "\e[91m Venv-Python: $SCRIPT_ROOT_DIR/venv_linux_$OS_NAME/bin/python3\e[0m"
+    echo "venv_linux_$OS_NAME directory already exists."
 fi

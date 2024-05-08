@@ -7,7 +7,7 @@ SCRIPT_ROOT_DIR=$(dirname "$(dirname "$DEPLOY_DIR")")
 main_script="$SCRIPT_ROOT_DIR/main.py"
 python_deploy="$main_script"
 SCRIPT_ROOT_DIR=$(dirname "$(dirname "$DEPLOY_DIR")")
-python_interpreter="$SCRIPT_ROOT_DIR/venv_linux/bin/python3"
+python_interpreter="$SCRIPT_ROOT_DIR/venv_linux_$OS_NAME/bin/python3"
 
 if ! which sudo > /dev/null 2>&1; then
     echo "Installing sudo..."

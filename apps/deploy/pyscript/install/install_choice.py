@@ -1,13 +1,14 @@
-# import os
-from pycore.utils_linux import strtool, ip
+import os
+from pycore.utils_linux import strtool, ip, file
 from pycore.practicals_linux import select
 from apps.deploy.pyscript.tools.server_info import server_info
 from apps.deploy.pyscript.tools.disk import disk
 from apps.deploy.pyscript.tools.docker import docker
 from apps.deploy.pyscript.tools.migrate import migrate
-from apps.deploy.pyscript.provider.deployenv import env, compose_env,main_dir,wwwroot_dir
+from apps.deploy.pyscript.provider.deployenv import *
 from apps.deploy.pyscript.provider.docker_info import docker_info
 from apps.deploy.pyscript.operations.ssh import ssh
+from apps.deploy.pyscript.tools.choice import choice
 from pycore.base.base import Base
 
 class installChoice(Base):
@@ -25,7 +26,7 @@ class installChoice(Base):
     def install(self):
         self.success("The debian12 starts installation using python3")
         self.success("Initialize environment variables")
-        self.init_env()
+        self.init_env() # TODO
         self.success("Configure the ssh service to allow remote login and root account login")
         self.set_ssh_config()
         # disk.create_main_dir()
@@ -36,7 +37,7 @@ class installChoice(Base):
         # self.success("Copy nginx configuration")
         # migrate.copy_nginx_template()
         self.success("Generate docker-compose configuration and compile")
-        docker.gen_docker_compose()
+        docker.gen_docker_compose() # TODO
 
 
     def compiler_docker(self):
@@ -75,6 +76,7 @@ class installChoice(Base):
         env_compose_list = docker_info.get_compose_list_by_env(compose_name)
         env_compose_str = " ".join(env_compose_list)
         select_env_compose_str = select.edit_str(env_compose_str, "Select docker to edit the image")
+        choice.save_to_tmp_settings("DOCKER_COMPOSE_SELECT",select_env_compose_str)
         select_env_compose_list = select_env_compose_str.split()
         valid_compose_list = []
         invalid_compose_list = []
@@ -106,7 +108,7 @@ class installChoice(Base):
             if value == "portainer":
                 prompt_settings = [
                 ]
-                self.set_and_collection_envs(prompt_settings, value, show)
+                choice.set_and_collection_envs(prompt_settings, value, show)
             elif value == "mysql":
                 prompt_settings = [
                     ["MYSQL_ROOT_USER", "root"],
@@ -114,19 +116,19 @@ class installChoice(Base):
                     ["MYSQL_USER", "user"],
                     ["MYSQL_PASSWORD", ],
                 ]
-                self.set_and_collection_envs(prompt_settings, value, show)
+                choice.set_and_collection_envs(prompt_settings, value, show)
             elif value == "nginx":
                 prompt_settings = [
                     ["MIGRATE_NGINX", True, ],
                 ]
-                self.set_and_collection_envs(prompt_settings, value, show)
+                choice.set_and_collection_envs(prompt_settings, value, show)
             elif value == "ztncui":
                 prompt_settings = [
                     ["ZEROTIER_MYADDR", env.get_env("MAIN_IP")],
                     ["ZEROTIER_DOMIAN", ],
                     ["ZTNCUI_PASSWORD", ],
                 ]
-                self.set_and_collection_envs(prompt_settings, value, show)
+                choice.set_and_collection_envs(prompt_settings, value, show)
 
 
     def init_env(self, show=False):
@@ -144,7 +146,7 @@ class installChoice(Base):
             ["DOCKER_SOCK", docker_sock],
         ]
         set_name = "debian12.information"
-        self.set_and_collection_envs(show_settings, setting_name=set_name, show=True)
+        choice.set_and_collection_envs(show_settings, setting_name=set_name, show=True)
 
         docker_root_dir = docker_info.get_docker_dir()
         docker_data_dir = docker_info.get_docker_data_dir()
@@ -154,7 +156,7 @@ class installChoice(Base):
             ["DOCKER_DIR", docker_root_dir],
             ["DOCKER_DATA", docker_data_dir],
         ]
-        self.set_and_collection_envs(prompt_settings, set_name, True)
+        choice.set_and_collection_envs(prompt_settings, set_name, True)
 
         prompt_settings = [
             ["MAIN_IP", main_ip],
@@ -162,7 +164,7 @@ class installChoice(Base):
             ["WEB_DIR", wwwroot_dir],
         ]
         set_name = "global-setting"
-        self.set_and_collection_envs(prompt_settings, set_name, show)
+        choice.set_and_collection_envs(prompt_settings, set_name, show)
         self.init_docker_env(show=show)
 
 
@@ -170,41 +172,6 @@ class installChoice(Base):
         if settings:
             self.relative_settings[setting_name] = settings
 
-    def set_and_collection_envs(self, settings, setting_name="", show=False):
-        if not settings:
-            return
-        self.collection_settings(settings, setting_name)
-        if setting_name != "":
-            p_setting_name = strtool.to_blue(setting_name)
-            p_enter = strtool.to_yellow("<Enter>") if not show else strtool.to_blue("-------")
-            p_skip = strtool.to_blue(" to skip  ") if not show else strtool.to_blue("--------")
-            pre_str = strtool.to_blue("-------")
-            print(f"\n{pre_str}  config:{p_setting_name}, press{p_enter}{p_skip}{pre_str}")
-        green_color = '\033[92m'
-        end_color = '\033[0m'
-        for item in settings:
-            key = item[0]
-            val = env.get_env(key)
-            if val == "":
-                val = item[1] if len(item) > 1 else ""
-            if key.upper().endswith(('PWD', 'PASSWORD', 'PASSWORD')):
-                if not val:
-                    val = strtool.create_password(12)
-
-            p_key = strtool.extend(key)
-            input_nse = ",Input New?:" if show == False else ""
-            prompt = f"{p_key}\t:{green_color}{val}{end_color} {input_nse}"
-            if not show:
-                new_val = input(prompt).strip()
-            else:
-                print(prompt)
-                new_val = ""
-            if new_val != "":
-                val = new_val
-                p_key = strtool.to_red(p_key)
-                p_val = strtool.to_red(val)
-                print(f"The {p_key} has been set to {p_val}")
-            env.set_env(key, val)
 
 
 install_choice = installChoice()

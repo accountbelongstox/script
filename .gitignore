@@ -18,7 +18,8 @@ node_modules/
 .docker-compose
 .bt_template/
 .bt_server_bak/
-
+venv_linux_debian/
+venv_*/
 # 忽略打包和发布的文件
 dist/
 build/
