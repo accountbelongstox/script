@@ -26,3 +26,4 @@ up_command="sudo docker-compose -f $compose_yml up -d"
 echo "Docker-Up-CMD: $up_command"
 $up_command
 
+s
