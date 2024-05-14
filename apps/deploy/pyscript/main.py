@@ -4,8 +4,7 @@ from apps.deploy.pyscript.install.install_choice import install_choice
 from apps.deploy.pyscript.install.install_local_choice import install_local_choice
 from apps.deploy.pyscript.provider.deployenv import env, compose_env, deploy_dir
 from pycore.base.base import Base
-import sys
-
+import sys,os
 
 # import website
 
@@ -13,9 +12,15 @@ class DeplyMainScript(Base):
     def __init__(self):
         pass
 
+    def test(self):
+        from pycore.practicals_linux import env as _env
+        print("deploy-test")
+
     def main(self):
         param_type = sysarg.get_arg(1)
         param_func = sysarg.get_arg(2)
+        print("param_type", param_type)
+        print("param_func", param_func)
 
         if param_type is None:
             print("Missing argument: Please provide the parameter type (yml, env, web).")

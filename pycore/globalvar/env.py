@@ -158,6 +158,7 @@ class Env(Base):
         "utf-7",
     ]
 
+
     def __init__(self, root_dir=None, env_name=".env", delimiter="="):
         if root_dir == None:
             root_dir = self.get_root_dir()
@@ -250,10 +251,21 @@ class Env(Base):
             return None
         return file_name
 
-    def save_key_to_tmp(self, key, val):
-        tmp_dir = gdir.getTempDir()
-        filename = gdir.getTempDir(key)
+    def save_key_to_tmp(self, key, val, force=False):
+        tmp_dir = self.get_local_dir()
+        filename = os.path.join(tmp_dir, f".{key}")
+        if not force and os.path.exists(filename):
+            return
+        with open(filename, 'w') as file:
+            file.write(val)
 
+    def get_local_dir(self):
+        basedir = self.get_basedir(self.root_dir)
+        tmp_dir = gdir.getLocalDir(basedir)
+        return tmp_dir
+
+    def get_basedir(self, root_dir):
+        return os.path.basename(root_dir)
 
     def set_root_dir(self, root_dir, env_name=".env", delimiter="="):
         self.set_delimiter(delimiter)
@@ -302,6 +314,7 @@ class Env(Base):
         example_dict = self.arr_to_dict(example_arr)
         local_dict = self.arr_to_dict(local_arr)
         for key, value in example_dict.items():
+            self.save_key_to_tmp(key, value,False)
             if key not in local_dict:
                 local_dict[key] = value
                 added_keys.append(key)
@@ -413,6 +426,8 @@ class Env(Base):
                 break
         if not key_exists:
             env_arr.append([key, value])
+
+        self.save_key_to_tmp(key, value, True)
         self.save_env(env_arr, file_path)
 
     def get_arg(self, name):
@@ -453,15 +468,42 @@ class Env(Base):
             print("True")
         return True
 
+    # def get_env(self, key, file_path=None):
+    #     # is_arg = self.is_arg("get_env")
+    #     if file_path is None:
+    #         file_path = self.local_env_file
+    #     env_arr = self.read_env(file_path=file_path)
+    #     for subarr in env_arr:
+    #         if subarr[0] == key:
+    #             val = subarr[1]
+    #             self.save_key_to_tmp(key, val, True)
+    #             return val
+    #     return self.save_key_to_tmp(key, "", True)
+
     def get_env(self, key, file_path=None):
-        # is_arg = self.is_arg("get_env")
         if file_path is None:
             file_path = self.local_env_file
         env_arr = self.read_env(file_path=file_path)
+        tmp_dir = self.get_local_dir()
+        env_arr_tmp = self.read_tmp_env(tmp_dir)
+        env_arr.extend(env_arr_tmp)
         for subarr in env_arr:
             if subarr[0] == key:
-                return subarr[1]
+                val = subarr[1]
+                self.save_key_to_tmp(key, val, True)
+                return val
+        self.save_key_to_tmp(key, "", True)
         return ""
+
+    def read_tmp_env(self, tmp_dir):
+        keys = [f for f in os.listdir(tmp_dir) if os.path.isfile(os.path.join(tmp_dir, f)) and f.startswith('.')]
+        env_arr_tmp = []
+        for key in keys:
+            filename = os.path.join(tmp_dir, key)
+            with open(filename, 'r') as file:
+                value = file.read()
+            env_arr_tmp.append([key.lstrip('.'), value])
+        return env_arr_tmp
 
     def get_args(self):
         return self.command_line_args

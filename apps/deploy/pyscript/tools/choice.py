@@ -55,10 +55,9 @@ class Choice(Base):
             self.save_to_tmp_settings(key,val)
 
     def save_to_tmp_settings(self,key,val):
-        env_file_path = os.path.join(gdir.tmp_dd_settings_dir, f"{key}")
+        env_local_dir = env.get_local_dir()
+        env_file_path = os.path.join(env_local_dir, f".{key}")
         file.save(env_file_path, val,"utf-8",True)
-        # if not file.is_file(env_file_path):
-        print(f"File {env_file_path} was created successfully. {key} / {val}")
 
     def get_input(self, prompt, default_value="", original_value="", allow_empty=True):
         green_color = '\033[92m'

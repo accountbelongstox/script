@@ -4,10 +4,13 @@ from pycore.base.base import Base
 from apps.deploy.pyscript.provider.docker_info import docker_info
 from apps.deploy.pyscript.provider.deployenv import env, deploy_dir, compose_env
 from pycore.practicals_linux import yml
+from apps.deploy.pyscript.tools.server_info import server_info
 
 class Docker(Base):
     def __init__(self):
-        pass
+        self.snap_docker = server_info.check_docker_snap()
+        print("snap_docker", self.snap_docker)
+
 
     def mount_docker(self):
         root_dir, daemon_file, snap, sock_file, docker_infos = docker_info.get_docker_snap_and_daemon()
@@ -44,8 +47,8 @@ class Docker(Base):
         self.copy_dockerFiles(compose_dir)
 
     def docker_compose_build_up(self, docker_compose_file):
-        build_command = f"docker-compose -f {docker_compose_file} build"
-        up_command = f"docker-compose -f {docker_compose_file} up -d"
+        build_command = f"sudo docker-compose -f {docker_compose_file} build"
+        up_command = f"sudo docker-compose -f {docker_compose_file} up -d"
 
     def clear_docker_compose_dir(self, compose_dir):
         if file.isdir(compose_dir):
@@ -161,9 +164,11 @@ class Docker(Base):
  
     def start_docker(self):
         if self.snap_docker == "1":
-            plattools.exec_cmd(["sudo", "snap", "start", "docker"], info=False)
+            plattools.exec_cmd(["sudo", "snap", "docker", "start"], info=False)
+        # elif self.snap_docker == "2":
+        #     plattools.exec_cmd(["sudo", "systemctl", "start", "docker"], info=False)
         else:
-            plattools.exec_cmd(["sudo", "systemctl", "start", "docker"], info=False)
+            plattools.exec_cmd(["sudo", "service", "docker", "start"], info=False)
         print("Started Docker")
 
     def setup_environment(self):

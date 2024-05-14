@@ -8,6 +8,7 @@ import time
 import uuid
 import socket
 from urllib.parse import urlparse
+from pycore.globalvar.gdir import gdir
 
 class AutoInstall():
     server_role = ""
@@ -15,12 +16,11 @@ class AutoInstall():
 
     def __init__(self):
         self.venv_dir = self.read_dynamic_dir()
-        print(f"Venv_Dir: {self.venv_dir}")
         self.pip_source_name = self.get_env("PIP_SOURCE")
         self.server_role = self.get_server_role()
 
     def read_dynamic_dir(self):
-        with open('/tmp/venv_dir.txt', 'r') as f:
+        with open('/usr/local/venv_dir', 'r') as f:
             venv_dir = f.read().strip()
         return venv_dir
 
@@ -34,10 +34,10 @@ class AutoInstall():
         return server_role
 
     def install(self):
-        self.install()
+        self.install_package()
 
     def start(self):
-        self.install()
+        self.install_package()
 
     def get_pip_source(self):
         if self.pip_source_name == "tencent":
@@ -154,7 +154,7 @@ class AutoInstall():
         else:
             return False
 
-    def mkdir(self,path):
+    def mkdir(self, path):
         if os.path.exists(path):
             return True
         try:
@@ -165,12 +165,22 @@ class AutoInstall():
             return False
 
     def get_pip_source_url(self):
+        settings_dir = os.path.join(self.venv_dir, "settings")
+        os.makedirs(settings_dir, exist_ok=True)
+        venv_setting_dir = os.path.join(self.venv_dir,"settings")
+        vpython_trusted_host = os.path.join(venv_setting_dir, ".trusted_host")
+
         url = self.get_pip_source()
         pip_cmd = f"{sys.executable} -m pip config set global.index-url {url}"
         trust_url = urlparse(url).hostname
-        trust_cmd = f"{sys.executable} -m pip   config set global.trusted-host {trust_url}"
+        trust_cmd = f"{sys.executable} -m pip config set global.trusted-host {trust_url}"
+        url_set_val = f"-i {url} --trusted-host {trust_url}"
+        if os.path.exists(vpython_trusted_host):
+            return url_set_val
         self.cmd(trust_cmd, info=False)
-        return f"-i {url} --trusted-host {trust_url}"
+        with open(vpython_trusted_host, 'w', encoding='utf-8') as b_file:
+            b_file.write(trust_url)
+        return url_set_val
 
     def is_package_installed(self, package_name):
         package_name = package_name.split('=')[0].strip()
@@ -178,9 +188,8 @@ class AutoInstall():
         result = self.cmd(pip_cmd, info=False)
         return result
 
-    def install(self):
+    def install_package(self):
         python_exe = sys.executable
-        print(f"Python_Executable: {python_exe}")
         if self.server_role != "linux":
             self.info("\ndetection. Must depend on the library.")
         require_file = self.get_requirefile()
@@ -220,14 +229,17 @@ class AutoInstall():
                     success += 1
                     with open(installed_requirements, 'a', encoding='utf-8') as b_file:
                         b_file.write(package + "\n")
+                    fail_message = ""
                 else:
                     fail += 1
-                if fail > 0:
                     fail_message = f",fail:{fail}"
                     self.warn(f"fail: {package}")
-                else:
-                    fail_message = ""
+
+                if fail > 0:
+                    self.warn(f"fail: {package}")
+
                 self.success(f"install {success}/{len(extra_lines)}{fail_message}")
+                print()
 
     def get_mac_address(self):
         mac = uuid.UUID(int=uuid.getnode()).hex[-12:]

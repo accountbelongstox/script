@@ -27,6 +27,11 @@ class Gdir(Base):
                 self.warn(e)
             return True
 
+    def _mkbasedir(self, dir):
+        basedir = os.path.dirname(dir)
+        if not os.path.exists(basedir):
+            os.makedirs(basedir)
+
     def getDesktopFile(self, param=None):
         desktopPath = os.path.join(os.path.expanduser("~"), 'Desktop')
         return os.path.join(desktopPath, param) if param else desktopPath
@@ -46,7 +51,11 @@ class Gdir(Base):
         return fullPath
 
     def getUserProfileDir(self, subDir=None):
-        userProfileDir = os.path.expanduser("~")
+        os_name = platform.system()
+        if os_name == 'Linux':
+            userProfileDir = '/usr/local/'
+        else:
+            userProfileDir = os.path.expanduser("~")
         fullPath = os.path.join(userProfileDir, subDir) if subDir else userProfileDir
         os.makedirs(fullPath, exist_ok=True)
         return fullPath
@@ -94,7 +103,7 @@ class Gdir(Base):
         return self.testAccessibleApi + upath if upath else self.testAccessibleApi
 
     def getLocalDir(self, subDir=None):
-        homeDir = self.getHomeDir('.desktop_by_node')
+        homeDir = self.getUserProfileDir('.pcore_local')
         fullPath = os.path.join(homeDir, subDir) if subDir else homeDir
         os.makedirs(fullPath, exist_ok=True)
         return fullPath
@@ -118,7 +127,11 @@ class Gdir(Base):
         return fullPath
 
     def getHomeDir(self, subDir=None):
-        homeDir = os.path.expanduser("~")
+        os_name = platform.system()
+        if os_name == 'Linux':
+            homeDir = '/home'
+        else:
+            homeDir = os.path.expanduser("~")
         fullPath = os.path.join(homeDir, subDir) if subDir else homeDir
         os.makedirs(fullPath, exist_ok=True)
         return fullPath
@@ -136,18 +149,17 @@ class Gdir(Base):
         elif os_name == 'Windows':
             base_dir = os.environ.get('TEMP', '')
         else:
-            return None
+            return ""
 
         if subDir is not None:
-            temp_dir = os.path.join(base_dir, subDir)
-            os.makedirs(temp_dir, exist_ok=True)
-            return temp_dir
+            base_dir = os.path.join(base_dir, subDir)
+        os.makedirs(base_dir, exist_ok=True)
         return base_dir
 
     def getTempFile(self, subDir=None):
         tempDir = self.getTempDir()
         fullPath = os.path.join(tempDir, subDir) if subDir else tempDir
-        os.makedirs(fullPath, exist_ok=True)
+        self._mkbasedir(fullPath)
         return fullPath
 
     def getAppDataDir(self, subDir=None):

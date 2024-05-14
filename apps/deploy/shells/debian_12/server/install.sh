@@ -5,9 +5,13 @@ OS_VERSION_ID=$(awk -F= '/^VERSION_ID=/ { print $2 }' /etc/os-release | tr -d '"
 DEPLOY_DIR=$(dirname "$( dirname "$( dirname "$BASE_DIR")")")
 SCRIPT_ROOT_DIR=$(dirname "$(dirname "$DEPLOY_DIR")")
 main_script="$SCRIPT_ROOT_DIR/main.py"
-export VENV_DIR=$(cat /tmp/venv_dir.txt)
 #SCRIPT_ROOT_DIR=$(dirname "$(dirname "$DEPLOY_DIR")")
-python_interpreter="$SCRIPT_ROOT_DIR/venv_linux_$OS_NAME/bin/python3.9"
+OS_NAME=$(awk -F= '/^ID=/ { print $2 }' /etc/os-release | tr -d '"')
+OS_VERSION=$(awk -F= '/^VERSION_ID=/ { print $2 }' /etc/os-release | tr -d '"')
+PYTHON_VENV_DIR="venv_linux_${OS_NAME}_${OS_VERSION}"
+PYTHON_INTERPRET="$PYTHON_VENV_DIR"
+python_interpreter="$SCRIPT_ROOT_DIR/$PYTHON_INTERPRET/bin/python3"
+
 execute_scripts() {
     local directory=$1
     if [ -d "$directory" ]; then

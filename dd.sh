@@ -174,7 +174,7 @@ select_install_type() {
         done
         ;;
     "select_docker_compose")
-        "$SCRIPT_DIR/apps/deploy/exec_entry.sh" "server/docker_compiler.sh"
+        "$SCRIPT_DIR/apps/deploy/exec_entry.sh" "server/rebuild_docker_compose.sh"
         ;;
     "enable_local_sharing")
         "$SCRIPT_DIR/apps/deploy/exec_entry.sh" "server/docker_compiler.sh"

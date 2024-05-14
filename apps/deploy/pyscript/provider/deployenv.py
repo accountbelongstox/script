@@ -22,7 +22,6 @@ def get_os_info():
 
 
 systemname,systemversion = get_os_info()
-print(systemname,systemversion)
 _deploy_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 _env.set_root_dir(_deploy_dir)
 tmpdir = "/home/script/.tmp"

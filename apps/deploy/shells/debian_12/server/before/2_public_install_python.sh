@@ -59,18 +59,23 @@ fi
 /usr/local/bin/python3.9 --version
 
 OS_NAME=$(awk -F= '/^ID=/ { print $2 }' /etc/os-release | tr -d '"')
-export VENV_DIR="$SCRIPT_ROOT_DIR/venv_linux_$OS_NAME"
+OS_VERSION=$(awk -F= '/^VERSION_ID=/ { print $2 }' /etc/os-release | tr -d '"')
+PYTHON_VENV_DIR="venv_linux_${OS_NAME}_${OS_VERSION}"
+PYTHON_INTERPRET="$PYTHON_VENV_DIR"
+VENV_DIR="$SCRIPT_ROOT_DIR/$PYTHON_INTERPRET"
+
+echo "$VENV_DIR" > /usr/local/venv_dir
+
 echo "Venv_Dir:$VENV_DIR"
-echo $VENV_DIR > /tmp/venv_dir.txt
-s
+
 if [ ! -d "$VENV_DIR" ]; then
-    echo "venv_linux_$OS_NAME directory does not exist. Creating..."
+    echo "$PYTHON_VENV_DIR directory does not exist. Creating..."
     cd "$SCRIPT_ROOT_DIR" || exit
     /usr/local/bin/python3.9 -m venv "$VENV_DIR"
 
     echo -e "\e[91m Venv-Python: $VENV_DIR/bin/python3.9\e[0m"
 else
     echo -e "\e[91m Venv-Python: $VENV_DIR/bin/python3.9\e[0m"
-    echo "venv_linux_$OS_NAME directory already exists."
+    echo "$PYTHON_VENV_DIR directory already exists."
 fi
 
