@@ -46,8 +46,8 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
     fi
 
     # Create symbolic links
-    ln -s /usr/local/bin/python3.9/bin/python3.9 /usr/bin/python3.9
-    ln -s /usr/local/bin/python3.9/bin/pip3.9 /usr/bin/pip3.9
+#    ln -s /usr/local/bin/python3.9/bin/python3.9 /usr/bin/python3.9
+#    ln -s /usr/local/bin/python3.9/bin/pip3.9 /usr/bin/pip3.9
     ln -s /usr/local/bin/python3.9/bin/python3.9 /usr/local/bin/python3.9
     ln -s /usr/local/bin/python3.9/bin/pip3.9 /usr/local/bin/pip3.9
 
