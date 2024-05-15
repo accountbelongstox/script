@@ -14,7 +14,7 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
 
     # Install prerequisites
     sudo apt update && sudo apt upgrade
-    sudo apt install -y wget build-essential libreadline-gplv2-dev libncursesw5-dev \
+    sudo apt install -y wget build-essential libreadline-dev libncursesw5-dev \
          libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev \
          libffi-dev zlib1g-dev openssl libssl-dev libbz2-dev libreadline-dev \
          libsqlite3-dev llvm libncurses5-dev xz-utils tk-dev
