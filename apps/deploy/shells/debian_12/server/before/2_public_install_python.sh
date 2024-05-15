@@ -23,16 +23,17 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
     sudo apt-get -y install libncurses5-dev libncursesw5-dev
 
     # Download Python source code
-    sudo wget -P /tmp https://www.python.org/ftp/python/3.9.16/Python-3.9.16.tgz
-
-    # Extract archive
-    FILE="/tmp/Python-3.9.16"
-    echo "FILE : $FILE"
-    if [ -d "$FILE" ]; then
-        echo "$FILE exists."
-    else
-        sudo tar xzf /tmp/Python-3.9.16.tgz -C /tmp
-    fi
+#    sudo wget -P /tmp https://www.python.org/ftp/python/3.9.16/Python-3.9.16.tgz
+#
+#    cd /tmp
+#    # Extract archive
+#    FILE="/tmp/Python-3.9.16"
+#    echo "FILE : $FILE"
+#    if [ -f "$FILE" ]; then
+#        echo "$FILE exists."
+#    else
+#        sudo tar xzf /tmp/Python-3.9.16.tgz -C /tmp
+#    fi
 
     # Compile Python source
     cd /tmp/Python-3.9.16
@@ -49,7 +50,7 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
     fi
 
     if [ -L /usr/local/bin/python3.9/bin/python3.9 ]; then
-    sudo rm /usr/local/bin/python3.9/bin/python3.9
+        sudo rm /usr/local/bin/python3.9/bin/python3.9
     fi
 
     if [ -L /usr/bin/pip3.9 ]; then
@@ -57,7 +58,7 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
     fi
 
     if [ -L /usr/local/bin/python3.9/bin/pip3.9 ]; then
-    sudo rm /usr/local/bin/python3.9/bin/pip3.9
+        sudo rm /usr/local/bin/python3.9/bin/pip3.9
     fi
 
     # Create symbolic links
