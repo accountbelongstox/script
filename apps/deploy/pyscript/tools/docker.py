@@ -9,7 +9,6 @@ from apps.deploy.pyscript.tools.server_info import server_info
 class Docker(Base):
     def __init__(self):
         self.snap_docker = server_info.check_docker_snap()
-        print("snap_docker", self.snap_docker)
 
 
     def mount_docker(self):
