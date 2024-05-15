@@ -30,9 +30,8 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
 
     if [ -f "$FILE" ]; then
         echo "$FILE exists."
-        tar xzf /tmp/Python-3.9.16.tgz -C /tmp
     else
-        echo "$FILE does not exist."
+        tar xzf /tmp/Python-3.9.16.tgz -C /tmp
     fi
 
     # Compile Python source
