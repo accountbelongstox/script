@@ -27,7 +27,6 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
 
     # Extract archive
     FILE="/tmp/Python-3.9.16"
-
     if [ -f "$FILE" ]; then
         echo "$FILE exists."
     else
@@ -63,6 +62,7 @@ else
 fi
 
 /usr/local/bin/python3.9 --version
+/usr/local/bin/pip3.9 --version
 
 OS_NAME=$(awk -F= '/^ID=/ { print $2 }' /etc/os-release | tr -d '"')
 OS_VERSION=$(awk -F= '/^VERSION_ID=/ { print $2 }' /etc/os-release | tr -d '"')

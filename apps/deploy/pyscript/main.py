@@ -19,8 +19,6 @@ class DeplyMainScript(Base):
     def main(self):
         param_type = sysarg.get_arg(1)
         param_func = sysarg.get_arg(2)
-        print("param_type", param_type)
-        print("param_func", param_func)
 
         if param_type is None:
             print("Missing argument: Please provide the parameter type (yml, env, web).")
