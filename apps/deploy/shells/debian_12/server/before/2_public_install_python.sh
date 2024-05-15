@@ -31,7 +31,7 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
     if [ -d "$FILE" ]; then
         echo "$FILE exists."
     else
-        tar xzf /tmp/Python-3.9.16.tgz -C /tmp
+        sudo tar xzf /tmp/Python-3.9.16.tgz -C /tmp
     fi
 
     # Compile Python source
@@ -48,8 +48,16 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
         sudo rm /usr/bin/python3.9
     fi
 
+    if [ -L /usr/local/bin/python3.9/bin/python3.9 ]; then
+    sudo rm /usr/local/bin/python3.9/bin/python3.9
+    fi
+
     if [ -L /usr/bin/pip3.9 ]; then
         sudo rm /usr/bin/pip3.9
+    fi
+
+    if [ -L /usr/local/bin/python3.9/bin/pip3.9 ]; then
+    sudo rm /usr/local/bin/python3.9/bin/pip3.9
     fi
 
     # Create symbolic links
