@@ -15,9 +15,9 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
     # Install prerequisites
     sudo apt update && sudo apt upgrade
     sudo apt install -y wget build-essential libreadline-dev libncursesw5-dev \
-         libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev \
-         libffi-dev zlib1g-dev openssl libssl-dev libbz2-dev libreadline-dev \
-         libsqlite3-dev llvm libncurses5-dev xz-utils tk-dev
+        libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev \
+        libffi-dev zlib1g-dev openssl libssl-dev libbz2-dev libreadline-dev \
+        libsqlite3-dev llvm libncurses5-dev xz-utils tk-dev
 
     # Install the curses library
     sudo apt-get -y install libncurses5-dev libncursesw5-dev
@@ -25,11 +25,10 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
     #Download Python source code
     sudo wget -P /tmp https://www.python.org/ftp/python/3.9.16/Python-3.9.16.tgz
 
-
-     Extract archive
+    #Extract archive
     FILE="/tmp/Python-3.9.16"
     echo "FILE : $FILE"
-    if [ -f "$FILE" ]; then
+    if [ -d "$FILE" ]; then
         echo "$FILE exists."
     else
         sudo tar xzf /tmp/Python-3.9.16.tgz -C /tmp
@@ -37,10 +36,9 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
 
     # Compile Python source
     cd /tmp/Python-3.9.16
-    sudo ./configure --enable-optimizations --prefix=/usr/local/bin/python3.9 --with-openssl --with-curses
+    sudo ./configure --enable-optimizations --prefix=/usr/local/python3.9 --with-openssl --with-curses
     sudo make
     sudo make install
-
 
     sudo apt install -y libncurses5-dev
 
@@ -49,24 +47,13 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
         sudo rm /usr/bin/python3.9
     fi
 
-#    if [ -L /usr/local/bin/python3.9/bin/python3.9 ]; then
-#        sudo rm /usr/local/bin/python3.9/bin/python3.9
-#    fi
-
     if [ -L /usr/bin/pip3.9 ]; then
         sudo rm /usr/bin/pip3.9
     fi
 
-#    if [ -L /usr/local/bin/python3.9/bin/pip3.9 ]; then
-#        sudo rm /usr/local/bin/python3.9/bin/pip3.9
-
     #Create symbolic links
-    ln -s /usr/local/bin/python3.9/bin/python3.9 /usr/bin/python3.9
-    ln -s /usr/local/bin/python3.9/bin/pip3.9 /usr/bin/pip3.9
-    ln -s /usr/local/bin/python3.9/bin/python3.9 /usr/local/bin/python3.9
-    ln -s /usr/local/bin/python3.9/bin/pip3.9 /usr/local/bin/pip3.9
-
-
+    sudo ln -s /usr/local/python3.9/bin/python3.9 /usr/bin/python3.9
+    sudo ln -s /usr/local/python3.9/bin/pip3.9 /usr/bin/pip3.9
 
     echo "Python 3.9 installed successfully."
 else
