@@ -92,44 +92,18 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
     fi
 
     # Compile Python source
-    # Change directory to Python source directory
     cd /tmp/Python-3.9.16
-
-    # Configure, make, and install Python
     sudo ./configure --enable-optimizations --prefix=/usr/local/python3.9 --with-openssl --with-curses
     sudo make
     sudo make install
-
-    # Make sure /usr/bin/python3 has executable permission
     sudo chmod +x /usr/bin/python3
 
-    # Define symbolic link targets
-    python_link_target="/usr/local/python3.9/bin/python3.9"
-    pip_link_target="/usr/local/python3.9/bin/pip3.9"
 
-    # Define symbolic link paths
-    python_link_paths=(
-        "/usr/bin/python3.9"
-        "/usr/local/bin/python3.9"
-    )
-    pip_link_paths=(
-        "/usr/bin/pip3.9"
-        "/usr/local/bin/pip3.9"
-    )
-
-    # Remove existing symbolic links and create new ones
-    for link_path in "${python_link_paths[@]}"; do
-        if [ -L "$link_path" ]; then
-            sudo rm "$link_path"
-        fi
-        sudo ln -s "$python_link_target" "$link_path"
-    done
-
-    for link_path in "${pip_link_paths[@]}"; do
-        if [ -L "$link_path" ]; then
-            sudo rm "$link_path"
-        fi
-        sudo ln -s "$pip_link_target" "$link_path"
+    for cmd in python3.9 pip3.9; do
+    if [ -L /usr/local/bin/$cmd ]; then
+        sudo rm /usr/local/bin/$cmd
+    fi
+    sudo ln -s /usr/local/python3.9/bin/$cmd /usr/local/bin/$cmd
     done
 
     echo "Python 3.9 installed successfully."
