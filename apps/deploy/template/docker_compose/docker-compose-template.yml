@@ -32,8 +32,8 @@ services:
       - "${DOCKER_DATA}/nginx/proxy_temp_dir:/home/tmp/proxy_temp_dir"
       - "${DOCKER_DATA}/nginx/proxy_cache_dir:/home/tmp/proxy_cache_dir"
       - "${DOCKER_DATA}/nginx/wwwlogs:/www/wwwlogs"
-#      - "${SERVICE_DIR}/conf/nginx:/etc/nginx"
-      - "/www/service/compose/conf/nginx:/etc/nginx"
+      - "${SERVICE_DIR}/conf/nginx:/etc/nginx"
+#      - "/www/service/compose/conf/nginx:/etc/nginx"
       - "${WEB_DIR}:/www/wwwroot"
 #    command: "chmod -R 777 /www/wwwroot"
 #    links:
