@@ -110,10 +110,12 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
     if [ -L /usr/bin/python3.9 ]; then
         sudo rm /usr/bin/python3.9
     fi
+    sudo ln -s /usr/local/python3.9/bin/python3.9 /usr/bin/python3.9
 
     if [ -L /usr/bin/pip3.9 ]; then
         sudo rm /usr/bin/pip3.9
     fi
+    sudo ln -s /usr/local/python3.9/bin/pip3.9 /usr/bin/pip3.9
 
     #Create symbolic links
     if [ -L /usr/local/bin/python3.9 ]; then
