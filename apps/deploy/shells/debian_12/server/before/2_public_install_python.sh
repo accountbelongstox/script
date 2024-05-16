@@ -81,11 +81,11 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
     sudo wget -P /tmp https://www.python.org/ftp/python/3.9.16/Python-3.9.16.tgz
 
     #Extract archive
-#    if [ ! -d "/tmp/Python-3.9.16" ]; then
-#        echo "/tmp/Python-3.9.16 exists."
-#    else
-#        sudo tar xzf /tmp/Python-3.9.16.tgz -C /tmp
-#    fi
+    if [ ! -d /tmp/Python-3.9.16 ]; then
+        echo "/tmp/Python-3.9.16 exists."
+    else
+        sudo tar xzf /tmp/Python-3.9.16.tgz -C /tmp
+    fi
 
     # Compile Python source
     cd /tmp/Python-3.9.16
@@ -96,25 +96,25 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
 
     sudo apt install -y libncurses5-dev
 
-#    if [ -L /usr/bin/python3.9 ]; then
-#        sudo rm /usr/bin/python3.9
-#    fi
-#    sudo ln -s /usr/local/python3.9/bin/python3.9 /usr/bin/python3.9
-#
-#    if [ -L /usr/bin/pip3.9 ]; then
-#        sudo rm /usr/bin/pip3.9
-#    fi
-#    sudo ln -s /usr/local/python3.9/bin/pip3.9 /usr/bin/pip3.9
-#
-#    if [ -L /usr/local/bin/python3.9 ]; then
-#    sudo rm /usr/local/bin/python3.9
-#    fi
-#    sudo ln -s /usr/local/python3.9/bin/python3.9 /usr/local/bin/python3.9
-#
-#    if [ -L /usr/local/bin/pip3.9 ]; then
-#        sudo rm /usr/local/bin/pip3.9
-#    fi
-#    sudo ln -s /usr/local/python3.9/bin/pip3.9 /usr/local/bin/pip3.9
+    if [ -L /usr/bin/python3.9 ]; then
+        sudo rm /usr/bin/python3.9
+    fi
+    sudo ln -s /usr/local/python3.9/bin/python3.9 /usr/bin/python3.9
+
+    if [ -L /usr/bin/pip3.9 ]; then
+        sudo rm /usr/bin/pip3.9
+    fi
+    sudo ln -s /usr/local/python3.9/bin/pip3.9 /usr/bin/pip3.9
+
+    if [ -L /usr/local/bin/python3.9 ]; then
+    sudo rm /usr/local/bin/python3.9
+    fi
+    sudo ln -s /usr/local/python3.9/bin/python3.9 /usr/local/bin/python3.9
+
+    if [ -L /usr/local/bin/pip3.9 ]; then
+        sudo rm /usr/local/bin/pip3.9
+    fi
+    sudo ln -s /usr/local/python3.9/bin/pip3.9 /usr/local/bin/pip3.9
 
     echo "Python 3.9 installed successfully."
 else
