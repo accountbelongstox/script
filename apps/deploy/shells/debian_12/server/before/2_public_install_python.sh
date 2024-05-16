@@ -91,9 +91,12 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
         echo "/tmp/Python-3.9.16 exists."
     fi
 
+    sudo apt-get install openssl
+    sudo apt-get install libssl-dev
+
     # Compile Python source
     cd /tmp/Python-3.9.16
-    sudo ./configure --enable-optimizations --prefix=/usr/local/python3.9 --with-openssl --with-curses
+    sudo ./configure --enable-optimizations --prefix=/usr/local/python3.9 --with-openssl=/usr/bin/openssl --with-curses
     sudo make
     sudo make install
     sudo chmod +x /usr/bin/python3
