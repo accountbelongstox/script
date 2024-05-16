@@ -1,8 +1,11 @@
+FROM debian:bookworm-slim
+
+FROM alpine:latest
+
+# Update APK source and upgrade existing packages
 RUN echo "https://mirrors.aliyun.com/alpine/v3.4/main/" > /etc/apk/repositories \
     && apk update \
-    && apk add --no-cache ca-certificates curl openssl tar xz
-
-FROM debian:bookworm-slim
+    && apk upgrade
 
 # Installation command from your original Dockerfile
 RUN apk add --no-cache ca-certificates curl openssl tar xz
