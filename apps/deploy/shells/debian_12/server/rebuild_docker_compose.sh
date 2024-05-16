@@ -10,7 +10,6 @@ OS_VERSION=$(awk -F= '/^VERSION_ID=/ { print $2 }' /etc/os-release | tr -d '"')
 PYTHON_VENV_DIR="venv_linux_${OS_NAME}_${OS_VERSION}"
 PYTHON_INTERPRET="$PYTHON_VENV_DIR"
 python_interpreter="$SCRIPT_ROOT_DIR/$PYTHON_INTERPRET/bin/python3"
-echo "python_interpreter :12"
 
 #compose_yml=$(sudo "$python_interpreter" "$main_script" deploy env get_env DOCKER_COMPOSE_FILE)
 
@@ -25,5 +24,3 @@ echo "docker-compose-yml: $compose_yml"
 up_command="sudo docker-compose -f $compose_yml up -d"
 echo "Docker-Up-CMD: $up_command"
 $up_command
-
-s

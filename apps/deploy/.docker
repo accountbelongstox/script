@@ -1,1 +1,1 @@
-default=mysql
+default=mysql portainer nginx php83 php82 php74 redis postgres

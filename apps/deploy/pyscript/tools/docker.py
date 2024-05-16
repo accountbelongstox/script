@@ -158,7 +158,7 @@ class Docker(Base):
         if self.snap_docker == "1":
             plattools.exec_cmd(["sudo", "snap", "stop", "docker"], info=False)
         else:
-            plattools.exec_cmd(["sudo", "systemctl", "stop", "docker"], info=False)
+            plattools.exec_cmd(["sudo", "service", "stop", "docker"], info=False)
         self.warn("Stopped Docker")
  
     def start_docker(self):

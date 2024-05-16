@@ -1,5 +1,15 @@
 FROM debian:bookworm-slim
 
+FROM alpine:latest
+
+# Update APK source and upgrade existing packages
+RUN echo "https://mirrors.aliyun.com/alpine/v3.4/main/" > /etc/apk/repositories \
+    && apk update \
+    && apk upgrade
+
+# Installation command from your original Dockerfile
+RUN apk add --no-cache ca-certificates curl openssl tar xz
+
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 #RUN groupadd -r www-data && useradd -r --create-home -g www-data www-data
 
