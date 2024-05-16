@@ -98,7 +98,6 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
     sudo make install
     sudo chmod +x /usr/bin/python3
 
-    sudo apt install -y libncurses5-dev
 
     if [ -L /usr/bin/python3.9 ]; then
         sudo rm /usr/bin/python3.9
