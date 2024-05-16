@@ -81,11 +81,11 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
     sudo wget -P /tmp https://www.python.org/ftp/python/3.9.16/Python-3.9.16.tgz
 
     #Extract archive
-    if [ ! -d "/tmp/Python-3.9.16" ]; then
-        echo "/tmp/Python-3.9.16 exists."
-    else
-        sudo tar xzf /tmp/Python-3.9.16.tgz -C /tmp
-    fi
+#    if [ ! -d "/tmp/Python-3.9.16" ]; then
+#        echo "/tmp/Python-3.9.16 exists."
+#    else
+#        sudo tar xzf /tmp/Python-3.9.16.tgz -C /tmp
+#    fi
 
     # Compile Python source
     cd /tmp/Python-3.9.16
