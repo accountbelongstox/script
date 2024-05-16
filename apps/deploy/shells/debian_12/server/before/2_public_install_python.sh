@@ -78,14 +78,18 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
     sudo apt-get -y install libncurses5-dev libncursesw5-dev
 
     #Download Python source code
-    sudo wget -P /tmp https://www.python.org/ftp/python/3.9.16/Python-3.9.16.tgz
+    if [ ! -f /tmp/Python-3.9.16.tgz ]; then
+        sudo wget -P /tmp https://www.python.org/ftp/python/3.9.16/Python-3.9.16.tgz
+    else
+        echo "/tmp/Python-3.9.16.tgz exists, skipping download."
+    fi
 
     #Extract archive
-#    if [ ! -d /tmp/Python-3.9.16 ]; then
-#        echo "/tmp/Python-3.9.16 exists."
-#    else
-#        sudo tar xzf /tmp/Python-3.9.16.tgz -C /tmp
-#    fi
+    if [ ! -d /tmp/Python-3.9.16 ]; then
+        sudo tar xzf /tmp/Python-3.9.16.tgz -C /tmp
+    else
+        echo "/tmp/Python-3.9.16 exists."
+    fi
 
     # Compile Python source
     cd /tmp/Python-3.9.16
