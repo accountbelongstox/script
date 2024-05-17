@@ -1,97 +1,64 @@
-FROM debian:bullseye-slim
+ARG ALPINE_VERSION=3.19
+FROM alpine:${ALPINE_VERSION}
+LABEL Maintainer="Tim de Pater <code@trafex.nl>"
+LABEL Description="Lightweight container with Nginx 1.24 & PHP 8.3 based on Alpine Linux."
+# Setup document root
+WORKDIR /var/www/html
 
-RUN apt-get update \
-    && apt-get upgrade -y \
-    && apt-get install -y --no-install-recommends \
-        ca-certificates \
-        curl \
-        openssl \
-        tar \
-        xz \
-        nginx \
-        php-fpm \
-        php-mysql \
-        libldap-dev \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# Install packages and remove default server definition
+RUN apk add --no-cache \
+  curl \
+  nginx \
+  php83 \
+  php83-ctype \
+  php83-curl \
+  php83-dom \
+  php83-fileinfo \
+  php83-fpm \
+  php83-gd \
+  php83-intl \
+  php83-mbstring \
+  php83-mysqli \
+  php83-opcache \
+  php83-openssl \
+  php83-phar \
+  php83-session \
+  php83-tokenizer \
+  php83-xml \
+  php83-xmlreader \
+  php83-xmlwriter \
+  supervisor
 
-ENV HTTPD_PREFIX /usr/local/apache2
-ENV PATH $HTTPD_PREFIX/bin:$PATH
+# Configure nginx - http
+COPY config/nginx.conf /etc/nginx/nginx.conf
+# Configure nginx - default server
+COPY config/conf.d /etc/nginx/conf.d/
 
-RUN mkdir -p "$HTTPD_PREFIX" \
-    && useradd --system --create-home --shell /usr/sbin/nologin www-data \
-    && chown www-data:www-data "$HTTPD_PREFIX"
+# Configure PHP-FPM
+ENV PHP_INI_DIR /etc/php83
+COPY config/fpm-pool.conf ${PHP_INI_DIR}/php-fpm.d/www.conf
+COPY config/php.ini ${PHP_INI_DIR}/conf.d/custom.ini
 
-WORKDIR $HTTPD_PREFIX
+# Configure supervisord
+COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        bzip2 \
-        dpkg-dev \
-        gcc \
-        gnupg \
-        libapr1-dev \
-        libaprutil1-dev \
-        libbrotli-dev \
-        libcurl4-openssl-dev \
-        libjansson-dev \
-        libnghttp2-dev \
-        libpcre3-dev \
-        libssl-dev \
-        libxml2-dev \
-        make \
-        patch \
-        wget \
-        zlib1g-dev \
-    && rm -rf /var/lib/apt/lists/*
+# Make sure files/folders needed by the processes are accessable when they run under the nobody user
+RUN chown -R nobody.nobody /var/www/html /run /var/lib/nginx /var/log/nginx
 
-ENV HTTPD_VERSION 2.4.59
-ENV HTTPD_SHA256 ec51501ec480284ff52f637258135d333230a7d229c3afa6f6c2f9040e321323
+# Create symlink for php
+RUN ln -s /usr/bin/php83 /usr/bin/php
 
-RUN wget -O httpd.tar.bz2 "https://dlcdn.apache.org/httpd/httpd-$HTTPD_VERSION.tar.bz2" \
-    && echo "$HTTPD_SHA256 *httpd.tar.bz2" | sha256sum -c - \
-    && mkdir src \
-    && tar -xf httpd.tar.bz2 -C src --strip-components=1 \
-    && rm httpd.tar.bz2
+# Switch to use a non-root user from here on
+USER nobody
 
-COPY patches /tmp/patches
+# Add application
+COPY --chown=nobody src/ /var/www/html/
 
-RUN set -eux; \
-    cd src; \
-    patches() { \
-        while [ "$#" -gt 0 ]; do \
-            local patchFile="$1"; shift; \
-            local patchSha256="$1"; shift; \
-            echo "$patchSha256 *$patchFile" | sha256sum -c -; \
-            patch -p0 < "$patchFile"; \
-            rm -f "$patchFile"; \
-        done; \
-    }; \
-    patches /tmp/patches/*; \
-    gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)"; \
-    CFLAGS="$(dpkg-buildflags --get CFLAGS)"; \
-    CPPFLAGS="$(dpkg-buildflags --get CPPFLAGS)"; \
-    LDFLAGS="$(dpkg-buildflags --get LDFLAGS)"; \
-    ./configure \
-        --build="$gnuArch" \
-        --prefix="$HTTPD_PREFIX" \
-        --enable-mods-shared=reallyall \
-        --enable-mpms-shared=all \
-        --enable-pie \
-        CFLAGS="-pipe $CFLAGS" \
-        CPPFLAGS="$CPPFLAGS" \
-        LDFLAGS="-Wl,--as-needed $LDFLAGS"; \
-    make -j "$(nproc)"; \
-    make install; \
-    cd ..; \
-    rm -rf src /tmp/patches
+# Expose the port nginx is reachable on
+EXPOSE 8080
 
-RUN apt-mark auto '.*' > /dev/null
+# Let supervisord start nginx & php-fpm
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
-STOPSIGNAL SIGWINCH
-
-COPY httpd-foreground /usr/local/bin/
-RUN chmod +x /usr/local/bin/httpd-foreground
-
-EXPOSE 80
-CMD ["httpd-foreground"]
+# Configure a healthcheck to validate that everything is up&running
+HEALTHCHECK --timeout=10s CMD curl --silent --fail http://127.0.0.1:8080/fpm-ping || exit 1
