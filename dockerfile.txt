@@ -1,7 +1,5 @@
-# Use a newer base image
 FROM debian:bullseye-slim
 
-# Update apt and install packages
 RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends \
@@ -13,21 +11,19 @@ RUN apt-get update \
         nginx \
         php-fpm \
         php-mysql \
+        libldap-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Set environment variables
 ENV HTTPD_PREFIX /usr/local/apache2
 ENV PATH $HTTPD_PREFIX/bin:$PATH
 
-# Create user and working directory
 RUN mkdir -p "$HTTPD_PREFIX" \
     && useradd --system --create-home --shell /usr/sbin/nologin www-data \
     && chown www-data:www-data "$HTTPD_PREFIX"
 
 WORKDIR $HTTPD_PREFIX
 
-# Install runtime dependencies
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         bzip2 \
@@ -39,7 +35,6 @@ RUN apt-get update \
         libbrotli-dev \
         libcurl4-openssl-dev \
         libjansson-dev \
-        libldap-dev \
         libnghttp2-dev \
         libpcre3-dev \
         libssl-dev \
@@ -50,7 +45,6 @@ RUN apt-get update \
         zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Download and verify httpd source code
 ENV HTTPD_VERSION 2.4.59
 ENV HTTPD_SHA256 ec51501ec480284ff52f637258135d333230a7d229c3afa6f6c2f9040e321323
 RUN wget -O httpd.tar.bz2 "https://dlcdn.apache.org/httpd/httpd-$HTTPD_VERSION.tar.bz2" \
@@ -58,7 +52,6 @@ RUN wget -O httpd.tar.bz2 "https://dlcdn.apache.org/httpd/httpd-$HTTPD_VERSION.t
     && tar -xf httpd.tar.bz2 -C src --strip-components=1 \
     && rm httpd.tar.bz2
 
-# Apply patches and compile httpd
 COPY patches /tmp/patches
 RUN set -eux; \
     cd src; \
@@ -90,18 +83,12 @@ RUN set -eux; \
     && cd .. \
     && rm -rf src /tmp/patches
 
-# Reset apt-mark
 RUN apt-mark auto '.*' > /dev/null
 
-# Reset stop signal
 STOPSIGNAL SIGWINCH
 
-# Copy httpd-foreground script and set executable permission
 COPY httpd-foreground /usr/local/bin/
 RUN chmod +x /usr/local/bin/httpd-foreground
 
-# Expose port and set startup command
 EXPOSE 80
 CMD ["httpd-foreground"]
-
-
