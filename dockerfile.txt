@@ -47,12 +47,15 @@ RUN apt-get update \
 
 ENV HTTPD_VERSION 2.4.59
 ENV HTTPD_SHA256 ec51501ec480284ff52f637258135d333230a7d229c3afa6f6c2f9040e321323
+
 RUN wget -O httpd.tar.bz2 "https://dlcdn.apache.org/httpd/httpd-$HTTPD_VERSION.tar.bz2" \
     && echo "$HTTPD_SHA256 *httpd.tar.bz2" | sha256sum -c - \
+    && mkdir src \
     && tar -xf httpd.tar.bz2 -C src --strip-components=1 \
     && rm httpd.tar.bz2
 
 COPY patches /tmp/patches
+
 RUN set -eux; \
     cd src; \
     patches() { \
@@ -77,11 +80,11 @@ RUN set -eux; \
         --enable-pie \
         CFLAGS="-pipe $CFLAGS" \
         CPPFLAGS="$CPPFLAGS" \
-        LDFLAGS="-Wl,--as-needed $LDFLAGS" \
-    && make -j "$(nproc)" \
-    && make install \
-    && cd .. \
-    && rm -rf src /tmp/patches
+        LDFLAGS="-Wl,--as-needed $LDFLAGS"; \
+    make -j "$(nproc)"; \
+    make install; \
+    cd ..; \
+    rm -rf src /tmp/patches
 
 RUN apt-mark auto '.*' > /dev/null
 
