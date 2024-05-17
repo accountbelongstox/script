@@ -57,10 +57,10 @@ services:
       - "443:443"
 #    image: 'uozi/nginx_ui:latest'
   php83:
-    build:
-      context: ./php/8.3/alpine3.19/fpm
-      dockerfile: Dockerfile
-#    image: php:8.2-rc-fpm
+#    build:
+#      context: ./php/8.3/alpine3.19/fpm
+#      dockerfile: Dockerfile
+    image: bitnami/php-fpm:8.3.7-debian-12-r1
     container_name: php83
     restart: unless-stopped
     volumes:
