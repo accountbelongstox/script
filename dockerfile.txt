@@ -1,50 +1,97 @@
-FROM mcr.microsoft.com/powershell:debian-11
+FROM debian:bullseye-slim
 
-ARG REPOSITORY=PSGallery
-ARG MODULE=Az
-ARG CONFIG=config
-ARG AZURERM_CONTEXT_SETTINGS=AzureRmContextSettings.json
-ARG AZURE=/root/.Azure
-ARG VCS_REF="none"
-ARG BUILD_DATE=
-ARG VERSION=
-ARG LATEST=
-ARG BLOB_URL=
-ARG IMAGE_NAME=mcr.microsoft.com/azure-powershell:${VERSION}-debian-11
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && apt-get install -y --no-install-recommends \
+        ca-certificates \
+        curl \
+        openssl \
+        tar \
+        xz \
+        nginx \
+        php-fpm \
+        php-mysql \
+        libldap-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-ENV AZUREPS_HOST_ENVIRONMENT="dockerImage/${VERSION}-debian-11"
+ENV HTTPD_PREFIX /usr/local/apache2
+ENV PATH $HTTPD_PREFIX/bin:$PATH
 
-LABEL maintainer="Azure PowerShell Team <azdevxps@microsoft.com>" \
-      readme.md="http://aka.ms/azpsdockerreadme" \
-      description="This Dockerfile will install the latest release of Azure PowerShell." \
-      org.label-schema.build-date=${BUILD_DATE} \
-      org.label-schema.usage="http://aka.ms/azpsdocker" \
-      org.label-schema.url="http://aka.ms/azpsdockerreadme" \
-      org.label-schema.vcs-url="https://github.com/Azure/azure-powershell" \
-      org.label-schema.name="azure powershell" \
-      org.label-schema.vendor="Azure PowerShell" \
-      org.label-schema.version=${VERSION} \
-      org.label-schema.schema-version="1.0" \
-      org.label-schema.vcs-ref=${VCS_REF} \
-      org.label-schema.docker.cmd="docker run --rm ${IMAGE_NAME} pwsh -c '\$PSVERSIONTABLE'" \
-      org.label-schema.docker.cmd.devel="docker run -it --rm -e 'DebugPreference=Continue' ${IMAGE_NAME} pwsh" \
-      org.label-schema.docker.cmd.test="currently not available" \
-      org.label-schema.docker.cmd.help="docker run --rm ${IMAGE_NAME} pwsh -c Get-Help"
+RUN mkdir -p "$HTTPD_PREFIX" \
+    && useradd --system --create-home --shell /usr/sbin/nologin www-data \
+    && chown www-data:www-data "$HTTPD_PREFIX"
 
-RUN if [ "${LATEST}" = True ] ; then \
-        # install latest azure-powershell from BLOB
-        pwsh -Command Invoke-WebRequest -uri ${BLOB_URL} -OutFile latest.tar.gz && \       
-        mkdir latest  && \
-        tar -zxvf ./latest.tar.gz -C ./latest  && \
-        pwsh -Command ./latest/InstallModule.ps1 -Scope AllUsers ;\
-    else \
-        # install old azure-powershell from PSGallery
-        pwsh -Command Set-PSRepository -Name ${REPOSITORY} -InstallationPolicy Trusted && \
-        pwsh -Command Install-Module -Name ${MODULE} -RequiredVersion ${VERSION} -Scope AllUsers -Repository ${REPOSITORY} && \
-        pwsh -Command Set-PSRepository -Name ${REPOSITORY} -InstallationPolicy Untrusted ;\
-    fi
+WORKDIR $HTTPD_PREFIX
 
-# create AzureRmContextSettings.json before it was generated
-COPY ${CONFIG}/${AZURERM_CONTEXT_SETTINGS} ${AZURE}/${AZURERM_CONTEXT_SETTINGS}
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        bzip2 \
+        dpkg-dev \
+        gcc \
+        gnupg \
+        libapr1-dev \
+        libaprutil1-dev \
+        libbrotli-dev \
+        libcurl4-openssl-dev \
+        libjansson-dev \
+        libnghttp2-dev \
+        libpcre3-dev \
+        libssl-dev \
+        libxml2-dev \
+        make \
+        patch \
+        wget \
+        zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-CMD [ "pwsh" ]
+ENV HTTPD_VERSION 2.4.59
+ENV HTTPD_SHA256 ec51501ec480284ff52f637258135d333230a7d229c3afa6f6c2f9040e321323
+
+RUN wget -O httpd.tar.bz2 "https://dlcdn.apache.org/httpd/httpd-$HTTPD_VERSION.tar.bz2" \
+    && echo "$HTTPD_SHA256 *httpd.tar.bz2" | sha256sum -c - \
+    && mkdir src \
+    && tar -xf httpd.tar.bz2 -C src --strip-components=1 \
+    && rm httpd.tar.bz2
+
+COPY patches /tmp/patches
+
+RUN set -eux; \
+    cd src; \
+    patches() { \
+        while [ "$#" -gt 0 ]; do \
+            local patchFile="$1"; shift; \
+            local patchSha256="$1"; shift; \
+            echo "$patchSha256 *$patchFile" | sha256sum -c -; \
+            patch -p0 < "$patchFile"; \
+            rm -f "$patchFile"; \
+        done; \
+    }; \
+    patches /tmp/patches/*; \
+    gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)"; \
+    CFLAGS="$(dpkg-buildflags --get CFLAGS)"; \
+    CPPFLAGS="$(dpkg-buildflags --get CPPFLAGS)"; \
+    LDFLAGS="$(dpkg-buildflags --get LDFLAGS)"; \
+    ./configure \
+        --build="$gnuArch" \
+        --prefix="$HTTPD_PREFIX" \
+        --enable-mods-shared=reallyall \
+        --enable-mpms-shared=all \
+        --enable-pie \
+        CFLAGS="-pipe $CFLAGS" \
+        CPPFLAGS="$CPPFLAGS" \
+        LDFLAGS="-Wl,--as-needed $LDFLAGS"; \
+    make -j "$(nproc)"; \
+    make install; \
+    cd ..; \
+    rm -rf src /tmp/patches
+
+RUN apt-mark auto '.*' > /dev/null
+
+STOPSIGNAL SIGWINCH
+
+COPY httpd-foreground /usr/local/bin/
+RUN chmod +x /usr/local/bin/httpd-foreground
+
+EXPOSE 80
+CMD ["httpd-foreground"]
