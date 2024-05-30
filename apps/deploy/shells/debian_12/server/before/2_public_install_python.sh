@@ -80,7 +80,7 @@ if [[ $current_python_version != Python\ 3.9* ]] || [[ $current_pip_version != p
 
     #Download Python source code
     if [ ! -f /tmp/Python-3.9.16.tgz ]; then
-        sudo wget -P /tmp https://www.python.org/ftp/python/3.9.16/Python-3.9.16.tgz
+        sudo wget -P /tmp http://www.python.org/ftp/python/3.9.16/Python-3.9.16.tgz
     else
         echo "/tmp/Python-3.9.16.tgz exists, skipping download."
     fi
