@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 if ! which sshd &> /dev/null; then
     echo "OpenSSH not installed. Installing OpenSSH..."

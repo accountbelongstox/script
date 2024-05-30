@@ -96,6 +96,12 @@ class DockerInfo(Base):
 
     def get_mirrors(self):
         registry_mirrors = [
+            "https://registry-1.docker.io",
+            "https://gcr.io",
+            "https://asia.gcr.io",
+            "https://azurecr.io",
+            "https://quay.io",
+            "https://aws_account_id.dkr.ecr.region.amazonaws.com",
             "https://4idglt5r.mirror.aliyuncs.com",
             "https://docker.m.daocloud.io",
             "https://hub-mirror.c.163.com",

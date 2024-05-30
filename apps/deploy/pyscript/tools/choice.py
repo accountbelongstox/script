@@ -1,7 +1,8 @@
 # import os
-from pycore.utils_linux import strtool
-from apps.deploy.pyscript.provider.deployenv import env, compose_env,main_dir,wwwroot_dir
+from pycore.utils_linux import *
 from pycore.base.base import Base
+from apps.deploy.pyscript.provider.deployenv import *
+from pycore.globalvar.gdir import gdir
 
 class Choice(Base):
     relative_settings = {}
@@ -51,6 +52,12 @@ class Choice(Base):
                 p_val = strtool.to_red(val)
                 print(f"The {p_key} has been set to {p_val}")
             env.set_env(key, val)
+            self.save_to_tmp_settings(key,val)
+
+    def save_to_tmp_settings(self,key,val):
+        env_local_dir = env.get_local_dir()
+        env_file_path = os.path.join(env_local_dir, f".{key}")
+        file.save(env_file_path, val,"utf-8",True)
 
     def get_input(self, prompt, default_value="", original_value="", allow_empty=True):
         green_color = '\033[92m'

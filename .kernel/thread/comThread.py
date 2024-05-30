@@ -62,7 +62,7 @@ class ComThread(threading.Thread, Base):
                             self.task.put(args)
                     else:
                         self.resultQueue.put(result)
-                self.info("The task completes and the current thread ends")
+                self.info("The tasks completes and the current thread ends")
             else:
                 try:
                     result = self.target()

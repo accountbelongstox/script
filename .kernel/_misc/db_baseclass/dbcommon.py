@@ -1,5 +1,4 @@
-from pycore.base.base import *
-from pycore.db_baseclass.dbbase import *
+from pycore.base.base import Base
 # from sqlalchemy import create_engine
 # from sqlalchemy.orm import sessionmaker
 from sqlalchemy import asc, desc, inspect
@@ -15,10 +14,8 @@ from sqlalchemy.ext.declarative import declarative_base
 SqlalchemyBase = declarative_base()
 
 
-class DBCommon(Base, DBBase):
-    def __init__(self, session, engine):
-        self.session = session
-        self.engine = engine
+class DBCommon(Base):
+    def __init__(self):
         pass
 
     def main(self, args):

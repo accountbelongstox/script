@@ -4,14 +4,17 @@ from apps.deploy.pyscript.install.install_choice import install_choice
 from apps.deploy.pyscript.install.install_local_choice import install_local_choice
 from apps.deploy.pyscript.provider.deployenv import env, compose_env, deploy_dir
 from pycore.base.base import Base
-import sys
-
+import sys,os
 
 # import website
 
 class DeplyMainScript(Base):
     def __init__(self):
         pass
+
+    def test(self):
+        from pycore.practicals_linux import env as _env
+        print("deploy-test")
 
     def main(self):
         param_type = sysarg.get_arg(1)

@@ -1,7 +1,7 @@
-#!/bin/bash
+
 PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
 DEPLOY_DIR=$(dirname "$(dirname "$(dirname "$PARENT_DIR")")")
-TOP_DIR=$(dirname "$DEPLOY_DIR")
+SCRIPT_ROOT_DIR=$(dirname "$(dirname "$DEPLOY_DIR")")
 
 current_python_version=$(python3 --version 2>&1)
 echo "Current Python version: $current_python_version"
@@ -33,13 +33,13 @@ fi
 python3 --version
 
 
-VENV_DIR="$TOP_DIR/venv"
+VENV_DIR="$SCRIPT_ROOT_DIR/venv_linux_$OS_NAME"
 if [ ! -d "$VENV_DIR" ]; then
-    echo "venv directory does not exist. Creating..."
-    cd "$TOP_DIR" || exit
-    python3 -m venv venv
-    echo -e "\e[91m Venv-Python: $TOP_DIR/venv/bin/python3\e[0m"
+    echo "venv_linux_$OS_NAME directory does not exist. Creating..."
+    cd "$SCRIPT_ROOT_DIR" || exit
+    python3 -m venv venv_linux_$OS_NAME
+    echo -e "\e[91m Venv-Python: $SCRIPT_ROOT_DIR/venv_linux_$OS_NAME/bin/python3\e[0m"
 else
-    echo -e "\e[91m Venv-Python: $TOP_DIR/venv/bin/python3\e[0m"
-    echo "venv directory already exists."
+    echo -e "\e[91m Venv-Python: $SCRIPT_ROOT_DIR/venv_linux_$OS_NAME/bin/python3\e[0m"
+    echo "venv_linux_$OS_NAME directory already exists."
 fi

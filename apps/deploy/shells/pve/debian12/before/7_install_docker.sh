@@ -1,4 +1,4 @@
-#!/bin/bash
+
 PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
 DEPLOY_DIR=$(dirname "$(dirname "$(dirname "$PARENT_DIR")")")
 

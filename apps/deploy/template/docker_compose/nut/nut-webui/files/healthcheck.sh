@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 err_report() {
     printf "check on #%s: error detected!\n" $1

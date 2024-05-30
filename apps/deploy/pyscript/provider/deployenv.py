@@ -7,20 +7,21 @@ def get_os_info():
     os_name = platform.system()
     os_version = platform.release()
     if os_name == "Linux":
-        distro_info = platform.linux_distribution()
-        if distro_info[0] == "centos":
-            return "CentOS", distro_info[1]
-        elif distro_info[0] == "ubuntu":
-            return "Ubuntu", distro_info[1]
-        elif distro_info[0] == "debian":
-            return "Debian", distro_info[1]
+        distro_info = platform.platform()
+        if "centos" in distro_info.lower():
+            return "CentOS", os_version
+        elif "ubuntu" in distro_info.lower():
+            return "Ubuntu", os_version
+        elif "debian" in distro_info.lower():
+            return "Debian", os_version
         else:
             return "Unsupported Linux distribution", ""
     else:
         return "Unsupported operating system", ""
 
+
+
 systemname,systemversion = get_os_info()
-print(systemname,systemversion)
 _deploy_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 _env.set_root_dir(_deploy_dir)
 tmpdir = "/home/script/.tmp"

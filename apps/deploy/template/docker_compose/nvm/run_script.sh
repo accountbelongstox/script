@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 # 设置 NVM_NODEJS_ORG_MIRROR 环境变量
 export NVM_NODEJS_ORG_MIRROR=https://npm.taobao.org/mirrors/node/

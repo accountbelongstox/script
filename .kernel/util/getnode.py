@@ -233,7 +233,7 @@ class Zip(base):
     def exec_task(self):
         # 如果当前没有执行的任务事件，则开始执行
         if not self.exec_task_event:
-            self.log('Background compaction task started', True)
+            self.log('Background compaction tasks started', True)
             self.exec_task_event = True
 
             while self.exec_task_event:
@@ -262,7 +262,7 @@ class Zip(base):
                 else:
                     if self.exec_count_tasks < 1:
                         self.exec_task_event = False
-                        self.log('There is currently no compression task, end monitoring.')
+                        self.log('There is currently no compression tasks, end monitoring.')
                         self.exec_task_queue_callback()
                     else:
                         self.log(f'There are still {self.exec_count_tasks} compression tasks, waiting')

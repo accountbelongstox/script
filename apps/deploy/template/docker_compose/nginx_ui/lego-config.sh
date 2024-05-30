@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 # Download go-acme/lego repository
 download_and_extract() {

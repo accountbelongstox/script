@@ -12,7 +12,6 @@ supervisor
 readmdict
 filetype
 pysubs2
-pykeyboard
 cmake
 chardet
 psutil
@@ -20,3 +19,5 @@ keyboard
 colorama
 cryptography
 pyyaml
+Flask-WTF
+

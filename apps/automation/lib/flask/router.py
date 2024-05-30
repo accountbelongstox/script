@@ -1,7 +1,7 @@
 # import os.path
 from flask import request as flask_request, render_template
 import pprint
-from apps.task.task import task
+from apps.tasks.task import task
 # import itsdangerous
 from pycore.base.base import Base
 from pycore.practicals import flasktool

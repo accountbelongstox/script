@@ -54,7 +54,8 @@ class Ziptask(Base):
         return self.getCurrentOS() == 'windows'
 
     def get7zExeName(self):
-        exeFile = '7zz' if not self.isWindows() else '7z.exe'
+        exeFile = '7zz' if not self.isWindows() else
+
         return exeFile
 
     def get7zExe(self):
@@ -152,7 +153,7 @@ class Ziptask(Base):
 
     def execTask(self):
         if not self.execTaskEvent:
-            self.log('Background compaction task started', True)
+            self.log('Background compaction tasks started', True)
             self.execTaskEvent = asyncio.get_event_loop().call_later(1, self._execTask)
 
     def _execTask(self):
@@ -171,16 +172,14 @@ class Ziptask(Base):
             if not self.isFileLocked(zipPath):
                 self.log(f'Unziping {zipName}, background:{self.concurrentTasks}', True)
                 self.execCountTasks += 1
-                asyncio.ensure_future(self.addToPendingTasks(command,
-                                                             lambda usetime: self._execTaskCallback(usetime, zipPath,
-                                                                                                    token, isQueue)))
+                asyncio.ensure_future(self.addToPendingTasks(command,lambda usetime: self._execTaskCallback(usetime, zipPath,token, isQueue)))
             else:
                 self.pendingTasks.insert(0, TaskObject)
                 self.log(f'The file is in use, try again later, "{zipPath}"')
         else:
             if self.execCountTasks < 1:
                 self.execTaskEvent = None
-                self.log('There is currently no compression task, end monitoring.')
+                self.log('There is currently no compression tasks, end monitoring.')
                 self.execTaskQueueCallback()
             else:
                 self.log(f'There are still {self.execCountTasks} compression tasks, waiting...')
@@ -208,6 +207,9 @@ class Ziptask(Base):
             del self.callbacks[token]
             if callback:
                 callback(usetime, src)
+
+    def addZipTask(self, src, out, token, callback):
+        self.putZipTask(src, out, token, callback)
 
     def putZipTask(self, src, out, token, callback):
         self.putTask(src, out, token, True, callback, False)

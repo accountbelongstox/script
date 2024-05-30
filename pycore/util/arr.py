@@ -2,7 +2,8 @@ import copy
 import random
 import re
 from queue import Queue
-
+import html
+import json
 
 class Arr():
 
@@ -277,3 +278,59 @@ class Arr():
             result.append([key, value])
         return result
 
+    def list_tojson(self, lst):
+        for d in lst:
+            for k, v in d.items():
+                v = self.reverse_html_escape(v)
+                d[k] = self.to_json(v)
+        return lst
+
+    def dict_escape(self, data):
+        for key, value in data.items():
+            data[key] = self.convert_to_string(value)
+        return data
+
+    def convert_to_string(self, value):
+        if isinstance(value, str) or isinstance(value, int) or isinstance(value, float):
+            return value
+        if not isinstance(value, str):
+            if hasattr(value, "__html__"):
+                value = value.__html__()
+            else:
+                try:
+                    value = html.escape(json.dumps(value))
+                except:
+                    return value
+        else:
+            return value
+        return value
+
+    def reverse_html_escape(self, value):
+        if isinstance(value, str):
+            value = html.unescape(value)
+        elif isinstance(value, (list, tuple)):
+            # 对列表或元组中的每个元素递归调用本方法
+            value = [self.reverse_html_escape(x) for x in value]
+        elif isinstance(value, dict):
+            # 对字典中的每个值递归调用本方法
+            value = {k: self.reverse_html_escape(v) for k, v in value.items()}
+        return value
+
+    def to_json(self, json_str):
+        if isinstance(json_str, bytes):
+            # Decode the binary string to curses.pyc regular string
+            json_str = json_str.decode('utf-8')
+        if not isinstance(json_str, str):
+            return json_str
+        json_str = json_str.strip()
+        if len(json_str) == 0:
+            return json_str
+        first_char = json_str[0]
+        if first_char not in ["{", '"', '[']:
+            return json_str
+        try:
+            json_str = json.loads(json_str)
+        except Exception as e:
+            print(json_str, e)
+            pass
+        return json_str

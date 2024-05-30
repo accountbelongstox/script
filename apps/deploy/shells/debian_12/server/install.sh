@@ -1,13 +1,17 @@
-#!/bin/bash
+CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 OS_NAME=$(awk -F= '/^ID=/ { print $2 }' /etc/os-release | tr -d '"')
 OS_VERSION_ID=$(awk -F= '/^VERSION_ID=/ { print $2 }' /etc/os-release | tr -d '"')
 DEPLOY_DIR=$(dirname "$( dirname "$( dirname "$BASE_DIR")")")
-TOP_DIR=$(dirname "$DEPLOY_DIR")
-main_script="$TOP_DIR/main.py"
-python_deploy="$main_script"
-TOP_DIR=$(dirname "$DEPLOY_DIR")
-python_interpreter="$TOP_DIR/venv/bin/python3"
+SCRIPT_ROOT_DIR=$(dirname "$(dirname "$DEPLOY_DIR")")
+main_script="$SCRIPT_ROOT_DIR/main.py"
+#SCRIPT_ROOT_DIR=$(dirname "$(dirname "$DEPLOY_DIR")")
+OS_NAME=$(awk -F= '/^ID=/ { print $2 }' /etc/os-release | tr -d '"')
+OS_VERSION=$(awk -F= '/^VERSION_ID=/ { print $2 }' /etc/os-release | tr -d '"')
+PYTHON_VENV_DIR="venv_linux_${OS_NAME}_${OS_VERSION}"
+PYTHON_INTERPRET="$PYTHON_VENV_DIR"
+python_interpreter="$SCRIPT_ROOT_DIR/$PYTHON_INTERPRET/bin/python3"
+
 execute_scripts() {
     local directory=$1
     if [ -d "$directory" ]; then
@@ -38,7 +42,7 @@ if [ "$OS_NAME" = "centos" -o "$OS_NAME" = "debian" -o "$OS_NAME" = "ubuntu" ]; 
     before_scripts="${BASE_DIR}/before"
     execute_scripts "$before_scripts"
     execute_public_scripts
-    sudo "$python_interpreter" "$python_deploy" deploy install
+    sudo "$python_interpreter" "$main_script" deploy install
     after_public_dir="${BASE_DIR}/after"
     execute_scripts "$after_public_dir"
 else

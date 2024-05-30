@@ -18,7 +18,8 @@ node_modules/
 .docker-compose
 .bt_template/
 .bt_server_bak/
-
+venv_linux_debian/
+venv_*/
 # 忽略打包和发布的文件
 dist/
 build/
@@ -30,6 +31,8 @@ public/source/
 video/
 out/
 source/
+venv_linux/
+venv/
 
 .env
 *.swp
@@ -58,7 +61,7 @@ public/js/
 # Laravel Passport
 public/oauth-*
 
-# Rocketeer PHP task runner and deployment package. https://rocketeer.autopergamene.eu/
+# Rocketeer PHP tasks runner and deployment package. https://rocketeer.autopergamene.eu/
 .rocketeer/
 
 # PHPUnit

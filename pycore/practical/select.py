@@ -1,7 +1,7 @@
 import curses
+import os
 from pycore.utils_linux import strtool
 from pycore.base.base import Base
-
 
 class Select(Base):
     edit_user_input = ""
@@ -37,6 +37,7 @@ class Select(Base):
             p_val = strtool.to_red(edit_str)
             print(f"The {p_key} has been set to {p_val}")
         print("\n")
+
         return edit_str
 
     def edit(self, init_str=""):

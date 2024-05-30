@@ -1,4 +1,4 @@
-#!/bin/bash
+
 pyscript="$PARENT_DIR/pyscript/main.py"
 env_file="/home/.server.env"
 MAIN_DIR=$(grep "^MAIN_DIR=" "$env_file" | cut -d '=' -f2)

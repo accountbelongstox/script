@@ -1,4 +1,5 @@
-#!/bin/bash
+CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 OS=$(awk -F= '/^ID=/ { print $2 }' /etc/os-release | tr -d '"')
 echo "Updating and installing packages for $OS..."
 

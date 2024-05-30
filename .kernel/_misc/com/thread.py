@@ -32,7 +32,7 @@ class Thread(Base):
         global global_thread_id
         global public_queue
         # """
-        # curses.pyc thread must be translated into some task as Queue
+        # curses.pyc thread must be translated into some tasks as Queue
         # and output curses.pyc resultQueue by thread-self
         # """
         if args == None:
@@ -78,7 +78,7 @@ class Thread(Base):
         if type(args) == Queue:
             task = args
             args = {
-                "task": task,
+                "tasks": task,
             }
         else:
             max_thread = self.get_args(args, "max_thread", default=max_thread)
@@ -86,9 +86,9 @@ class Thread(Base):
             info = self.get_args(args, "info", default=info)
             callback = self.get_args(args, "callback", default=callback)
             tasks_per_thread = self.get_args(args, "tasks_per_thread", default=tasks_per_thread)
-            task = args.get('task')
+            task = args.get('tasks')
             if task == None:
-                self.com_util.print_warn(f"thread_pool not transition a task Queue: {task}")
+                self.com_util.print_warn(f"thread_pool not transition a tasks Queue: {task}")
                 return None
         task_qsize = task.qsize()
         thread_num = int(task_qsize / tasks_per_thread)  # 每线程处理敘数
@@ -176,7 +176,7 @@ class Thread(Base):
             index += 1
 
     def args_setqueueandlock(self, args, thread_ident):
-        task = "task"
+        task = "tasks"
         if task not in args:
             args[task] = self.get_thread_queue(thread_ident, task)
         result = "result"

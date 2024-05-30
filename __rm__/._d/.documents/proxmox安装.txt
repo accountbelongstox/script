@@ -12,7 +12,14 @@ qm set 102 --sata1 /dev/disk/by-id/ata-ST4000NM0033-9ZM170_Z1Z93KP3
 
 qm set 100 --sata1 /dev/disk/by-id/ata-SSD32G_SZHYPO15091104D0604
 pct set 102 -mp1 /disk/sde,mp=/www
-pct set 102 -mp1 /dev/disk/by-id/ata-ST4000NM0033-9ZM170_Z1Z93KP3,mp=/www
+
+
+/dev/disk/by-id/ata-ST4000NM0033-9ZM170_Z1Z93KP3
+
+
+pct set 104 -mp1 /dev/disk/by-id/ata-ST4000NM0033-9ZM170_Z1Z93KP3:rw,mp=/www
+pct set 102 -mp1 /disk/sde,mp=/www
+>>>>>>> dd330cdf186eb812192232447c87906bb9c0f1b3
 
 (已使用)ata-CHUZUN_CS101_2304W0221B001167 -> ../../sdb
 (已使用)ata-CLOVER_CM321HI_C439M73320D71165_0 -> ../../sda
