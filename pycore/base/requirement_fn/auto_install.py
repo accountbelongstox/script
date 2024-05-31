@@ -219,7 +219,7 @@ class AutoInstall():
                     continue
                 # is_installed = self.is_package_installed(package)
                 target_dir = f"{self.venv_dir}/lib/python3.9/site-packages"
-                install_cmd = f"pip install {package} --target {target_dir} {source_url}"
+                install_cmd = f"{python_exe} -m pip install {package} --target {target_dir} {source_url}"
                 #install_cmd = f"{python_exe} -m pip install {package} {source_url}"
                 # if not is_installed:
                 #     install_commands.append(install_cmd)
