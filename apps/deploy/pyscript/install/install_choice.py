@@ -72,7 +72,20 @@ class installChoice(Base):
             ["MAIN_DIR", main_dir],
             ["WEB_DIR", wwwroot_dir],
         ]
-        set_name = "global-setting"
+        set_name = "Global-Info"
+        choice.set_and_collection_envs(prompt_settings, set_name, True)
+
+        python_executable = sys.executable
+        SCRIPT_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
+        APPS_DIR = os.path.join(SCRIPT_DIR,"apps")
+        deploy_dir = os.path.join(APPS_DIR,"deploy")
+        shells_dir = os.path.join(deploy_dir,"shells")
+        prompt_settings = [
+            ["SCRIPT_DIR", SCRIPT_DIR],
+            ["APPS_DIR", APPS_DIR],
+            ["SHELLS_DIR", shells_dir],
+        ]
+        set_name = "Dir-Info"
         choice.set_and_collection_envs(prompt_settings, set_name, True)
 
     def init_env(self,show=False):
