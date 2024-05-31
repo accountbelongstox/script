@@ -256,8 +256,11 @@ class Env(Base):
         filename = os.path.join(tmp_dir, f".{key}")
         if not force and os.path.exists(filename):
             return
-        with open(filename, 'w') as file:
-            file.write(val)
+        try:
+            with open(filename, 'w') as file:
+                file.write(val)
+        except Exception as e:
+            self.warn(f"save_key_to_tmp: {e}")
 
     def get_local_dir(self):
         basedir = self.get_basedir(self.root_dir)
