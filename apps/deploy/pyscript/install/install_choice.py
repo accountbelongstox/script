@@ -40,8 +40,6 @@ class installChoice(Base):
         docker.gen_docker_compose()
 
     def init_env(self,show=False):
-        compose_list = docker_info.get_compose_list()
-        valid_compose_list = self.init_docker_compose(compose_list)
         main_ip = ip.get_local_ip()
         # self.success("-The docker-compose you need to configure is:")
         # self.success(valid_compose_list)
@@ -166,6 +164,8 @@ class installChoice(Base):
 
 
     def set_envs(self, show=False):
+        compose_list = docker_info.get_compose_list()
+        valid_compose_list = self.init_docker_compose(compose_list)
         self.init_env(show=show)
         self.init_docker_env(show=show)
 
