@@ -102,9 +102,19 @@ namespace ddwin.coreTools
         public static string GetMaxDriver()
         {
             DriveInfo[] drives = DriveInfo.GetDrives();
-            var driveSpaces = drives.ToDictionary(d => d.Name, d => d.AvailableFreeSpace);
+
+            var hardDrives = drives.Where(d => d.DriveType == DriveType.Fixed);
+
+            if (!hardDrives.Any())
+            {
+                throw new InvalidOperationException("No fixed drives found.");
+            }
+
+            var driveSpaces = hardDrives.ToDictionary(d => d.Name, d => d.AvailableFreeSpace);
+
             string baseDrive = "C:\\";
             long maxSpace = 0;
+
             foreach (var kvp in driveSpaces)
             {
                 if (kvp.Value > maxSpace)
@@ -113,6 +123,7 @@ namespace ddwin.coreTools
                     baseDrive = kvp.Key;
                 }
             }
+
             return baseDrive;
         }
 

@@ -121,7 +121,7 @@ namespace ddwin.coreTools
 
         private void UpdatePathRegistry(List<string> updatedPath)
         {
-            string regType = GetPathType(null, "REG_SZ");
+            string regType = GetPathType("", "REG_SZ");
             string addPath = string.Join(";", updatedPath);
             ProcessStartInfo processInfo = new ProcessStartInfo
             {
