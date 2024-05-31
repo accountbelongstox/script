@@ -1,11 +1,9 @@
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
-DEPLOY_CHIDDIR=$(dirname "$(dirname "$(dirname "$PARENT_DIR")")")
 DEPLOY_DIR=$(dirname "$(dirname "$(dirname "$(dirname "$CURRENT_DIR")")")")
 SCRIPT_ROOT_DIR=$(dirname "$(dirname "$DEPLOY_DIR")")
-
 current_python_version=$(python3.9 --version 2>&1)
 current_pip_version=$(pip3.9 --version 2>&1)
+
 echo "Current Python version: $current_python_version"
 echo "Current Pip version: $current_pip_version"
 
@@ -85,5 +83,5 @@ fi
 
 sudo $python_interpreter --version
 sudo $python_interpreter -m pip --version
-echo sudo "$python_interpreter" "$main_script" deploy init_info
+echo Execting sudo "$python_interpreter" "$main_script" deploy init_info
 sudo "$python_interpreter" "$main_script" deploy init_info

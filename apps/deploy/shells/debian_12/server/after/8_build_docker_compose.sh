@@ -48,10 +48,8 @@ copy_pm2_config(){
 }
 # -------------------------------------------------------------
 PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
-echo "BasiDir ${PARENT_DIR}..."
-pyscript="$PARENT_DIR/pyscript/main.py"
-env_file="/home/.server.env"
-
+PYTHON_MAIN_SCRIPT=$(cat "$TMP_INFO_DIR/.PYTHON_MAIN_SCRIPT")
+PYTHON_EXECUTABLE=$(cat "$TMP_INFO_DIR/.PYTHON_EXECUTABLE")
 MAIN_DIR=$(cat "$TMP_INFO_DIR/.MAIN_DIR")
 WEB_DIR=$(cat "$TMP_INFO_DIR/.WEB_DIR")
 BT_IMAGE=$(cat "$TMP_INFO_DIR/.BT_IMAGE")
@@ -70,23 +68,22 @@ MYSQL_USER=$(cat "$TMP_INFO_DIR/.MYSQL_USER")
 MYSQL_PASSWORD=$(cat "$TMP_INFO_DIR/.MYSQL_PASSWORD")
 ZEROTIER_DOMIAN=$(cat "$TMP_INFO_DIR/.ZEROTIER_DOMIAN")
 ZTNCUI_PASSWD=$(cat "$TMP_INFO_DIR/.ZTNCUI_PASSWD")
+DOCKER_COMPOSE=$(cat "$TMP_INFO_DIR/.DOCKER_COMPOSE")
 
 echo "DOCKER_DATA ${DOCKER_DATA}..."
 echo "SERVICE_DIR ${SERVICE_DIR}..."
-selected_services=$(sudo python3.9 "$pyscript" env get_val "docker_compose")
-if [ -z "$selected_services" ]; then
-    echo "No docker_compose configuration found in $env_file. Current machine will not deploy docker-compose."
+if [ -z "$DOCKER_COMPOSE" ]; then
+    echo "No docker_compose configuration found in $DOCKER_COMPOSE. Current machine will not deploy docker-compose."
 else
-    echo "Generating docker-compose file based on selected services: $selected_services"
-    pyscript="$PARENT_DIR/pyscript/main.py"
-    echo "pyscript: $pyscript"
-    if [[ -f "$pyscript" ]]; then
-        sudo python3.9 "$pyscript" yml extract "$selected_services"
+    echo "Generating docker-compose file based on selected services: $DOCKER_COMPOSE"
+    echo "pyscript: $PYTHON_MAIN_SCRIPT"
+    if [[ -f "$PYTHON_MAIN_SCRIPT" ]]; then
+        sudo PYTHON_EXECUTABLE "$PYTHON_MAIN_SCRIPT" yml extract "$DOCKER_COMPOSE"
     else
         echo "YAML parse script or docker-compose file not found."
     fi
 fi
-IFS=' ' read -ra services <<< "$selected_services"
+IFS=' ' read -ra services <<< "$DOCKER_COMPOSE"
 echo "$IFS"
 for service in "${services[@]}"; do
     if [[ "$service" == *"nginx"* ]]; then

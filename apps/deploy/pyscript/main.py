@@ -64,6 +64,10 @@ class DeplyMainScript(Base):
                 print(f"'env' parameter type does not support the function: {param_func}")
             return
 
+        if param_type == 'install_ssh':
+            from apps.deploy.pyscript.operations.ssh import ssh
+            ssh.modify_ssh_config()
+
         # elif param_type == 'web':
         #     if param_func in dir(self.web):
         #         getattr(self.web, param_func)(*sys.argv[3:])

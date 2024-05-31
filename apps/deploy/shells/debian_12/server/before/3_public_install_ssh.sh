@@ -1,4 +1,5 @@
-
+TMP_INFO_DIR="/usr/local/.pcore_local/deploy"
+PYTHON_EXECUTABLE=$(cat "$TMP_INFO_DIR/.PYTHON_EXECUTABLE")
 
 if ! which sshd &> /dev/null; then
     echo "OpenSSH not installed. Installing OpenSSH..."
@@ -18,3 +19,6 @@ else
         sudo systemctl start ssh
     fi
 fi
+
+
+sudo "$PYTHON_EXECUTABLE" "PYTHON_MAIN_SCRIPT" deploy install_ssh

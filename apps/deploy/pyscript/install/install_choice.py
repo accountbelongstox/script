@@ -87,6 +87,7 @@ class installChoice(Base):
 
 
     def init_env(self,show=False):
+        self.init_info()
         compose_list = docker_info.get_compose_list()
         valid_compose_list = self.init_docker_compose(compose_list)
         main_ip = ip.get_local_ip()
