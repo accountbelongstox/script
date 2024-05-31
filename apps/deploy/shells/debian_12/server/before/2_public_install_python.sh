@@ -60,8 +60,6 @@ else
     echo "Python 3.9 is already installed."
 fi
 
-/usr/local/bin/python3.9 --version
-/usr/local/bin/pip3.9 --version
 
 OS_NAME=$(awk -F= '/^ID=/ { print $2 }' /etc/os-release | tr -d '"')
 OS_VERSION=$(awk -F= '/^VERSION_ID=/ { print $2 }' /etc/os-release | tr -d '"')
@@ -85,5 +83,7 @@ else
     echo "$VENV_DIR directory already exists."
 fi
 
+sudo $python_interpreter --version
+sudo $python_interpreter -m pip --version
 echo sudo "$python_interpreter" "$main_script" deploy init_info
 sudo "$python_interpreter" "$main_script" deploy init_info
