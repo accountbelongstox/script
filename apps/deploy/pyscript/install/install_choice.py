@@ -78,10 +78,12 @@ class installChoice(Base):
         choice.set_and_collection_envs(prompt_settings, "SCRIPT-Info", True)
 
         prompt_settings = [
+            ["INFO_DIR", INFO_DIR],
             ["PYTHON_EXECUTABLE", PYTHON_EXECUTABLE],
             ["LSB_RELEASE", LSB_RELEASE],
         ]
         choice.set_and_collection_envs(prompt_settings, "System-Info", True)
+
 
     def init_env(self,show=False):
         compose_list = docker_info.get_compose_list()
