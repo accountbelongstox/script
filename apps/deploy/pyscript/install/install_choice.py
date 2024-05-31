@@ -39,7 +39,8 @@ class installChoice(Base):
         self.success("Generate docker-compose configuration and compile")
         docker.gen_docker_compose()
 
-    def init_env(self,show=False):
+    def init_info(self,show=False):
+        self.success("init_info")
         main_ip = ip.get_local_ip()
         # self.success("-The docker-compose you need to configure is:")
         # self.success(valid_compose_list)
@@ -57,6 +58,7 @@ class installChoice(Base):
         docker_root_dir = docker_info.get_docker_dir()
         docker_data_dir = docker_info.get_docker_data_dir()
 
+        set_name = "SERVICE.information"
         prompt_settings = [
             ["SERVICE_DIR", main_ip],
             ["DOCKER_DIR", docker_root_dir],
@@ -64,6 +66,44 @@ class installChoice(Base):
         ]
         choice.set_and_collection_envs(prompt_settings, set_name, True)
 
+        set_name = "SERVICE.Main-Info"
+        prompt_settings = [
+            ["MAIN_IP", main_ip],
+            ["MAIN_DIR", main_dir],
+            ["WEB_DIR", wwwroot_dir],
+        ]
+        set_name = "global-setting"
+        choice.set_and_collection_envs(prompt_settings, set_name, show)
+
+    def init_env(self,show=False):
+        compose_list = docker_info.get_compose_list()
+        valid_compose_list = self.init_docker_compose(compose_list)
+        main_ip = ip.get_local_ip()
+        # self.success("-The docker-compose you need to configure is:")
+        # self.success(valid_compose_list)
+
+        snap_docker = server_info.check_docker_snap()
+        docker_sock = server_info.get_docker_sock()
+
+        show_settings = [
+            ["SNAP_DOCKER", snap_docker],
+            ["DOCKER_SOCK", docker_sock],
+        ]
+        set_name = "debian12.information"
+        choice.set_and_collection_envs(show_settings, setting_name=set_name, show=True)
+
+        docker_root_dir = docker_info.get_docker_dir()
+        docker_data_dir = docker_info.get_docker_data_dir()
+
+        set_name = "SERVICE.information"
+        prompt_settings = [
+            ["SERVICE_DIR", main_ip],
+            ["DOCKER_DIR", docker_root_dir],
+            ["DOCKER_DATA", docker_data_dir],
+        ]
+        choice.set_and_collection_envs(prompt_settings, set_name, True)
+
+        set_name = "SERVICE.Main-Info"
         prompt_settings = [
             ["MAIN_IP", main_ip],
             ["MAIN_DIR", main_dir],
@@ -164,8 +204,6 @@ class installChoice(Base):
 
 
     def set_envs(self, show=False):
-        compose_list = docker_info.get_compose_list()
-        valid_compose_list = self.init_docker_compose(compose_list)
         self.init_env(show=show)
         self.init_docker_env(show=show)
 
