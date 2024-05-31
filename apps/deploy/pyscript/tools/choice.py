@@ -55,7 +55,7 @@ class Choice(Base):
             self.save_to_tmp_settings(key,val)
 
     def save_to_tmp_settings(self,key,val):
-        env_local_dir = env.get_local_dir()
+        env_local_dir = TMP_INFO_DIR
         env_file_path = os.path.join(env_local_dir, f".{key}")
         file.save(env_file_path, val,"utf-8",True)
 

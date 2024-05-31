@@ -91,12 +91,11 @@ _env.set_root_dir(DEPLOY_DIR)
 env = _env
 ENV = _env
 
-INFO_DIR = gdir.getLocalDir(basedir)
+TMP_INFO_DIR = gdir.getLocalDir()
 MAIN_DIR = "/www"
 SERVICE_DIR = os.path.join(MAIN_DIR, "service")
 WWWROOT_DIR = os.path.join(MAIN_DIR, "wwwroot")
 
-file.mkdir(INFO_DIR)
 file.mkdir(MAIN_DIR)
 file.mkdir(SERVICE_DIR)
 file.mkdir(WWWROOT_DIR)
