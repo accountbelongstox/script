@@ -73,7 +73,7 @@ class installChoice(Base):
             ["WEB_DIR", wwwroot_dir],
         ]
         set_name = "global-setting"
-        choice.set_and_collection_envs(prompt_settings, set_name, show)
+        choice.set_and_collection_envs(prompt_settings, set_name, True)
 
     def init_env(self,show=False):
         compose_list = docker_info.get_compose_list()
