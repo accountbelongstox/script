@@ -68,6 +68,8 @@ OS_VERSION=$(awk -F= '/^VERSION_ID=/ { print $2 }' /etc/os-release | tr -d '"')
 PYTHON_VENV_DIR="venv_linux_${OS_NAME}_${OS_VERSION}"
 PYTHON_INTERPRET="$PYTHON_VENV_DIR"
 VENV_DIR="$SCRIPT_ROOT_DIR/$PYTHON_INTERPRET"
+python_interpreter="$VENV_DIR/bin/python3"
+main_script="$SCRIPT_ROOT_DIR/main.py"
 
 echo "$VENV_DIR" > /usr/local/venv_dir
 
@@ -77,15 +79,10 @@ if [ ! -d "$VENV_DIR" ]; then
     echo "$PYTHON_VENV_DIR directory does not exist. Creating..."
     cd "$SCRIPT_ROOT_DIR" || exit
     /usr/local/bin/python3.9 -m venv "$VENV_DIR"
-
     echo -e "\e[91m Venv-Python: $VENV_DIR/bin/python3.9\e[0m"
 else
     echo -e "\e[91m Venv-Python: $VENV_DIR/bin/python3.9\e[0m"
-    echo "$PYTHON_VENV_DIR directory already exists."
+    echo "$VENV_DIR directory already exists."
 fi
 
-
-PYTHON_VENV_DIR="venv_linux_${OS_NAME}_${OS_VERSION}"
-python_interpreter="$SCRIPT_ROOT_DIR/$PYTHON_INTERPRET/bin/python3"
-main_script="$SCRIPT_ROOT_DIR/main.py"
 sudo "$python_interpreter" "$main_script" deploy init_env
