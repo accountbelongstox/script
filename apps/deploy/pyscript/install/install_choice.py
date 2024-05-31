@@ -1,4 +1,5 @@
 import os
+import sys
 from pycore.utils_linux import strtool, ip, file
 from pycore.practicals_linux import select
 from apps.deploy.pyscript.tools.server_info import server_info
@@ -40,10 +41,7 @@ class installChoice(Base):
         docker.gen_docker_compose()
 
     def init_info(self,show=False):
-        self.success("init_info")
         main_ip = ip.get_local_ip()
-        # self.success("-The docker-compose you need to configure is:")
-        # self.success(valid_compose_list)
 
         snap_docker = server_info.check_docker_snap()
         docker_sock = server_info.get_docker_sock()
