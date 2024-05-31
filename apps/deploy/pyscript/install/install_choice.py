@@ -50,41 +50,37 @@ class installChoice(Base):
             ["SNAP_DOCKER", snap_docker],
             ["DOCKER_SOCK", docker_sock],
         ]
-        set_name = "debian12.information"
-        choice.set_and_collection_envs(show_settings, setting_name=set_name, show=True)
+        choice.set_and_collection_envs(show_settings, "debian12.information", show=True)
 
         docker_root_dir = docker_info.get_docker_dir()
         docker_data_dir = docker_info.get_docker_data_dir()
 
-        set_name = "SERVICE.information"
         prompt_settings = [
-            ["SERVICE_DIR", main_ip],
+            ["SERVICE_DIR", SERVICE_DIR],
             ["DOCKER_DIR", docker_root_dir],
             ["DOCKER_DATA", docker_data_dir],
         ]
-        choice.set_and_collection_envs(prompt_settings, set_name, True)
+        choice.set_and_collection_envs(prompt_settings, "SERVICE.information", True)
 
-        set_name = "SERVICE.Main-Info"
         prompt_settings = [
             ["MAIN_IP", main_ip],
-            ["MAIN_DIR", main_dir],
-            ["WEB_DIR", wwwroot_dir],
+            ["MAIN_DIR", MAIN_DIR],
+            ["WEB_DIR", WWWROOT_DIR],
         ]
-        set_name = "Global-Info"
-        choice.set_and_collection_envs(prompt_settings, set_name, True)
+        choice.set_and_collection_envs(prompt_settings, "SERVICE.Main-Info", True)
 
-        python_executable = sys.executable
-        SCRIPT_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
-        APPS_DIR = os.path.join(SCRIPT_DIR,"apps")
-        deploy_dir = os.path.join(APPS_DIR,"deploy")
-        shells_dir = os.path.join(deploy_dir,"shells")
         prompt_settings = [
             ["SCRIPT_DIR", SCRIPT_DIR],
+            ["DEPLOY_DIR", DEPLOY_DIR],
             ["APPS_DIR", APPS_DIR],
-            ["SHELLS_DIR", shells_dir],
+            ["SHELLS_DIR", SHELLS_DIR],
         ]
-        set_name = "Dir-Info"
-        choice.set_and_collection_envs(prompt_settings, set_name, True)
+        choice.set_and_collection_envs(prompt_settings, "SCRIPT-Info", True)
+
+        prompt_settings = [
+            ["PYTHON_EXECUTABLE", PYTHON_EXECUTABLE],
+        ]
+        choice.set_and_collection_envs(prompt_settings, "Python-Info", True)
 
     def init_env(self,show=False):
         compose_list = docker_info.get_compose_list()
@@ -108,7 +104,7 @@ class installChoice(Base):
 
         set_name = "SERVICE.information"
         prompt_settings = [
-            ["SERVICE_DIR", main_ip],
+            ["SERVICE_DIR", SERVICE_DIR],
             ["DOCKER_DIR", docker_root_dir],
             ["DOCKER_DATA", docker_data_dir],
         ]
@@ -117,8 +113,8 @@ class installChoice(Base):
         set_name = "SERVICE.Main-Info"
         prompt_settings = [
             ["MAIN_IP", main_ip],
-            ["MAIN_DIR", main_dir],
-            ["WEB_DIR", wwwroot_dir],
+            ["MAIN_DIR", MAIN_DIR],
+            ["WEB_DIR", WWWROOT_DIR],
         ]
         set_name = "global-setting"
         choice.set_and_collection_envs(prompt_settings, set_name, show)

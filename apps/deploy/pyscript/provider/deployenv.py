@@ -2,59 +2,104 @@ import os
 from pycore.practicals_linux import env as _env
 from pycore.utils_linux import file
 import platform
+import re
+import platform
 
-def get_os_info():
-    os_name = platform.system()
-    os_version = platform.release()
-    if os_name == "Linux":
-        distro_info = platform.platform()
-        if "centos" in distro_info.lower():
-            return "CentOS", os_version
-        elif "ubuntu" in distro_info.lower():
-            return "Ubuntu", os_version
-        elif "debian" in distro_info.lower():
-            return "Debian", os_version
-        else:
-            return "Unsupported Linux distribution", ""
-    else:
-        return "Unsupported operating system", ""
+def get_distro_release():
+    debian_codenames = {
+        '8': 'jessie',
+        '9': 'stretch',
+        '10': 'buster',
+        '11': 'bullseye',
+        '12': 'bookworm'
+    }
+
+    try:
+        # Try to use `lsb_release -cs`
+        codename = subprocess.check_output(['lsb_release', '-cs'], universal_newlines=True).strip()
+        return codename
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        pass
+
+    try:
+        # Read `/etc/os-release`
+        with open('/etc/os-release') as f:
+            for line in f:
+                if line.startswith('VERSION_CODENAME='):
+                    return line.strip().split('=')[1]
+    except FileNotFoundError:
+        pass
+
+    try:
+        # Read `/etc/lsb-release`
+        with open('/etc/lsb-release') as f:
+            for line in f:
+                if line.startswith('DISTRIB_CODENAME='):
+                    return line.strip().split('=')[1]
+    except FileNotFoundError:
+        pass
+
+    try:
+        # Read `/etc/issue`
+        with open('/etc/issue') as f:
+            issue_content = f.read().strip()
+            # A simple regex to match common codename patterns in `/etc/issue`
+            match = re.search(r'Ubuntu (\w+)', issue_content)
+            if match:
+                return match.group(1)
+            # Add other distribution patterns here if needed
+    except FileNotFoundError:
+        pass
+
+    try:
+        # Use os module as a last resort
+        if os.path.exists('/etc/debian_version'):
+            with open('/etc/debian_version') as f:
+                debian_version = f.read().strip()
+                # Map the Debian version to codename
+                if debian_version in debian_codenames:
+                    return debian_codenames[debian_version]
+    except Exception as e:
+        pass
+
+    # Use platform module as the final fallback
+    try:
+        dist_name, version, codename = platform.linux_distribution()
+        if codename:
+            return codename
+        elif 'debian' in dist_name.lower():
+            # Map the Debian version to codename
+            major_version = version.split('.')[0]
+            if major_version in debian_codenames:
+                return debian_codenames[major_version]
+    except Exception as e:
+        pass
+
+    return None
 
 
+LSB_RELEASE = get_distro_release()
+PYTHON_EXECUTABLE = sys.executable
+SCRIPT_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
+APPS_DIR = os.path.join(SCRIPT_DIR, "apps")
+DEPLOY_DIR = os.path.join(APPS_DIR, "deploy")
+SHELLS_DIR = os.path.join(DEPLOY_DIR, "shells")
 
-systemname,systemversion = get_os_info()
-_deploy_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-_env.set_root_dir(_deploy_dir)
-tmpdir = "/home/script/.tmp"
-infodir = "/home/script/.info"
-file.mkdir(tmpdir)
-file.mkdir(infodir)
-shells_dir = os.path.join(_deploy_dir, "shells")
-
-deploy_dir_file = os.path.join(infodir,".deploy_dir")
-shells_dir_file = os.path.join(infodir,".shells_dir")
-apps_dir_file = os.path.join(infodir,".apps_dir")
-systeminfo_file = os.path.join(infodir,".systeminfo_dir")
-script_dir_file = os.path.join(_deploy_dir, "shells")
-
+_env.set_root_dir(DEPLOY_DIR)
 env = _env
-compose_env = _env.load(_deploy_dir, ".docker")
-deploy_dir = _deploy_dir
-base_dir = os.path.dirname(_deploy_dir)
-apps_dir = base_dir
-main_dir = "/www"
-service_dir = os.path.join(main_dir, "service")
-docker_main_dir = os.path.join(main_dir, "docker")
-docker_data = os.path.join(main_dir, "data")
-wwwroot_dir = os.path.join(main_dir, "wwwroot")
 
-if not file.is_file(deploy_dir_file):
-    file.save(deploy_dir_file,_deploy_dir)
-if not file.is_file(shells_dir_file):
-    file.save(deploy_dir_file,shells_dir)
-if not file.is_file(apps_dir_file):
-    file.save(deploy_dir_file,apps_dir)
-if not file.is_file(script_dir_file):
-    file.save(deploy_dir_file,apps_dir)
+INFO_DIR = "/home/script/.info"
+MAIN_DIR = "/www"
+
+file.mkdir(INFO_DIR)
+file.mkdir(MAIN_DIR)
+
+compose_env = _env.load(DEPLOY_DIR, ".docker")
+
+SERVICE_DIR = os.path.join(main_dir, "service")
+WWWROOT_DIR = os.path.join(main_dir, "wwwroot")
+
+
 
 
 
