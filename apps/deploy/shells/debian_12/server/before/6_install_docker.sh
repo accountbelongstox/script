@@ -2,6 +2,21 @@ CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
 DEPLOY_DIR=$(dirname "$(dirname "$(dirname "$(dirname "$CURRENT_DIR")")")")
 
+TMP_INFO_DIR="/usr/local/.pcore_local/deploy"
+LSB_RELEASE="$TMP_INFO_DIR/.LSB_RELEASE"
+RELEASE=""
+
+if [ ! -d "$TMP_INFO_DIR" ]; then
+    echo -e "\e[31mTMP_INFO_DIR $TMP_INFO_DIR does not exist.\e[0m"
+else
+    if [ ! -f "$LSB_RELEASE" ]; then
+        echo -e "\e[31mLSB_RELEASE $LSB_RELEASE does not exist.\e[0m"
+    else
+        RELEASE=$(cat "$LSB_RELEASE")
+    fi
+fi
+
+
 install_docker_compose() {
   COMPOSE_REMOTE_URL="https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64"
   COMPOSE_LOCAL_PATH="$DEPLOY_DIR/library/docker/docker-compose-linux-x86_64"
@@ -19,7 +34,7 @@ install_docker_compose() {
     fi
   fi
 }
-
+bookworm 
 install_docker() {
     echo "Docker is not installed. Installing..."
 
@@ -30,7 +45,7 @@ install_docker() {
 #    sudo curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
     sudo curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --yes --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $RELEASE stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
     sudo apt-get update
 
