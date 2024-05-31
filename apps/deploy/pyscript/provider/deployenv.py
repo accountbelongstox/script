@@ -3,7 +3,7 @@ from pycore.practicals_linux import env as _env
 from pycore.utils_linux import file
 import platform
 import re
-import platform
+import subprocess
 
 def get_distro_release():
     debian_codenames = {
