@@ -44,6 +44,7 @@ class DeplyMainScript(Base):
 
         if param_type == 'init_env':
             install_choice.init_env()
+            self.success("The system environment is initialized successfully")
             return
         
         if param_type == 'local_install':
