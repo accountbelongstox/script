@@ -20,5 +20,4 @@ else
     fi
 fi
 
-
-sudo "$PYTHON_EXECUTABLE" "PYTHON_MAIN_SCRIPT" deploy install_ssh
+sudo "$PYTHON_EXECUTABLE" "$PYTHON_MAIN_SCRIPT" deploy install_ssh
