@@ -261,6 +261,7 @@ class Env(Base):
                 file.write(val)
         except Exception as e:
             self.warn(f"save_key_to_tmp: {e}")
+            return
 
     def get_local_dir(self):
         basedir = self.get_basedir(self.root_dir)
