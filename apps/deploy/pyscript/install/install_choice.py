@@ -60,7 +60,7 @@ class installChoice(Base):
             ["DOCKER_DIR", docker_root_dir],
             ["DOCKER_DATA", docker_data_dir],
         ]
-        choice.set_and_collection_envs(prompt_settings, "SERVICE.information", True)
+        choice.set_and_collection_envs(prompt_settings, "Docker.information", True)
 
         prompt_settings = [
             ["MAIN_IP", main_ip],
@@ -71,16 +71,17 @@ class installChoice(Base):
 
         prompt_settings = [
             ["SCRIPT_DIR", SCRIPT_DIR],
-            ["DEPLOY_DIR", DEPLOY_DIR],
             ["APPS_DIR", APPS_DIR],
+            ["DEPLOY_DIR", DEPLOY_DIR],
             ["SHELLS_DIR", SHELLS_DIR],
         ]
         choice.set_and_collection_envs(prompt_settings, "SCRIPT-Info", True)
 
         prompt_settings = [
             ["PYTHON_EXECUTABLE", PYTHON_EXECUTABLE],
+            ["LSB_RELEASE", LSB_RELEASE],
         ]
-        choice.set_and_collection_envs(prompt_settings, "Python-Info", True)
+        choice.set_and_collection_envs(prompt_settings, "System-Info", True)
 
     def init_env(self,show=False):
         compose_list = docker_info.get_compose_list()
