@@ -38,7 +38,6 @@ install_docker() {
     sudo apt install -y docker-ce docker-ce-cli containerd.io rsync
 
     sudo apt list -a docker-ce
-    echo "Docker installed successfully."
 }
 
 

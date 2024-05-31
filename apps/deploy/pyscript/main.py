@@ -41,6 +41,10 @@ class DeplyMainScript(Base):
         if param_type == 'install':
             install_choice.install()
             return
+
+        if param_type == 'init_env':
+            install_choice.init_env()
+            return
         
         if param_type == 'local_install':
             install_local_choice.local_install()
