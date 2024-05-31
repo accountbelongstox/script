@@ -4,6 +4,7 @@ from pycore.utils_linux import file
 import platform
 import re
 import subprocess
+import sys
 
 def get_distro_release():
     debian_codenames = {
