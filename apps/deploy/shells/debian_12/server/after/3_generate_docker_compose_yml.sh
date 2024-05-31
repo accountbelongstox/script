@@ -1,6 +1,6 @@
+TMP_INFO_DIR="/usr/local/.pcore_local/deploy"
+compose_yml=$(cat "$TMP_INFO_DIR/.DOCKER_COMPOSE_FILE")
 
-
-compose_yml=$(cat /usr/local/.pcore_local/deploy/.DOCKER_COMPOSE_FILE)
 if [ -z "$compose_yml" ]; then
     echo "Error: docker-compose-yml output is empty."
     exit 1

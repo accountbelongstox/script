@@ -40,7 +40,7 @@ class Choice(Base):
 
             p_key = strtool.extend(key)
             input_nse = ",Input New?:" if show == False else ""
-            prompt = f"{p_key}\t:{green_color}{val}{end_color} {input_nse}"
+            prompt = f"{p_key}\t: {green_color}{val}{end_color} {input_nse}"
             if not show:
                 new_val = input(prompt).strip()
             else:

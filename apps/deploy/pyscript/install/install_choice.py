@@ -80,6 +80,7 @@ class installChoice(Base):
         prompt_settings = [
             ["TMP_INFO_DIR", TMP_INFO_DIR],
             ["PYTHON_EXECUTABLE", PYTHON_EXECUTABLE],
+            ["PYTHON_MAIN_SCRIPT", PYTHON_MAIN_SCRIPT],
             ["LSB_RELEASE", LSB_RELEASE],
         ]
         choice.set_and_collection_envs(prompt_settings, "System-Info", True)

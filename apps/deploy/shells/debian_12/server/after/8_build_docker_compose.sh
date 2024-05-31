@@ -1,4 +1,4 @@
-CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+TMP_INFO_DIR="/usr/local/.pcore_local/deploy"
 
 exit 0
 mount_give() {
@@ -51,24 +51,26 @@ PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
 echo "BasiDir ${PARENT_DIR}..."
 pyscript="$PARENT_DIR/pyscript/main.py"
 env_file="/home/.server.env"
-MAIN_DIR=$(sudo python3.9 "$pyscript" env get_val "MAIN_DIR")
-WEB_DIR=$(sudo python3.9 "$pyscript" env get_val "WEB_DIR")
-BT_IMAGE=$(sudo python3.9 "$pyscript" env get_val "BT_IMAGE")
-DOCKER_DATA=$(sudo python3.9 "$pyscript" env get_val "DOCKER_DATA")
-SERVICE_DIR=$(sudo python3.9 "$pyscript" env get_val "SERVICE_DIR")
-BT_USER=$(sudo python3.9 "$pyscript" env get_val "BT_USER")
-BT_PWD=$(sudo python3.9 "$pyscript" env get_val "BT_PWD")
-BT_ENTRY=$(sudo python3.9 "$pyscript" env get_val "BT_ENTRY")
-POSTGRES_USER=$(sudo python3.9 "$pyscript" env get_val "POSTGRES_USER")
-POSTGRES_PASSWORD=$(sudo python3.9 "$pyscript" env get_val "POSTGRES_PASSWORD")
-SAMBA_USER=$(sudo python3.9 "$pyscript" env get_val "SAMBA_USER")
-SAMBA_PWD=$(sudo python3.9 "$pyscript" env get_val "SAMBA_PWD")
-MYSQL_ROOT_USER=$(sudo python3.9 "$pyscript" env get_val "MYSQL_ROOT_USER")
-MYSQL_ROOT_PASSWORD=$(sudo python3.9 "$pyscript" env get_val "MYSQL_ROOT_PASSWORD")
-MYSQL_USER=$(sudo python3.9 "$pyscript" env get_val "MYSQL_USER")
-MYSQL_PASSWORD=$(sudo python3.9 "$pyscript" env get_val "MYSQL_PASSWORD")
-ZEROTIER_DOMIAN=$(sudo python3.9 "$pyscript" env get_val "ZEROTIER_DOMIAN")
-ZTNCUI_PASSWD=$(sudo python3.9 "$pyscript" env get_val "ZTNCUI_PASSWD")
+
+MAIN_DIR=$(cat "$TMP_INFO_DIR/.MAIN_DIR")
+WEB_DIR=$(cat "$TMP_INFO_DIR/.WEB_DIR")
+BT_IMAGE=$(cat "$TMP_INFO_DIR/.BT_IMAGE")
+DOCKER_DATA=$(cat "$TMP_INFO_DIR/.DOCKER_DATA")
+SERVICE_DIR=$(cat "$TMP_INFO_DIR/.SERVICE_DIR")
+BT_USER=$(cat "$TMP_INFO_DIR/.BT_USER")
+BT_PWD=$(cat "$TMP_INFO_DIR/.BT_PWD")
+BT_ENTRY=$(cat "$TMP_INFO_DIR/.BT_ENTRY")
+POSTGRES_USER=$(cat "$TMP_INFO_DIR/.POSTGRES_USER")
+POSTGRES_PASSWORD=$(cat "$TMP_INFO_DIR/.POSTGRES_PASSWORD")
+SAMBA_USER=$(cat "$TMP_INFO_DIR/.SAMBA_USER")
+SAMBA_PWD=$(cat "$TMP_INFO_DIR/.SAMBA_PWD")
+MYSQL_ROOT_USER=$(cat "$TMP_INFO_DIR/.MYSQL_ROOT_USER")
+MYSQL_ROOT_PASSWORD=$(cat "$TMP_INFO_DIR/.MYSQL_ROOT_PASSWORD")
+MYSQL_USER=$(cat "$TMP_INFO_DIR/.MYSQL_USER")
+MYSQL_PASSWORD=$(cat "$TMP_INFO_DIR/.MYSQL_PASSWORD")
+ZEROTIER_DOMIAN=$(cat "$TMP_INFO_DIR/.ZEROTIER_DOMIAN")
+ZTNCUI_PASSWD=$(cat "$TMP_INFO_DIR/.ZTNCUI_PASSWD")
+
 echo "DOCKER_DATA ${DOCKER_DATA}..."
 echo "SERVICE_DIR ${SERVICE_DIR}..."
 selected_services=$(sudo python3.9 "$pyscript" env get_val "docker_compose")

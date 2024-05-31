@@ -86,6 +86,8 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
 APPS_DIR = os.path.join(SCRIPT_DIR, "apps")
 DEPLOY_DIR = os.path.join(APPS_DIR, "deploy")
 SHELLS_DIR = os.path.join(DEPLOY_DIR, "shells")
+PYTHON_MAIN_SCRIPT_NAME = "main.py"
+PYTHON_MAIN_SCRIPT = os.path.join(SCRIPT_DIR, PYTHON_MAIN_SCRIPT_NAME)
 
 _env.set_root_dir(DEPLOY_DIR)
 env = _env
