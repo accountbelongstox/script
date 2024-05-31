@@ -85,4 +85,5 @@ else
     echo "$VENV_DIR directory already exists."
 fi
 
+echo sudo "$python_interpreter" "$main_script" deploy init_env
 sudo "$python_interpreter" "$main_script" deploy init_env
