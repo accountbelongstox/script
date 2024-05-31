@@ -91,14 +91,16 @@ env = _env
 
 INFO_DIR = "/home/script/.info"
 MAIN_DIR = "/www"
+SERVICE_DIR = os.path.join(MAIN_DIR, "service")
+WWWROOT_DIR = os.path.join(MAIN_DIR, "wwwroot")
 
 file.mkdir(INFO_DIR)
 file.mkdir(MAIN_DIR)
+file.mkdir(SERVICE_DIR)
+file.mkdir(WWWROOT_DIR)
 
 compose_env = _env.load(DEPLOY_DIR, ".docker")
 
-SERVICE_DIR = os.path.join(main_dir, "service")
-WWWROOT_DIR = os.path.join(main_dir, "wwwroot")
 
 
 
