@@ -2,7 +2,7 @@ import json
 import os
 from pycore.utils_linux import plattools, file, strtool
 from pycore.base.base import Base
-from apps.deploy.pyscript.provider.deployenv import env, deploy_dir, compose_env
+from apps.deploy.pyscript.provider.deployenv import *
 from pycore.practicals_linux import yml
 
 class DockerInfo(Base):
@@ -11,13 +11,13 @@ class DockerInfo(Base):
 
     def get_compose_list(self):
         return self.get_docker_compose_service_keys()
-        compose_str = compose_env.get_env("full")
+        compose_str = COMPOSE_ENV.get_env("full")
         compose_list = compose_str.split()
         return compose_list
 
     def get_compose_list_by_env(self, compose_name="default"):
         DOCKER_COMPOSE_NAME = compose_name  # env.get_env("DOCKER_COMPOSE") or "default"
-        compose = compose_env.get_env(DOCKER_COMPOSE_NAME)
+        compose = COMPOSE_ENV.get_env(DOCKER_COMPOSE_NAME)
         compose_list = compose.split()
         return compose_list
 
@@ -26,8 +26,8 @@ class DockerInfo(Base):
             compose_str = " ".join(compose_list)
         else:
             compose_str = compose_list
-        env.set_env("DOCKER_COMPOSE", name)
-        compose_env.set_env(name, compose_str)
+        ENV.set_env("DOCKER_COMPOSE", name)
+        COMPOSE_ENV.set_env(name, compose_str)
         return True
 
     def get_docker_dir(self):
@@ -113,7 +113,7 @@ class DockerInfo(Base):
         return registry_mirrors
 
     def get_docker_compose_template_dir(self):
-        docker_compose_dir = os.path.join(deploy_dir, "template/docker_compose")
+        docker_compose_dir = os.path.join(DEPLOY_DIR, "template/docker_compose")
         return docker_compose_dir
 
     def get_docker_compose_template_file(self):

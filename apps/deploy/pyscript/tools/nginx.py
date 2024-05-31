@@ -1,8 +1,7 @@
 from pycore.base.base import Base
 from pycore.utils_linux import file, arr, strtool
 # from pycore.practicals_prune import yml
-from apps.deploy.pyscript.provider.deployenv import env  # , deploy_dir, base_dir
-# from apps.deploy.pyscript.env.docker_info import docker_info
+from apps.deploy.pyscript.provider.deployenv import *
 # import os
 import re
 
@@ -89,7 +88,7 @@ class Nginx(Base):
         return result
 
     def replace_wwwroot(self, content):
-        # web_dir = env.get_env("WEB_DIR")
+        # web_dir = ENV.get_env("WEB_DIR")
         # content = content.replace("/etc/nginx/conf.d/*.conf", "/etc/nginx/*.conf")
         content = content.replace("/etc/nginx/vhost/nginx/tcp/*.conf", "/etc/nginx/tcp/*.conf")
         # content = content.replace("/var/run/nginx.pid;", "/home/nginx.pid")

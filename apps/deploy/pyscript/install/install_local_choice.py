@@ -1,7 +1,7 @@
 # import os
 from apps.deploy.pyscript.tools.choice import choice
 from apps.deploy.pyscript.operations.env_init import env_init
-from apps.deploy.pyscript.provider.deployenv import env, main_dir, wwwroot_dir
+from apps.deploy.pyscript.provider.deployenv import *
 from apps.deploy.pyscript.system.user_tools import user_tools
 from apps.deploy.pyscript.operations.samba import samba
 from pycore.utils_linux import file
@@ -32,7 +32,7 @@ class installLocalChoice(Base):
         set_name = "samba.setting"
         choice.set_and_collection_envs(show_settings, setting_name=set_name, show=show)
 
-        samba_enable = env.get_env("SAMBA_ENABLE")
+        samba_enable = ENV.get_env("SAMBA_ENABLE")
         if samba_enable != "no":
             set_name = "samba-setting"
             current_username = user_tools.get_current_username()
@@ -41,7 +41,8 @@ class installLocalChoice(Base):
             prompt_settings = [
                 ["SAMBA_USER", current_username],
                 [samba_pwd_key, default_pwd],
-                ["SAMBA_SHARE_DIR", wwwroot_dir],
+                ["SAMBA_SHARE_DIR", WWWROOT_DIR],
+
             ]
             choice.set_and_collection_envs(prompt_settings, set_name, show)
             samba_user_key = "SAMBA_USER"

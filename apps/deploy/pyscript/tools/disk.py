@@ -1,7 +1,7 @@
 import os
 from pycore.utils_linux import strtool, plattools, file
 from pycore.base.base import Base
-from apps.deploy.pyscript.provider.deployenv import env, compose_env
+from apps.deploy.pyscript.provider.deployenv import *
 import re
 
 class Disk(Base):
@@ -9,14 +9,14 @@ class Disk(Base):
         pass
 
     def create_main_dir(self):
-        main_dir = env.get_env("MAIN_DIR")
+        main_dir = ENV.get_env("MAIN_DIR")
         if not file.isdir(main_dir):
             file.mkdir(main_dir)
         self.mount_main_dir(main_dir)
         return main_dir
 
     def get_local_mount_dir(self):
-        MOUNT_DIR = env.get_env("MOUNT_DIR")
+        MOUNT_DIR = ENV.get_env("MOUNT_DIR")
         if not MOUNT_DIR:
             MOUNT_DIR = "/home/www"
         if not file.isdir(MOUNT_DIR):

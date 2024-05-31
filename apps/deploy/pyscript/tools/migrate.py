@@ -1,6 +1,6 @@
 from pycore.base.base import Base
 from pycore.utils_linux import file
-from apps.deploy.pyscript.provider.deployenv import deploy_dir, env
+from apps.deploy.pyscript.provider.deployenv import *
 from apps.deploy.pyscript.tools.nginx import nginx
 from apps.deploy.pyscript.provider.docker_info import docker_info
 import os
@@ -8,7 +8,7 @@ import os
 
 class Migrate(Base):
     php_default_version = "82"
-    template_dir = os.path.join(deploy_dir, "template/nginx")
+    template_dir = os.path.join(DEPLOY_DIR, "template/nginx")
     nginx_conf_dir = ""
 
     def __init__(self):
@@ -17,8 +17,8 @@ class Migrate(Base):
     def migrate(self):
         bt_dir = "/www/debian12"
         if file.isdir(bt_dir):
-            bt_tmp = os.path.join(deploy_dir, ".bt_server_bak")
-            bt_template = os.path.join(deploy_dir, ".bt_template")
+            bt_tmp = os.path.join(DEPLOY_DIR, ".bt_server_bak")
+            bt_template = os.path.join(DEPLOY_DIR, ".bt_template")
             if file.is_empty(bt_tmp):
                 file.delete(bt_tmp)
             if file.is_empty(bt_template):
@@ -71,12 +71,12 @@ class Migrate(Base):
             "decTest",
             "pxd",
         ]
-        bt_template = os.path.join(deploy_dir, ".bt_template")
+        bt_template = os.path.join(DEPLOY_DIR, ".bt_template")
         self.del_log(bt_template, log_files, exts, 2)
-        bt_server_bak = os.path.join(deploy_dir, ".bt_server_bak")
+        bt_server_bak = os.path.join(DEPLOY_DIR, ".bt_server_bak")
         self.del_log(bt_server_bak, log_files, exts, 2)
         bt_wwwroot = "/www/wwwroot"
-        web_dir = env.get_env("WEB_DIR")
+        web_dir = ENV.get_env("WEB_DIR")
         if file.isdir(bt_wwwroot):
             contents = os.listdir(bt_wwwroot)
             for item in contents:
@@ -155,7 +155,7 @@ class Migrate(Base):
             "nginx.conf",
             "nginx.conf.default",
         ]
-        nginx_dir = os.path.join(deploy_dir, ".nginx")
+        nginx_dir = os.path.join(DEPLOY_DIR, ".nginx")
         for base_file in base_confs:
             nginx_conf_dir = docker_info.get_docker_compose_volume_by_val("nginx", "/etc/nginx")
             file.mkdir(nginx_conf_dir)

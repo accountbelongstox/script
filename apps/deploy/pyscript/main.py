@@ -2,7 +2,7 @@ from pycore.utils_linux import file, sysarg
 from pycore.practicals_linux import yml
 from apps.deploy.pyscript.install.install_choice import install_choice
 from apps.deploy.pyscript.install.install_local_choice import install_local_choice
-from apps.deploy.pyscript.provider.deployenv import env, compose_env, deploy_dir
+from apps.deploy.pyscript.provider.deployenv import *
 from pycore.base.base import Base
 import sys,os
 
@@ -29,13 +29,6 @@ class DeplyMainScript(Base):
                 getattr(yml, param_func)(*sys.argv[3:])
             else:
                 print(f"'yml' parameter type does not support the function: {param_func}")
-            return
-
-        if param_type == 'env':
-            if param_func == "get_env":
-                env_name = sysarg.get_arg(3)
-                val = env.get_env(env_name)
-                print(val)
             return
 
         if param_type == 'install':

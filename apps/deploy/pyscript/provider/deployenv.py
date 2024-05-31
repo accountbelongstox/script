@@ -88,6 +88,7 @@ SHELLS_DIR = os.path.join(DEPLOY_DIR, "shells")
 
 _env.set_root_dir(DEPLOY_DIR)
 env = _env
+ENV = _env
 
 INFO_DIR = "/home/script/.info"
 MAIN_DIR = "/www"
@@ -99,7 +100,7 @@ file.mkdir(MAIN_DIR)
 file.mkdir(SERVICE_DIR)
 file.mkdir(WWWROOT_DIR)
 
-compose_env = _env.load(DEPLOY_DIR, ".docker")
+COMPOSE_ENV = _env.load(DEPLOY_DIR, ".docker")
 
 
 

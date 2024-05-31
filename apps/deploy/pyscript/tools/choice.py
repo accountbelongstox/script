@@ -31,7 +31,7 @@ class Choice(Base):
         end_color = '\033[0m'
         for item in settings:
             key = item[0]
-            val = env.get_env(key)
+            val = ENV.get_env(key)
             if val == "":
                 val = item[1] if len(item) > 1 else ""
             if key.upper().endswith(('PWD', 'PASSWORD', 'PASSWORD')):
@@ -51,7 +51,7 @@ class Choice(Base):
                 p_key = strtool.to_red(p_key)
                 p_val = strtool.to_red(val)
                 print(f"The {p_key} has been set to {p_val}")
-            env.set_env(key, val)
+            ENV.set_env(key, val)
             self.save_to_tmp_settings(key,val)
 
     def save_to_tmp_settings(self,key,val):

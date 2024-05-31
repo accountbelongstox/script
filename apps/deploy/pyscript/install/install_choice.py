@@ -16,7 +16,7 @@ class installChoice(Base):
     relative_settings = {}
 
     def __init__(self):
-        self.docker_dir = env.get_env("DOCKER_DIR")
+        self.docker_dir = ENV.get_env("DOCKER_DIR")
 
     def show_envs(self):
         self.init_env(show=True)

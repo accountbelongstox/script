@@ -2,7 +2,7 @@ import os
 from pycore.utils_linux import plattools, file
 from pycore.base.base import Base
 from apps.deploy.pyscript.provider.docker_info import docker_info
-from apps.deploy.pyscript.provider.deployenv import env, deploy_dir, compose_env
+from apps.deploy.pyscript.provider.deployenv import *
 from pycore.practicals_linux import yml
 from apps.deploy.pyscript.tools.server_info import server_info
 
@@ -33,7 +33,7 @@ class Docker(Base):
         docker_info.get_docker_compose_template()
         compose_dict = self.get_docker_compose_select(compose_list_by_env, compose_name)
 
-        main_dir = env.get_env("MAIN_DIR")
+        main_dir = ENV.get_env("MAIN_DIR")
         service_dir = os.path.join(main_dir, 'service')
 
         compose_dir = os.path.join(service_dir, 'compose')
@@ -42,7 +42,7 @@ class Docker(Base):
         if file.is_file(docker_compose_file):
             file.delete_file(docker_compose_file)
         yml.save(docker_compose_file, compose_dict)
-        env.set_env("DOCKER_COMPOSE_FILE", docker_compose_file)
+        ENV.set_env("DOCKER_COMPOSE_FILE", docker_compose_file)
         self.copy_dockerFiles(compose_dir)
 
     def docker_compose_build_up(self, docker_compose_file):
