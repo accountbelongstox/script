@@ -1,5 +1,6 @@
 import os
 from pycore.practicals_linux import env as _env
+from pycore.globalvar.gdir import gdir
 from pycore.utils_linux import file
 import platform
 import re
@@ -90,7 +91,7 @@ _env.set_root_dir(DEPLOY_DIR)
 env = _env
 ENV = _env
 
-INFO_DIR = "/home/script/.info"
+INFO_DIR = gdir.getLocalDir(basedir)
 MAIN_DIR = "/www"
 SERVICE_DIR = os.path.join(MAIN_DIR, "service")
 WWWROOT_DIR = os.path.join(MAIN_DIR, "wwwroot")
