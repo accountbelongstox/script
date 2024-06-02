@@ -39,6 +39,7 @@ class GitLogProcessor:
                                                           ".sln",
                                                           ".pot",
                                                           ".cache",
+                                                          ".assets.json",
                                                           ".csproj"
                                                           ]},
                 "folder_starts": {"enabled": True, "values": ["tmp", "cache"]},
