@@ -23,11 +23,11 @@ class GitLogProcessor:
     def __init__(self, cwd=".", since=None, until=None,lv=1,role="developer",mode=2):
         self.rules = {
             "include": {
-                "folders": {"enabled": True, "values": ["apps/deploy", "pycore", "csharp"]},
+                "folders": {"enabled": True, "values": [ "pycore", "csharp"]},
                 "filenames": {"enabled": True, "values": []},
                 "file_starts": {"enabled": True, "values": []},
                 "file_ends": {"enabled": True, "values": []},
-                "folder_starts": {"enabled": True, "values": []},
+                "folder_starts": {"enabled": True, "values": ["apps/deploy/shells/debian_12","apps/deploy/py_script"]},
                 "folder_ends": {"enabled": True, "values": []},
                 "any_subdir": {"enabled": True, "values": []}
             },
@@ -233,20 +233,20 @@ class GitLogProcessor:
         include_file_ends_values = self.rules["include"]["file_ends"]["values"]
         include_rules_any_subdir_values = self.rules["include"]["any_subdir"]["values"]
 
-        self.rules["include"]["folders"]["enabled"] = bool(self.rules["include"]["folders"]["enabled"]) and bool(
-            include_folders_values)
-        self.rules["include"]["folder_starts"]["enabled"] = bool(
-            self.rules["include"]["folder_starts"]["enabled"]) and bool(include_folder_starts_values)
-        self.rules["include"]["folder_ends"]["enabled"] = bool(
-            self.rules["include"]["folder_ends"]["enabled"]) and bool(include_folder_ends_values)
-        self.rules["include"]["filenames"]["enabled"] = bool(self.rules["include"]["filenames"]["enabled"]) and bool(
-            include_filenames_values)
-        self.rules["include"]["file_starts"]["enabled"] = bool(
-            self.rules["include"]["file_starts"]["enabled"]) and bool(include_file_starts_values)
-        self.rules["include"]["file_ends"]["enabled"] = bool(self.rules["include"]["file_ends"]["enabled"]) and bool(
-            include_file_ends_values)
-        self.rules["include"]["any_subdir"]["enabled"] = bool(self.rules["include"]["any_subdir"]["enabled"]) and bool(
-            include_rules_any_subdir_values)
+        # self.rules["include"]["folders"]["enabled"] = bool(self.rules["include"]["folders"]["enabled"]) and bool(
+        #     include_folders_values)
+        # self.rules["include"]["folder_starts"]["enabled"] = bool(
+        #     self.rules["include"]["folder_starts"]["enabled"]) and bool(include_folder_starts_values)
+        # self.rules["include"]["folder_ends"]["enabled"] = bool(
+        #     self.rules["include"]["folder_ends"]["enabled"]) and bool(include_folder_ends_values)
+        # self.rules["include"]["filenames"]["enabled"] = bool(self.rules["include"]["filenames"]["enabled"]) and bool(
+        #     include_filenames_values)
+        # self.rules["include"]["file_starts"]["enabled"] = bool(
+        #     self.rules["include"]["file_starts"]["enabled"]) and bool(include_file_starts_values)
+        # self.rules["include"]["file_ends"]["enabled"] = bool(self.rules["include"]["file_ends"]["enabled"]) and bool(
+        #     include_file_ends_values)
+        # self.rules["include"]["any_subdir"]["enabled"] = bool(self.rules["include"]["any_subdir"]["enabled"]) and bool(
+        #     include_rules_any_subdir_values)
 
         exclude_folders_values = self.rules["exclude"]["folders"]["values"]
         exclude_folder_starts_values = self.rules["exclude"]["folder_starts"]["values"]
@@ -256,20 +256,20 @@ class GitLogProcessor:
         exclude_file_ends_values = self.rules["exclude"]["file_ends"]["values"]
         exclude_rules_any_subdir_values = self.rules["exclude"]["any_subdir"]["values"]
 
-        self.rules["exclude"]["folders"]["enabled"] = bool(self.rules["exclude"]["folders"]["enabled"]) and bool(
-            exclude_folders_values)
-        self.rules["exclude"]["folder_starts"]["enabled"] = bool(
-            self.rules["exclude"]["folder_starts"]["enabled"]) and bool(exclude_folder_starts_values)
-        self.rules["exclude"]["folder_ends"]["enabled"] = bool(
-            self.rules["exclude"]["folder_ends"]["enabled"]) and bool(exclude_folder_ends_values)
-        self.rules["exclude"]["filenames"]["enabled"] = bool(self.rules["exclude"]["filenames"]["enabled"]) and bool(
-            exclude_filenames_values)
-        self.rules["exclude"]["file_starts"]["enabled"] = bool(
-            self.rules["exclude"]["file_starts"]["enabled"]) and bool(exclude_file_starts_values)
-        self.rules["exclude"]["file_ends"]["enabled"] = bool(self.rules["exclude"]["file_ends"]["enabled"]) and bool(
-            exclude_file_ends_values)
-        self.rules["exclude"]["any_subdir"]["enabled"] = bool(self.rules["exclude"]["any_subdir"]["enabled"]) and bool(
-            exclude_rules_any_subdir_values)
+        # self.rules["exclude"]["folders"]["enabled"] = bool(self.rules["exclude"]["folders"]["enabled"]) and bool(
+        #     exclude_folders_values)
+        # self.rules["exclude"]["folder_starts"]["enabled"] = bool(
+        #     self.rules["exclude"]["folder_starts"]["enabled"]) and bool(exclude_folder_starts_values)
+        # self.rules["exclude"]["folder_ends"]["enabled"] = bool(
+        #     self.rules["exclude"]["folder_ends"]["enabled"]) and bool(exclude_folder_ends_values)
+        # self.rules["exclude"]["filenames"]["enabled"] = bool(self.rules["exclude"]["filenames"]["enabled"]) and bool(
+        #     exclude_filenames_values)
+        # self.rules["exclude"]["file_starts"]["enabled"] = bool(
+        #     self.rules["exclude"]["file_starts"]["enabled"]) and bool(exclude_file_starts_values)
+        # self.rules["exclude"]["file_ends"]["enabled"] = bool(self.rules["exclude"]["file_ends"]["enabled"]) and bool(
+        #     exclude_file_ends_values)
+        # self.rules["exclude"]["any_subdir"]["enabled"] = bool(self.rules["exclude"]["any_subdir"]["enabled"]) and bool(
+        #     exclude_rules_any_subdir_values)
 
     def match_include_rules(self, fpath, folder, filename, path_parts):
         should_include = False
@@ -346,8 +346,8 @@ class GitLogProcessor:
             else:
                 self.rules["include"]["file_ends"]["non_matches"].append(filename)
 
-        if is_include_rules_any_subdir and is_include_folders and is_include_folder_starts and is_include_folder_ends \
-                and is_include_filenames and is_include_file_starts and is_include_file_ends:
+        if is_include_rules_any_subdir or is_include_folders or is_include_folder_starts or is_include_folder_ends \
+                or is_include_filenames or is_include_file_starts or is_include_file_ends:
             should_include = True
 
         return should_include
@@ -568,7 +568,7 @@ class GitLogProcessor:
 
         if color == self.Colors.GREEN:
             if len(group) > 1000:
-                threshold = 500
+                threshold = 10
             elif len(group) > 100:
                 threshold = 2
             else:
