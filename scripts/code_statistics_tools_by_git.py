@@ -11,10 +11,16 @@ import os
 # Parameter 3: Start date
 # Parameter 4: End date
 
+
+
 class GitLogProcessor:
     current_dir = os.getcwd()
+    total_lines = 0
+    total_price = 0
+    added_price = 0
+    roles = ["developer", "tester", "architect"]
 
-    def __init__(self, cwd=".", since=None, until=None, mode=2):
+    def __init__(self, cwd=".", since=None, until=None,lv=1,role="developer",mode=2):
         self.rules = {
             "include": {
                 "folders": {"enabled": True, "values": ["apps/deploy", "pycore", "csharp"]},
@@ -58,12 +64,15 @@ class GitLogProcessor:
                 rule_data["non_matches"] = []
 
         time_due = self.getDates("%Y-%m-%d", [since, until], 2)
-        print("time_duration",time_due)
         self.since = time_due[0]
         self.until = time_due[1]
         self.cwd = self.getPath(cwd)
         # Mode switch: 0 = include, 1 = exclude, 2 = both
-        self.mode = self.get_param(int, mode)
+        int_params = self.get_params(int)
+        self.mode = int_params[0] if int_params and len(int_params) > 0 else mode
+        self.level = int_params[1] if int_params and len(int_params) > 1 else lv
+        self.role = self.getRole(role)
+        self.unitPrice = self.getUnitPrice()
         self.init_rules_enable()
         self.print_mode_logic()
         self.added_lines = 0
@@ -74,11 +83,12 @@ class GitLogProcessor:
         self.red_group = []
 
     def organize_logic(self):
-        total_lines = 0
         result = {
             "added_lines": self.added_lines,
             "removed_lines": self.removed_lines,
-            "total_lines": total_lines
+            "total_lines": self.total_lines,
+            "total_price": self.total_price,
+            "added_price": self.added_price,
         }
         os.chdir(self.cwd)
         git_isok = self.check_git_directory()
@@ -117,17 +127,77 @@ class GitLogProcessor:
                         if should_include and not should_exclude:
                             self.apply_rule_logic(add, remove, fpath, folder)
 
-            total_lines = self.added_lines - self.removed_lines
+            self.total_lines = self.added_lines - self.removed_lines
         os.chdir(self.current_dir)
         self.print_group_info(self.green_group, self.Colors.GREEN)
         self.print_group_info(self.yellow_group, self.Colors.YELLOW)
         self.print_group_info(self.red_group, self.Colors.RED)
         self.print_rules_info()
-
+        self.added_price = self.calculate_total_price(self.added_lines,"added_price")
+        self.total_price = self.calculate_total_price(self.total_lines,"total_price")
         self.print_info(
-            f"New-addition lines: {self.added_lines}, removed lines: {self.removed_lines}, total lines: {total_lines}",
-            self.Colors.END)
+            f"role\t: {self.role}\n" +
+            f"level\t: {self.level}\n" +
+            f"added lines\t: {self.added_lines}\n" +
+            f"added price\t: {self.added_price} (¥)\n" +
+            f"removed lines\t: {self.removed_lines}\n" +
+            f"total lines\t: {self.total_lines}\n" +
+            f"total price\t: {self.total_price} (¥)\n",
+            self.Colors.GREEN)
         return result
+
+    def calculate_total_price(self,total_lines,calculate_name = "total"):
+        statistical_unit = self.unitPrice[0]
+        thousand_price = self.unitPrice[1]
+        per_price = thousand_price / statistical_unit
+        thousands_count = total_lines // statistical_unit
+        num_thousands = thousands_count * statistical_unit
+        remainder_lines = total_lines - num_thousands
+        thousands_price = thousands_count * thousand_price
+        remainder_price = remainder_lines * per_price
+        total_price = thousands_price + remainder_price
+        print()
+        print(f"-----------------{calculate_name}---------------\t")
+        print("total_lines\t",total_lines)
+        print("thousands_count\t",thousands_count)
+        print("per_thousand_price\t",thousand_price)
+        print("thousands_price\t",thousands_price)
+        print("-\t")
+        print("remainder_lines\t",remainder_lines)
+        print("per_line_price\t",per_price)
+        print("remainder_price\t",remainder_price)
+        print("-\t")
+        print("total_price\t",total_price)
+        print("---------------------------------------\t")
+        return total_price
+
+    def getUnitPrice(self):
+        base_price = 1000.00
+        increments = {
+            "developer": 10.00,
+            "tester": 15.00,
+            "architect": 20.00
+        }
+        base_developer_price = 50.00
+        base_tester_price = 50.00
+        base_architect_price = 50.00
+
+        dev_price = base_developer_price + increments["developer"] * (self.level - 1)
+        tester_price = base_tester_price + increments["tester"] * (self.level - 1)
+        architect_price = base_architect_price + increments["architect"] * (self.level - 1)
+
+        prices = (base_price, dev_price, tester_price, architect_price)
+
+        if self.role == "developer":
+            price = prices[1]
+        elif self.role == "tester":
+            price = prices[2]
+        elif self.role == "architect":
+            price = prices[3]
+        else:
+            price = 0
+
+        return (prices[0], price)
 
     def check_git_directory(self):
         if not os.path.exists('.git'):
@@ -380,8 +450,12 @@ class GitLogProcessor:
             2: "Mode 2 (Both): Include files and folders based on the include rules unless they also match the exclude rules. If a file/folder matches both include and exclude rules, it will not be processed."
         }
         des = logic_description.get(self.mode, 'Unknown mode')
-        print(f"Current mode {self.mode} : {des}")
-        print(f"Current dir : {self.cwd}")
+        print(f"Current mode\t {self.mode} : {des}")
+        print(f"Current dir\t {self.cwd}")
+        print(f"Current level\t {self.level}")
+        print(f"Current price\t {self.unitPrice}")
+        print(f"Current role\t {self.role}")
+
 
     class Colors:
         GREEN = '\033[92m'
@@ -395,6 +469,9 @@ class GitLogProcessor:
         for arg in args:
             if param_type is None:
                 params.append(arg)
+            elif param_type == str:
+                if self.is_param_str(arg):
+                    params.append(arg)
             else:
                 try:
                     value = param_type(arg)
@@ -402,6 +479,23 @@ class GitLogProcessor:
                 except ValueError:
                     continue
         return params
+
+    def is_param_str(self, input_value):
+        if not isinstance(input_value, str):
+            return False
+        try:
+            float_value = float(input_value)
+            if float_value.is_integer():
+                return False
+            else:
+                return False
+        except ValueError:
+            pass
+
+        if input_value.lower() in ["true", "false", "null"]:
+            return False
+
+        return True
 
     def get_param(self, param_type=str, default_value=None):
         params = self.get_params(param_type)
@@ -439,6 +533,13 @@ class GitLogProcessor:
                 break
         if not os.path.isabs(default_value):
             default_value = os.path.abspath(os.path.join(os.path.dirname(__file__), default_value))
+        return default_value
+
+    def getRole(self,default_value="developer"):
+        strs = self.get_params(str)
+        for s in strs:
+            if s.lower() in self.roles:
+                return s.lower()
         return default_value
 
     def normalize_path(self, fpath):
