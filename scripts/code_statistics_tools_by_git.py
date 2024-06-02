@@ -5,13 +5,13 @@ from datetime import datetime, timedelta
 import os
 
 # Command:
-# python .\added_code.py ./ 2 2024-3-1 2024-6-2
+# python .\added_code.py ./ 2 2024-3-1 2024-6-2 architect author:accountbelongstox
 # Parameter 1: Path
 # Parameter 2: Mode
 # Parameter 3: Start date
 # Parameter 4: End date
-
-
+# Parameter 5: Role
+# Parameter 6: Author
 
 class GitLogProcessor:
     current_dir = os.getcwd()
@@ -73,6 +73,7 @@ class GitLogProcessor:
         self.mode = int_params[0] if int_params and len(int_params) > 0 else mode
         self.level = int_params[1] if int_params and len(int_params) > 1 else lv
         self.role = self.getRole(role)
+        self.author = self.getAuthor()
         self.unitPrice = self.getUnitPrice()
         self.init_rules_enable()
         self.print_mode_logic()
@@ -82,6 +83,25 @@ class GitLogProcessor:
         self.green_group = []
         self.yellow_group = []
         self.red_group = []
+
+    def get_all_authors(self):
+        if self.author != None:
+            return [self.author]
+        result = subprocess.run(['git', 'log', '--format=%aN'], capture_output=True, text=True)
+        authors = set(result.stdout.splitlines())
+        return authors
+
+    def get_git_log_command(self):
+        command = [
+            "git", "log",
+            f"--since={self.since}",
+            f"--until={self.until}",
+            "--pretty=tformat:",
+            "--numstat"
+        ]
+        if self.author != None:
+            command.insert(2, f"--author={self.author}")
+        return command
 
     def organize_logic(self):
         result = {
@@ -93,58 +113,69 @@ class GitLogProcessor:
         }
         os.chdir(self.cwd)
         git_isok = self.check_git_directory()
-        if git_isok == True:
-            git_log_command = self.get_git_log_command()
-            cmdresult = subprocess.run(git_log_command, capture_output=True, text=True)
-            for line in cmdresult.stdout.splitlines():
-                if line:
-                    lines = line.split()
-                    add = lines[0]
-                    remove = lines[1]
-                    fpath = self.normalize_path(lines[2])
-                    path_parts = re.split(r'[\\/]+', fpath)
+        if git_isok:
+            authors = self.get_all_authors()
+            for author in authors:
+                self.added_lines = 0
+                self.removed_lines = 0
+                self.green_group = []
+                self.yellow_group = []
+                self.red_group = []
 
-                    if add == '-' or remove == '-':
-                        continue
+                git_log_command = self.get_git_log_command()
+                cmdresult = subprocess.run(git_log_command, capture_output=True, text=True)
+                for line in cmdresult.stdout.splitlines():
+                    if line:
+                        lines = line.split()
+                        add = lines[0]
+                        remove = lines[1]
+                        fpath = self.normalize_path(lines[2])
 
-                    add = int(add)
-                    remove = int(remove)
-                    folder = path_parts[0]
-                    filename = path_parts[-1]
+                        if add == '-' or remove == '-':
+                            continue
 
-                    if self.mode == 0:
-                        should_include = self.match_include_rules(fpath, folder, filename, path_parts)
-                        if should_include:
-                            self.apply_rule_logic(add, remove, fpath, folder)
+                        add = int(add)
+                        remove = int(remove)
+                        folder = re.split(r'[\\/]+', fpath)[0]
 
-                    elif self.mode == 1:
-                        should_exclude = self.match_exclude_rules(fpath, folder, filename, path_parts)
-                        if not should_exclude:
-                            self.apply_rule_logic(add, remove, fpath, folder)
+                        if self.mode == 0:
+                            should_include = self.match_include_rules(fpath, folder, lines[2],
+                                                                      re.split(r'[\\/]+', fpath))
+                            if should_include:
+                                self.apply_rule_logic(add, remove, fpath, folder)
 
-                    elif self.mode == 2:
-                        should_include = self.match_include_rules(fpath, folder, filename, path_parts)
-                        should_exclude = self.match_exclude_rules(fpath, folder, filename, path_parts)
-                        if should_include and not should_exclude:
-                            self.apply_rule_logic(add, remove, fpath, folder)
+                        elif self.mode == 1:
+                            should_exclude = self.match_exclude_rules(fpath, folder, lines[2],
+                                                                      re.split(r'[\\/]+', fpath))
+                            if not should_exclude:
+                                self.apply_rule_logic(add, remove, fpath, folder)
 
-            self.total_lines = self.added_lines - self.removed_lines
+                        elif self.mode == 2:
+                            should_include = self.match_include_rules(fpath, folder, lines[2],
+                                                                      re.split(r'[\\/]+', fpath))
+                            should_exclude = self.match_exclude_rules(fpath, folder, lines[2],
+                                                                      re.split(r'[\\/]+', fpath))
+                            if should_include and not should_exclude:
+                                self.apply_rule_logic(add, remove, fpath, folder)
+
+                self.total_lines = self.added_lines - self.removed_lines
+                self.print_group_info(self.green_group, self.Colors.GREEN)
+                self.print_group_info(self.yellow_group, self.Colors.YELLOW)
+                self.print_group_info(self.red_group, self.Colors.RED)
+                self.print_rules_info()
+                self.added_price = self.calculate_total_price(self.added_lines, "added_price")
+                self.total_price = self.calculate_total_price(self.total_lines, "total_price")
+                self.print_info(
+                    f"Author\t: {author}\n" +
+                    f"role\t: {self.role}\n" +
+                    f"level\t: {self.level}\n" +
+                    f"added lines\t: {self.added_lines}\n" +
+                    f"added price\t: {self.added_price} (¥)\n" +
+                    f"removed lines\t: {self.removed_lines}\n" +
+                    f"total lines\t: {self.total_lines}\n" +
+                    f"total price\t: {self.total_price} (¥)\n",
+                    self.Colors.GREEN)
         os.chdir(self.current_dir)
-        self.print_group_info(self.green_group, self.Colors.GREEN)
-        self.print_group_info(self.yellow_group, self.Colors.YELLOW)
-        self.print_group_info(self.red_group, self.Colors.RED)
-        self.print_rules_info()
-        self.added_price = self.calculate_total_price(self.added_lines,"added_price")
-        self.total_price = self.calculate_total_price(self.total_lines,"total_price")
-        self.print_info(
-            f"role\t: {self.role}\n" +
-            f"level\t: {self.level}\n" +
-            f"added lines\t: {self.added_lines}\n" +
-            f"added price\t: {self.added_price} (¥)\n" +
-            f"removed lines\t: {self.removed_lines}\n" +
-            f"total lines\t: {self.total_lines}\n" +
-            f"total price\t: {self.total_price} (¥)\n",
-            self.Colors.GREEN)
         return result
 
     def calculate_total_price(self,total_lines,calculate_name = "total"):
@@ -215,15 +246,6 @@ class GitLogProcessor:
             return False
         self.print_info("\nSuccess: The '.git' directory is properly configured.\n", self.Colors.GREEN)
         return True
-
-    def get_git_log_command(self):
-        return [
-            "git", "log",
-            f"--since={self.since}",
-            f"--until={self.until}",
-            "--pretty=tformat:",
-            "--numstat"
-        ]
 
     def init_rules_enable(self):
         include_folders_values = self.rules["include"]["folders"]["values"]
@@ -457,7 +479,6 @@ class GitLogProcessor:
         print(f"Current price\t {self.unitPrice}")
         print(f"Current role\t {self.role}")
 
-
     class Colors:
         GREEN = '\033[92m'
         YELLOW = '\033[93m'
@@ -541,6 +562,13 @@ class GitLogProcessor:
         for s in strs:
             if s.lower() in self.roles:
                 return s.lower()
+        return default_value
+
+    def getAuthor(self, default_value=None):
+        strs = self.get_params(str)
+        for s in strs:
+            if s.lower().startswith("author:"):
+                return s[len("author:"):].strip()
         return default_value
 
     def normalize_path(self, fpath):
@@ -643,7 +671,6 @@ class GitLogProcessor:
                             self.Colors.GREEN)
         else:
             self.print_info(f"{rule_name}: Disabled", self.Colors.RED)
-
 
 processor = GitLogProcessor(since="2024-03-01", until="2024-06-02")
 processor.organize_logic()
