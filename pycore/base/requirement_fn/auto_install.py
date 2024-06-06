@@ -1,4 +1,3 @@
-
 import hashlib
 import os, re
 import platform
@@ -20,9 +19,12 @@ class AutoInstall():
         self.server_role = self.get_server_role()
 
     def read_dynamic_dir(self):
-        with open('/usr/local/venv_dir', 'r') as f:
-            venv_dir = f.read().strip()
-        return venv_dir
+        if self.is_windows():
+            return "."
+        else:
+            with open('/usr/local/venv_dir', 'r') as f:
+                venv_dir = f.read().strip()
+            return venv_dir
 
     def get_server_role(self):
         server_role = self.get_env("SERVER_ROLE")
@@ -165,8 +167,10 @@ class AutoInstall():
             return False
 
     def get_pip_source_url(self):
+        iswindow =  self.is_windows()
         settings_dir = os.path.join(self.venv_dir, "settings")
-        os.makedirs(settings_dir, exist_ok=True)
+        if not iswindow:
+            os.makedirs(settings_dir, exist_ok=True)
         venv_setting_dir = os.path.join(self.venv_dir,"settings")
         vpython_trusted_host = os.path.join(venv_setting_dir, ".trusted_host")
 
@@ -178,8 +182,9 @@ class AutoInstall():
         if os.path.exists(vpython_trusted_host):
             return url_set_val
         self.cmd(trust_cmd, info=False)
-        with open(vpython_trusted_host, 'w', encoding='utf-8') as b_file:
-            b_file.write(trust_url)
+        if not iswindow:
+            with open(vpython_trusted_host, 'w', encoding='utf-8') as b_file:
+                b_file.write(trust_url)
         return url_set_val
 
     def is_package_installed(self, package_name):
@@ -218,7 +223,7 @@ class AutoInstall():
                     #     self.info(f"Skipping Windows-specific package on Linux: {package}")
                     continue
                 # is_installed = self.is_package_installed(package)
-                target_dir = f"{self.venv_dir}/lib/python3.9/site-packages"
+                # target_dir = f"{self.venv_dir}/lib/python3.9/site-packages"
                 install_cmd = f"{python_exe} -m pip install {package} {source_url}"
                 #install_cmd = f"{python_exe} -m pip install {package} {source_url}"
                 # if not is_installed:

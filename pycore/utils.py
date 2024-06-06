@@ -9,6 +9,7 @@ from pycore.util.keyb import Keyboard
 from pycore.util.sysarg import SysArg
 from pycore.util.plattools import Plattools
 from pycore.util.screen import Screen
+from pycore.util.filefilter import FileFilter
 
 arg = Arg()
 arr = Arr()
@@ -21,6 +22,7 @@ keyb = Keyboard()
 sysarg = SysArg()
 plattools = Plattools()
 screen = Screen()
+filefilter = FileFilter()
 
 # from types import ModuleType
 # this_module = globals()

@@ -7,13 +7,11 @@ from apps.tasks.flask_router.router import Router
 from pycore.base.base import Base
 from pycore.threads import FlaskThread
 from pycore.utils import file
-
 from pycore.dbmode.baseclass.dbcommon import DBCommon
 from apps.tasks.provider.mock_data import mock
 import json
 from apps.tasks.provider.db_mysql import db
-
-from sqlalchemy import Column, Integer, String  # 导入正确的数据类型
+from sqlalchemy import Column, Integer, String
 
 
 class Tasks(Base):
@@ -27,6 +25,7 @@ class Tasks(Base):
         flask = FlaskThread(config=config, router=Router)
         flask.start()
         self.info("正在启动Tasks Flask..")
+
 
     def test_sql(self):
         # mysql_instance.get_columns('test')

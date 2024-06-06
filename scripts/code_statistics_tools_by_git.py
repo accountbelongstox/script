@@ -20,7 +20,7 @@ class GitLogProcessor:
     added_price = 0
     roles = ["developer", "tester", "architect"]
 
-    def __init__(self, cwd=".", since=None, until=None,lv=1,role="developer",mode=2):
+    def __init__(self, cwd=".", since=None, until=None,lv=1,role="developer",author=None,mode=2):
         self.rules = {
             "include": {
                 "folders": {"enabled": True, "values": [ "pycore", "csharp"]},
@@ -73,7 +73,7 @@ class GitLogProcessor:
         self.mode = int_params[0] if int_params and len(int_params) > 0 else mode
         self.level = int_params[1] if int_params and len(int_params) > 1 else lv
         self.role = self.getRole(role)
-        self.author = self.getAuthor()
+        self.author = self.getAuthor(author)
         self.unitPrice = self.getUnitPrice()
         self.init_rules_enable()
         self.print_mode_logic()

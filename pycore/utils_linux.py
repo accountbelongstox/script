@@ -8,6 +8,7 @@ from pycore.util.strtool import Strtool
 from pycore.util.tool import Tool
 from pycore.util.sysarg import SysArg
 from pycore.util.plattools import Plattools
+from pycore.util.filefilter import FileFilter
 
 arg = Arg()
 arr = Arr()
@@ -20,4 +21,5 @@ tool = Tool()
 ip = Ip()
 sysarg = SysArg()
 plattools = Plattools()
+filefilter = FileFilter()
 
