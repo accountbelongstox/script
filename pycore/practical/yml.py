@@ -22,7 +22,10 @@ class Yml(Base):
     def load(self, file_path=None):
         return Yml(file_path)
 
-    def save(self, file_path=None,compose_config=None):
+    def save(self, file_path=None,compose_config=None,info=True):
+        return self.save_yml(file_path=file_path,compose_config=compose_config,info=info)
+
+    def save_yml(self, file_path=None,compose_config=None,info=True):
         if compose_config==None:
             return
         if file_path==None:
@@ -30,13 +33,16 @@ class Yml(Base):
         if file.is_file(file_path):
             file.delete_file(file_path)
         file.mkbasedir(file_path)
-        self.info(f"save-yml: {file_path}")
-        with open(file_path, 'w') as new_file:
+        if info:
+            self.info(f"save-yml: {file_path}")
+        with open(file_path, 'w', encoding='utf-8') as new_file:
             yaml.safe_dump(compose_config, new_file)
 
-    def read_yml(self, file_path=None):
+    def read(self, file_path=None,info=True):
+        return self.read_yml(file_path=file_path,info=info)
 
-        with open(file_path, 'r') as content:
+    def read_yml(self, file_path=None,info=True):
+        with open(file_path, 'r', encoding='utf-8') as content:
             yarm_content = yaml.safe_load(content)
         self.yarm_content = yarm_content
         return yarm_content
@@ -59,7 +65,7 @@ class Yml(Base):
     def parse_docker_compose(self, file_path=None):
         if file_path == None:
             file_path = self.local_env_file
-        with open(file_path, 'r') as file:
+        with open(file_path, 'r', encoding='utf-8') as file:
             compose_data = yaml.safe_load(file)
         return compose_data.get('services', {}).keys()
 

@@ -27,9 +27,9 @@ if __name__ == "__main__":
     elif run_as == "ncss":
         from apps.ncss.main import auto_main
         auto_main.start()
-    elif run_as == "test":
-        from apps.deploy.pyscript.main import deploy
-        deploy.test()
+    elif run_as == "op":
+        from apps.op.main import op
+        op.start()
     elif run_as == "release_tasks":
         from apps.tasks.release import release
         release.start()

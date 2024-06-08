@@ -67,3 +67,4 @@ requests
 openai
 windows-curses
 pyyaml
+ruamel.yaml

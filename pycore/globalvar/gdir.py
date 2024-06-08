@@ -46,7 +46,7 @@ class Gdir(Base):
         return fullPath
 
     def getRelationRootDir(self, subDir=None):
-        cwd = os.path.abspath(os.path.join(__file__, '../'))
+        cwd = os.path.abspath(os.path.join(__file__, '../../../'))
         fullPath = os.path.join(cwd, subDir) if subDir else cwd
         os.makedirs(fullPath, exist_ok=True)
         return fullPath

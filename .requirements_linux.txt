@@ -20,4 +20,4 @@ colorama
 cryptography
 pyyaml
 Flask-WTF
-
+ruamel.yaml
