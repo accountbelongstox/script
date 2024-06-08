@@ -8,13 +8,8 @@ node_modules/
 .installed_requirements
 .installed_requirements*
 # 忽略编译产生的文件
-*.o
-*.obj
-*.exe
-*.dll
 *.class
 *.pyc
-*.so
 .docker-compose
 .bt_template/
 .bt_server_bak/

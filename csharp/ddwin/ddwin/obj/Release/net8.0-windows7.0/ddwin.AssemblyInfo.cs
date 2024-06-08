@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyCopyrightAttribute("动点世纪科技公司")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d8fbd449bb199a9c56239ebdd6187b45eccd6c54")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b2740a3eb55b7e2e9551feb5033cbcfcfaa34496")]
 [assembly: System.Reflection.AssemblyProductAttribute("ddwin")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ddwin")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

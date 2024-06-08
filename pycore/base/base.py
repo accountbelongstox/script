@@ -6,6 +6,13 @@ import sys
 from pycore.base.log import Log
 # from glob import glob
 global_modes = {}
+import hashlib
+import platform
+import uuid
+import subprocess
+import shutil
+from pycore.globalvar.encyclopedia import encyclopedia
+
 
 class Base(Log):
 
@@ -28,70 +35,30 @@ class Base(Log):
                 return global_modes[mode][method_name]
         return self.__dict__.get(key)
 
-    def set_modules(self, mode, value, module=None):
-        global global_modes
-        if not global_modes.get(mode):
-            global_modes[mode] = {}
-        if module == None:
-            key = value.__class__.__name__.lower()
-        else:
-            key = value
-            value = module
-        global_modes[mode][key] = value
+    def md5(self, value):
+        hash = hashlib.md5()
+        hash.update(value.encode())
+        return hash.hexdigest()
 
-    def get_modules(self, name):
-        global global_modes
-        if name in global_modes:
-            return global_modes[name]
-        else:
-            return {}
+    def md5id(self,srcvalue):
+        msd5str = self.md5(srcvalue)
+        return f"id_{msd5str}"
 
-    def set_module(self, mode, value):
-        global global_modes
-        global_modes[mode] = value
+    def gen_id(self):
+        return str(uuid.uuid4())
 
-    def get_module(self, mode, methd_name=None):
-        global global_modes
-        if methd_name != None:
-            return global_modes[mode][methd_name]
-        else:
-            return global_modes[mode]
+    def is_windows(self):
+        return platform.system() == 'Windows'
 
-    def set_com(self, value):
-        self.set_modules('com', value)
+    def is_linux(self):
+        return platform.system() == 'Linux'
 
-    def set_db(self, value):
-        self.set_modules('db', value)
+    def get_system_name(self):
+        return platform.system()
 
-    def set_mode(self, value):
-        self.set_modules('mode', value)
+    def mkdir(self, dirPath):
+        os.makedirs(dirPath, exist_ok=True)
 
-    def set_thread(self, value):
-        self.set_modules('thread', value)
-
-    def get_com(self, key):
-        return self.get_module('com', key)
-
-    def get_db(self, key):
-        return self.get_module('db', key)
-
-    def get_mode(self, key):
-        return self.get_module('mode', key)
-
-    def get_thread(self, key):
-        return self.get_module('thread', key)
-
-    def get_coms(self):
-        return self.get_modules('com')
-
-    def get_modes(self):
-        return self.get_modules('mode')
-
-    def get_dbs(self):
-        return self.get_modules('db')
-
-    def get_threads(self):
-        return self.get_modules('thread')
 
     def getcwd(self, file=None, suffix=""):
         if file == None:
@@ -102,6 +69,87 @@ class Base(Log):
         if suffix != "":
             cwd = os.path.join(cwd, suffix)
         return cwd
+
+    def exec_cmd(self, command, info=True):
+        if isinstance(command, list):
+            command = " ".join(command)
+        if info:
+            self.info(f"exec_cmd: {command}")
+        os.system(command)
+        if platform.system() == "Linux":
+            result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                    executable="/bin/bash")
+        else:
+            result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, )
+        if result.returncode == 0:
+            if info:
+                self.info(self.byte_to_str(result.stdout))
+                self.warn(self.byte_to_str(result.stderr))
+            return self.byte_to_str(result.stdout)
+        else:
+            if info:
+                self.warn(self.byte_to_str(result.stderr))
+            return self.byte_to_str(result.stderr)
+
+    def run_exe(self, command, info=True):
+        command = "start " + command if self.is_windows() else command
+        try:
+            result = subprocess.run(command, capture_output=True, text=True, shell=True, check=True)
+            if info:
+                self.info(f"Run-Exe-command : {command}")
+                self.info(result.stdout)
+                if result.stderr:
+                    self.warn(result.stderr)
+            return result.stdout + result.stderr
+
+        except subprocess.CalledProcessError as e:
+            print("Error run_exe:", command)
+            print("Error run_exe:", e)
+            return ""
+
+
+    def exec_cmd(self, command, info=True):
+        if isinstance(command, list):
+            executable = command[0]
+            command = " ".join(command)
+        else:
+            executable = command.split(' ')[0]
+
+        if info:
+            self.info(f"exec_cmd: {command}")
+
+        if platform.system() == "Linux":
+            result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                    executable="/bin/bash")
+        else:
+            if os.path.isabs(executable):
+                result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                        executable=executable)
+            else:
+                result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                        executable=shutil.which(executable))
+
+        if result.returncode == 0:
+            if info:
+                self.info(self.byte_to_str(result.stdout))
+                self.warn(self.byte_to_str(result.stderr))
+            return self.byte_to_str(result.stdout)
+        else:
+            if info:
+                self.warn(self.byte_to_str(result.stderr))
+            return self.byte_to_str(result.stderr)
+
+    def byte_to_str(self, astr):
+        try:
+            astr = astr.decode('utf-8')
+            return astr
+        except:
+            astr = str(astr)
+            is_byte = re.compile('^b\'{0,1}')
+            if re.search(is_byte, astr) is not None:
+                astr = re.sub(re.compile('^b\'{0,1}'), '', astr)
+                astr = re.sub(re.compile('\'{0,1}$'), '', astr)
+            return astr
 
     def get_env_file(self):
         return os.path.join(self.getcwd(), ".env")

@@ -4,6 +4,7 @@ import errno
 import http.client
 from pycore.base.base import Base
 import platform
+
 class Gdir(Base):
     intranetIPAddress = "http://192.168.100.5/"
     localStaticHttpsApiUrl = "https://static.local.12gm.com:905/"
@@ -197,22 +198,26 @@ class Gdir(Base):
         self.mkbasedir(fullPath)
         return fullPath
 
+    def getLibraryRootDir(self, subDir=None):
+        cwd = os.path.abspath(os.path.join(__file__, '../../'))
+        fullPath = os.path.join(cwd, f'base/library/{subDir or ""}')
+        return fullPath
+
     def getLibraryDir(self, subDir=None):
         platform = os.name
-        print("platform",platform)
         if platform != 'nt':
             return self.getLibraryByLinuxDir(subDir)
         else:
             return self.getLibraryByWin32Dir(subDir)
 
     def getLibraryByLinuxDir(self, subDir=None):
-        cwd = os.path.abspath(os.path.join(__file__, '../../base/'))
-        fullPath = os.path.join(cwd, f'library/linux/{subDir or ""}')
+        cwd = os.path.abspath(os.path.join(__file__, '../../'))
+        fullPath = os.path.join(cwd, f'base/library/linux/{subDir or ""}')
         return fullPath
 
     def getLibraryByWin32Dir(self, subDir=None):
-        cwd = os.path.abspath(os.path.join(__file__, '../../../'))
-        fullPath = os.path.join(cwd, rf'base\library\win32\{subDir or ""}')
+        cwd = os.path.abspath(os.path.join(__file__, '../../'))
+        fullPath = os.path.join(cwd, rf'base/library/win32/{subDir or ""}')
         return fullPath
 
     def getStaticDir(self, subDir=None):

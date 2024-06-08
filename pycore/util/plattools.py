@@ -3,6 +3,7 @@ import platform
 import sys
 import subprocess
 from pycore.base.base import Base
+
 class Plattools(Base):
     def __init__(self):
         pass
@@ -14,10 +15,18 @@ class Plattools(Base):
             return False
 
     def is_windows(self):
-        return os.name == 'nt' or sys.platform.startswith('win')
+        return self.is_windows()
 
     def is_linux(self):
-        return os.name == 'posix' and not sys.platform.startswith('win')
+        return self.is_linux()
+
+    def execute_program(self,program_path, *args):
+        try:
+            command = [program_path] + list(args)
+            result = subprocess.run(command, capture_output=True, text=True)
+            print(result)
+        except sh.ErrorReturnCode as e:
+            print(f"Error: {e.stderr.decode()}")
 
     def is_centos(self):
         try:

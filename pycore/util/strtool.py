@@ -238,7 +238,7 @@ class Strtool():
 
     def dir_normal(self, filename, linux=False):
         filename = re.sub(re.compile(r"[\\\/]+"), "/", filename)
-        if self.load_module.is_windows() and linux == False:
+        if self.is_windows() and linux == False:
             # pattern = re.compile(r"[\/]+")
             filename = filename.replace("//", "/")
             filename = filename.replace("/", "\\")

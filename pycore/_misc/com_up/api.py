@@ -66,7 +66,7 @@ class Api(Base):
         return result
 
     def update_ip_towebsitelisten(self):
-        if self.load_module.is_windows():
+        if self.is_windows():
             th = self.com_thread.create_thread("com", target=self.update_ip_towebsite)
             th.start()
 

@@ -8,6 +8,8 @@ from pycore.practical.wdoc import Wdoc
 # from pycore.practical.down import Down
 from pycore.practical.yml import Yml
 from pycore.practical.select import Select
+from pycore.practical.gittool import GitTool
+
 select = Select()
 # flasktool = FlaskTool()
 # trans = Trans()
@@ -16,6 +18,7 @@ env = Env()
 watch = Watch
 wdoc = Wdoc()
 yml = Yml()
+gittool = GitTool()
 # down = Down()
 flasktool = FlaskTool()
 

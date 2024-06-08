@@ -22,4 +22,3 @@ ip = Ip()
 sysarg = SysArg()
 plattools = Plattools()
 filefilter = FileFilter()
-

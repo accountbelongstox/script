@@ -418,7 +418,7 @@ class Selenium(Base):
             'firefox': r"SOFTWARE\Clients\StartMenuInternet\FIREFOX.EXE\DefaultIcon",
             '360': r"SOFTWARE\Clients\StartMenuInternet\360Chrome\DefaultIcon",
         }
-        if self.load_module.is_windows():
+        if self.is_windows():
             import winreg
             try:
                 key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, _browser_regs[browser])
@@ -477,7 +477,7 @@ class Selenium(Base):
         return chrome_path
 
     def download_chrome_binary(self):
-        if self.load_module.is_windows():
+        if self.is_windows():
             remote_url = self.com_config.get_global('remote_url')
             down_url = {
                 "url": f"{remote_url}/public/static/chrome_105.0.5195.52.zip",
@@ -507,7 +507,7 @@ class Selenium(Base):
 
     def get_chromeversion(self):
         version_re = re.compile(r'\d+\.\d+.\d+.\d+')
-        if self.load_module.is_windows():
+        if self.is_windows():
             chrome_path = self.get_chrome_path()
             VisualElementsManifest = os.path.join(os.path.dirname(chrome_path), 'chrome.VisualElementsManifest.xml')
             VisualElementsManifest = self.com_file.copy_totmp(VisualElementsManifest)
@@ -603,7 +603,7 @@ class Selenium(Base):
         if proxy:
             browsermob_proxy = self.com_config.get_public("libs/browsermob-proxy-2.1.4/bin/browsermob-proxy")
             self.__browsermob_proxy = True
-            if self.load_module.is_windows():
+            if self.is_windows():
                 browsermob_proxy += ".bat"
             server = Server(browsermob_proxy)
             server.start()
@@ -1419,13 +1419,13 @@ class Selenium(Base):
         url = self.get_driver_remoteurl(driver_type)
         if driver_type == "chrome":
             url = f"{url}{version}/"
-            if self.load_module.is_windows():
+            if self.is_windows():
                 return f"{url}chromedriver_win32.zip"
             else:
                 return f"{url}chromedriver_linux64.zip"
         elif driver_type == "edge":
             url = f"{url}{version}/"
-            if self.load_module.is_windows():
+            if self.is_windows():
                 edge_url = f"{url}edgedriver_win64.zip"
                 self.com_util.print_warn(f"Edge Driver cannot download automatically, please download manually.")
                 self.com_util.print_warn(edge_url)
@@ -1453,7 +1453,7 @@ class Selenium(Base):
         return version
 
     def get_driver_path_name(self, driver_type):
-        if self.load_module.is_windows():
+        if self.is_windows():
             if driver_type == "chrome":
                 return f"chromedriver.exe"
             else:
@@ -1529,7 +1529,7 @@ class Selenium(Base):
         # 根据操作系统类型构建下载地址和文件名
         file_name = 'chromedriver.exe'
         remote_url = self.__driver_remote_url[driver_type]
-        if self.load_module.is_windows():
+        if self.is_windows():
             if driver_type == "chrome":
                 file_name = 'chromedriver.exe'
             url = f'{remote_url}{version}/chromedriver_win32.zip'

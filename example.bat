@@ -1,0 +1,1 @@
+D:\applications\Git\cmd\git.exe -C D:/temp/TaskReleaseDirectory/task.local.12gm.com_20240609_021236/task.local.12gm.com add D:/temp/TaskReleaseDirectory/task.local.12gm.com_20240609_021236/task.local.12gm.com

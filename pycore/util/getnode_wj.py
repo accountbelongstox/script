@@ -31,14 +31,11 @@ class Getnode(Base):
     def getCurrentOS(self):
         return platform.system()
 
-    def isWindows(self):
-        return self.getCurrentOS() == 'Windows'
-
     def isLinux(self):
-        return not self.isWindows()
+        return not self.is_windows()
 
     def getNodeDirectory(self, npath=None):
-        isWindows = self.isWindows()
+        isWindows = self.is_windows()
         print("isWindows",isWindows)
         tmpDir = '/usr/nodes'
         if isWindows:
@@ -74,7 +71,7 @@ class Getnode(Base):
     def getDownloadDirectory(self, fpath=None):
         homeDir = os.path.expanduser("~")
         downloadsDir = os.path.join(homeDir, 'Downloads')
-        isWindows = self.isWindows()
+        isWindows = self.is_windows()
         tmpDir = '/tmp/node/Downloads'
         if isWindows:
             tmpDir = os.path.join(downloadsDir, self.tmpDirName)
@@ -393,7 +390,7 @@ class Getnode(Base):
             raise e
 
     def getNodeExecutable(self):
-        return 'node.exe' if self.isWindows() else 'node'
+        return 'node.exe' if self.is_windows() else 'node'
 
     def getNpmExecutable(self):
         return 'npm' if self.isLinux() else 'npm.cmd'
@@ -413,7 +410,7 @@ class Getnode(Base):
         return os.path.splitext(fileName)[0]
 
     def findNodeVersionByPlatform(self, nodeHrefVersions, version):
-        matchRoles = [f'v{version}.', 'win', 'x64', '.7z'] if self.isWindows() else [f'v{version}.', 'linux', 'x64',
+        matchRoles = [f'v{version}.', 'win', 'x64', '.7z'] if self.is_windows() else [f'v{version}.', 'linux', 'x64',
                                                                                    '.gz']
         matchRolesCopy = matchRoles[:]
         matchFound = False

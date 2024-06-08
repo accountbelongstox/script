@@ -14,5 +14,7 @@ class Encyclopedia:
         if key and val:
             self.encyclopedia[key] = val
 
+    def getEncyclopediaByKey(self, key):
+        return self.encyclopedia[key]
 
 encyclopedia = Encyclopedia()

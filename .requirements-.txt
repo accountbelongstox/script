@@ -58,3 +58,4 @@ pypinyin
 ffmpeg-python
 cryptography
 pyttsx3
+sh

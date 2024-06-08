@@ -23,7 +23,6 @@ sysarg = SysArg()
 plattools = Plattools()
 screen = Screen()
 filefilter = FileFilter()
-
 # from types import ModuleType
 # this_module = globals()
 # for class_name, class_instance in class_instances.items():

@@ -11,10 +11,10 @@ default_rules = {
         "folder_starts": {"enabled": True, "values": []},
         "folder_ends": {"enabled": True, "values": [
             ".py", ".js", ".java", ".c", ".cpp", ".cs", ".rb", ".php", ".swift", ".m", ".kt", ".go",
-            ".rs", ".ts", ".html", ".css", ".sql", ".sh", ".pl", ".scala", ".hs", ".lua", ".m", ".r",
+            ".rs", ".ts", ".html", ".css", ".sh", ".pl", ".scala", ".hs", ".lua", ".m", ".r",
             ".vhd", ".v", ".pas", ".f90", ".adb", ".cbl", ".dart", ".elm", ".fs", ".erl", ".pl",
             ".lisp", ".scm", ".groovy", ".ml", ".st", ".sol", ".jl", ".asm", ".md", ".yaml", ".json",
-            ".xml", ".tcl", ".vbs", ".bat", ".vue", ".jsx", ".tsx"
+            ".xml", ".tcl", ".vbs", ".bat", ".vue", ".jsx", ".tsx", ".txt"
         ]},
         "any_subdir": {"enabled": True, "values": []}
     },
@@ -23,9 +23,9 @@ default_rules = {
         "filenames": {"enabled": True, "values": []},
         "file_starts": {"enabled": True, "values": []},
         "file_ends": {"enabled": True, "values": [".bin", ".po", ".sln", ".pot", ".cache", ".assets.json", ".csproj"]},
-        "folder_starts": {"enabled": True, "values": []},
+        "folder_starts": {"enabled": True, "values": ["chunk-"]},
         "folder_ends": {"enabled": True, "values": []},
-        "any_subdir": {"enabled": True, "values": ["node_modules", ".vs", "__rm__", ".idea", ".vscode"]}
+        "any_subdir": {"enabled": True, "values": ["node_modules", ".vs", "__rm__", ".idea", ".vscode","venv",".fingerprint","build","vendor","dist"]}
     }
 }
 
@@ -51,17 +51,24 @@ class FileFilter(Base):
                             )
         return updated_rules
 
-    def filter(self, cwd, rules=None, mode=2):
+    def filter(self, cwd, rules=None, mode=2, print_info=False, include_folders=None):
         rules = self.set_rules(rules)
         for rule_type in rules:
             for rule_name, rule_data in rules[rule_type].items():
                 rule_data["matches"] = []
                 rule_data["non_matches"] = []
         rules = self.init_rules_enable(rules)
-        self.print_rules_info(mode, rules)
-        return
+
+        if not print_info:
+            self.print_rules_info(mode, rules)
+
         result = []
+
         for root, dirs, files in os.walk(cwd):
+            if include_folders and root == cwd:
+                dirs[:] = [d for d in dirs if d in include_folders]
+                files[:] = [f for f in files if os.path.splitext(f)[0] in include_folders]
+
             for file in files:
                 fpath = os.path.join(root, file)
                 fpath = self.normalize_path(fpath)
@@ -69,26 +76,29 @@ class FileFilter(Base):
                 path_parts = re.split(r'[\\/]+', relative_path)
                 folder = re.split(r'[\\/]+', relative_path)[0]
                 filename = os.path.basename(fpath)
+
                 if mode == 0:
                     should_include = self.match_include_rules(fpath, folder, filename, path_parts, rules)
                     if should_include:
                         result.append(fpath)
-
                 elif mode == 1:
                     should_include = self.match_exclude_rules(fpath, folder, filename, path_parts, rules)
                     if not should_include:
                         result.append(fpath)
-
                 elif mode == 2:
                     should_include = self.match_include_rules(fpath, folder, filename, path_parts, rules)
                     should_exclude = self.match_exclude_rules(fpath, folder, filename, path_parts, rules)
 
-                    # self.info(f"{fpath}\tinclude:{should_include},exclude:{should_exclude}")
                     if should_include and not should_exclude:
-                        self.info(fpath)
+                        if print_info:
+                            self.info(fpath)
                         result.append(fpath)
 
+        if print_info:
+            self.print_rules_info(mode, rules)
+
         return result
+
 
     def match_include_rules(self, fpath, folder, filename, path_parts, rules):
         should_include = False
@@ -101,17 +111,25 @@ class FileFilter(Base):
         include_file_ends_enabled = rules["include"]["file_ends"]["enabled"]
         include_rules_any_subdir_enabled = rules["include"]["any_subdir"]["enabled"]
 
-        is_include_rules_any_subdir = False if include_rules_any_subdir_enabled else None
-        is_include_folders = False if include_folders_enabled else None
-        is_include_folder_starts = False if include_folder_starts_enabled else None
-        is_include_folder_ends = False if include_folder_ends_enabled else None
-        is_include_filenames = False if include_filenames_enabled else None
-        is_include_file_starts = False if include_file_starts_enabled else None
-        is_include_file_ends = False if include_file_ends_enabled else None
+        is_include_rules_any_subdir = False
+        is_include_folders = False
+        is_include_folder_starts = False
+        is_include_folder_ends = False
+        is_include_filenames = False
+        is_include_file_starts = False
+        is_include_file_ends = False
 
-        #当  is_include 全部产石关闭时，包含为True
+        must_validate = (include_folders_enabled or
+                         include_folder_starts_enabled or
+                         include_folder_ends_enabled or
+                         include_filenames_enabled or
+                         include_file_starts_enabled or
+                         include_file_ends_enabled or
+                         include_rules_any_subdir_enabled)
+        if not must_validate:
+            should_include = True
+            return should_include
 
-        print("is_include_rules_any_subdir",is_include_rules_any_subdir)
         if include_rules_any_subdir_enabled:
             for part in path_parts:
                 if part in rules["include"]["any_subdir"]["values"]:
@@ -198,6 +216,8 @@ class FileFilter(Base):
                 if part in rules["exclude"]["any_subdir"]["values"]:
                     is_exclude_rules_any_subdir = True
                     break
+        if is_exclude_rules_any_subdir:
+            return True
 
         if exclude_folders_enabled:
             if folder in rules["exclude"]["folders"]["values"]:
@@ -205,6 +225,8 @@ class FileFilter(Base):
                 rules["exclude"]["folders"]["matches"].append(folder)
             else:
                 rules["exclude"]["folders"]["non_matches"].append(folder)
+        if is_exclude_folders:
+            return True
 
         if exclude_folder_starts_enabled:
             for start in rules["exclude"]["folder_starts"]["values"]:
@@ -214,6 +236,8 @@ class FileFilter(Base):
                     break
             else:
                 rules["exclude"]["folder_starts"]["non_matches"].append(fpath)
+        if is_exclude_folder_starts:
+            return True
 
         if exclude_folder_ends_enabled:
             for end in rules["exclude"]["folder_ends"]["values"]:
@@ -223,6 +247,8 @@ class FileFilter(Base):
                     break
             else:
                 rules["exclude"]["folder_ends"]["non_matches"].append(fpath)
+        if exclude_folder_ends_enabled:
+            return True
 
         if exclude_filenames_enabled:
             if filename in rules["exclude"]["filenames"]["values"]:
@@ -230,6 +256,8 @@ class FileFilter(Base):
                 rules["exclude"]["filenames"]["matches"].append(filename)
             else:
                 rules["exclude"]["filenames"]["non_matches"].append(filename)
+        if exclude_filenames_enabled:
+            return True
 
         if exclude_file_starts_enabled:
             for start in rules["exclude"]["file_starts"]["values"]:
@@ -239,6 +267,8 @@ class FileFilter(Base):
                     break
             else:
                 rules["exclude"]["file_starts"]["non_matches"].append(filename)
+        if exclude_file_starts_enabled:
+            return True
 
         if exclude_file_ends_enabled:
             for end in rules["exclude"]["file_ends"]["values"]:
@@ -248,6 +278,8 @@ class FileFilter(Base):
                     break
             else:
                 rules["exclude"]["file_ends"]["non_matches"].append(filename)
+        if is_exclude_file_ends:
+            return True
 
         if is_exclude_rules_any_subdir or is_exclude_folders or is_exclude_folder_starts or is_exclude_folder_ends \
                 or is_exclude_filenames or is_exclude_file_starts or is_exclude_file_ends:
@@ -350,6 +382,7 @@ class FileFilter(Base):
         return rules
 
     def print_rules_info(self, mode, rules):
+        self.info("Rules:")
         self.pprint(rules)
         if mode in [0, 2]:
             print("Include Rules:")

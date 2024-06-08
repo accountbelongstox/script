@@ -190,7 +190,6 @@ class File(Base):
 
         return full_paths
 
-
     def b64encode(self, data_file):
         if self.isfile(data_file):
             extent_file = os.path.splitext(data_file)[1]
@@ -376,19 +375,6 @@ class File(Base):
         contents = os.listdir(directory_path)
         return not contents
 
-    def byte_to_str(self, astr):
-        try:
-            astr = astr.decode('utf-8')
-            return astr
-        except:
-            astr = str(astr)
-
-            is_byte = re.compile('^b\'{0,1}')
-            if re.search(is_byte, astr) is not None:
-                astr = re.sub(re.compile('^b\'{0,1}'), '', astr)
-                astr = re.sub(re.compile('\'{0,1}$'), '', astr)
-            return astr
-
     def read_bytes(self, file_name):
         file_name = self.resolve_path(file_name)
         if self.isfile(file_name):
@@ -527,7 +513,6 @@ class File(Base):
                 elif info:
                     self.info(f"Skipping existing file {dest_item}")
 
-
     def cut(self, src, dst):
         if self.is_file(src) and self.is_file(dst):
             # self.warn(f"file cut error: file exists {dst}")
@@ -560,12 +545,6 @@ class File(Base):
     def rmtree(self, dir):
         shutil.rmtree(dir)
 
-    def dir_to_localurl(self, filename):
-        control_name = self.load_module.get_control_name()
-        filename = filename.split(control_name)[-1]
-        filename = self.dir_normal(filename, linux=True)
-        filename = filename.lstrip('/')
-        return filename
 
     def dir_normal(self, filename, linux=False):
         filename = re.sub(re.compile(r"[\\\/]+"), "/", filename)
@@ -579,14 +558,6 @@ class File(Base):
 
     def normal_path(self, path):
         return os.path.normpath(path)
-
-    def is_windows(self):
-        sysstr = platform.system()
-        windows = "windows"
-        if (sysstr.lower() == windows):
-            return True
-        else:
-            return False
 
     def file_to(self, filename, encoding="utf-8"):
         file_object = self.try_file_encode(filename)
@@ -831,3 +802,20 @@ class File(Base):
             return f"{drive_letter.upper()}:/{os.path.normpath(folder_path)}"
         else:
             return f"/mnt/{drive_letter.lower()}/{os.path.normpath(folder_path)}"
+
+    def get_size(self, file_path, unit='k'):
+        if not self.isfile(file_path):
+            return 0
+
+        file_size = os.path.getsize(file_path)
+        unit = unit.lower()
+
+        if unit in ['m', 'mb']:
+            return file_size / (1024 ** 2)
+        elif unit in ['g', 'gb']:
+            return file_size / (1024 ** 3)
+        elif unit in ['t', 'tb']:
+            return file_size / (1024 ** 4)
+        else:
+            return file_size / 1024
+

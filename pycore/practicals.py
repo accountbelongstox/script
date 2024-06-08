@@ -10,7 +10,7 @@ from pycore.util.plattools import Plattools
 from pycore.practical.yml import Yml
 from pycore.practical.select import Select
 from pycore.practical.cv2 import Cv2
-
+from pycore.practical.gittool import GitTool
 
 select = Select()
 flasktool = FlaskTool()
@@ -20,6 +20,7 @@ ocr = Ocr()
 watch = Watch
 wdoc = Wdoc()
 down = Down()
+gittool = GitTool()
 plattools = Plattools()
 yml = Yml()
 cv2 = Cv2()

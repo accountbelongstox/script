@@ -275,7 +275,7 @@ class Translate(Base):
         min_thread = 1
         max_processing_per_thread = 1000
         thread_n = min_thread
-        if self.load_module.is_windows():
+        if self.is_windows():
             if qsize > max_processing_per_thread:
                 thread_n = int(qsize / max_processing_per_thread)
                 if thread_n > max_thread:
