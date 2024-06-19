@@ -203,6 +203,7 @@ proxy-groups:
   - name: 🚀 节点选择
     type: select
     proxies:
+      - ♻️ 自动选择
       - 🇺🇸 凤凰城 免费节点01
       - 🇯🇵 日本 免费节点01
       - 🇯🇵 日本 免费节点02
@@ -285,6 +286,70 @@ proxy-groups:
       - 🇭🇰 Large 香港22 - nf | IEPL | 倍率:1.8
       - 🇭🇰 Large 香港23 - nfo | IEPL | 倍率:1.6
       - 🇭🇰 Large 香港24 - nfo | IEPL | 倍率:1.6
+      - 🇷🇺 Lil 俄罗斯01 | IEPL | 倍率:1.3
+      - 🇨🇦 Lil 加拿大1 | IEPL | 倍率:1.3
+      - 🇮🇳 Lil 印度01 | IEPL | 倍率:1.3
+      - 🇮🇳 Lil 印度02 | IEPL | 倍率:1.3
+      - 🇨🇳 Lil 台湾01 | IEPL | 倍率:1.5
+      - 🇨🇳 Lil 台湾02 | IEPL| 倍率:1.3
+      - 🇨🇳 Lil 台湾03 | IEPL | 倍率:1.3
+      - 🇨🇳 Lil 台湾04 | IEPL | 倍率:1.3
+      - 🇨🇳 Lil 台湾05 | IEPL | 倍率:1.3
+      - 🇨🇳 Lil 台湾06 | IEPL | 倍率:1.3
+      - 🇧🇷 Lil 巴西1 | IEPL | 倍率:1.5
+      - 🇩🇪 Lil 德国1 | IEPL | 倍率:1.3
+      - 🇩🇪 Lil 德国2 | IEPL | 倍率:1.3
+      - 🇩🇪 Lil 德国3 | IEPL | 倍率:1.3
+      - 🇸🇬 Lil 新加坡01 | IEPL | 倍率:1.5
+      - 🇸🇬 Lil 新加坡02 | IEPL | 倍率:1.5
+      - 🇸🇬 Lil 新加坡03 | IEPL | 倍率:1.5
+      - 🇸🇬 Lil 新加坡04 | IEPL | 倍率:2
+      - 🇸🇬 Lil 新加坡05 | IEPL | 倍率:2
+      - 🇯🇵 Lil 日本01 | IEPL | 倍率:1.5
+      - 🇯🇵 Lil 日本02 | IEPL | 倍率:1.3
+      - 🇯🇵 Lil 日本03 | IEPL | 倍率:1.3
+      - 🇯🇵 Lil 日本04 | IEPL | 倍率:1.3
+      - 🇯🇵 Lil 日本05 | IEPL | 倍率:1.3
+      - 🇯🇵 Lil 日本06 | IEPL | 倍率:2
+      - 🇺🇸 Lil 美国01 | IEPL | 倍率:1.3
+      - 🇺🇸 Lil 美国02 | IEPL | 倍率:1.3
+      - 🇺🇸 Lil 美国03 | IEPL | 倍率:1.3
+      - 🇺🇸 Lil 美国04 | IEPL | 倍率:1.3
+      - 🇺🇸 Lil 美国05 | IEPL | 倍率:1.3
+      - 🇺🇸 Lil 美国06 | IEPL | 倍率:1.3
+      - 🇺🇸 Lil 美国07 | IEPL | 倍率:1.3
+      - 🇺🇸 Lil 美国08 | IEPL | 倍率:1.3
+      - 🇺🇸 Lil 美国09 | IEPL | 倍率:1.3
+      - 🇺🇸 Lil 美国10 | IEPL | 倍率:1.3
+      - 🇺🇸 Lil 美国11 | IEPL | 倍率:2
+      - 🇬🇧 Lil 英国1 | IEPL | 倍率:1.6
+      - 🇬🇧 Lil 英国2 | IEPL | 倍率:1.3
+      - 🇬🇧 Lil 英国3 | IEPL | 倍率:1.3
+      - 🇬🇧 Lil 英国4 | IEPL | 倍率:1.3
+      - 🇬🇧 Lil 英国5 | IEPL | 倍率:1.3
+      - 🇬🇧 Lil 英国6 | IEPL | 倍率:1.3
+      - 🇳🇱 Lil 荷兰1 | IEPL | 倍率:1.3
+      - 🇵🇭 Lil 菲律宾01 | IEPL | 倍率:1.3
+      - 🇰🇷 Lil 韩国01 | IEPL | 倍率:1.5
+      - 🇰🇷 Lil 韩国02 | IEPL | 倍率:1.5
+      - 🇰🇷 Lil 韩国03 | IEPL | 倍率:1.5
+      - 🇰🇷 Lil 韩国04 | IEPL | 倍率:2
+      - 🇰🇷 Lil 韩国05 | IEPL | 倍率:2
+      - 🇭🇰 Lil 香港01 | IEPL | 倍率:1.8
+      - 🇭🇰 Lil 香港02 | IEPL | 倍率:1.8
+      - 🇭🇰 Lil 香港03 | IEPL | 倍率:1.6
+      - 🇭🇰 Lil 香港04 | IEPL | 倍率:1.6
+      - 🇭🇰 Lil 香港05 | IEPL | 倍率:1.5
+      - 🇭🇰 Lil 香港06 | IEPL | 倍率:1.5
+      - 🇭🇰 Lil 香港07 | IEPL | 倍率:1.5
+      - 🇭🇰 Lil 香港08 | IEPL | 倍率:1.5
+      - 🇭🇰 Lil 香港09 | IEPL | 倍率:1.6
+      - 🇭🇰 Lil 香港10 | IEPL | 倍率:1.6
+      - 🇭🇰 Lil 香港11 | IEPL | 倍率:3
+      - 🇭🇰 Lil 香港12 | IEPL | 倍率:3
+      - 🇯🇵 Play1 日本 - 遊戲專用|視頻限速 | 倍率:20
+      - 🇭🇰 Play2 香港 - 遊戲專用|視頻限速 | 倍率:20
+      - 🇨🇳 Play3 台湾 - 遊戲專用|視頻限速 | 倍率:20
       - 官网：gyyun.top
       - l日本-1
       - l日本-2
@@ -413,6 +478,70 @@ proxy-groups:
       - 🇭🇰 Large 香港22 - nf | IEPL | 倍率:1.8
       - 🇭🇰 Large 香港23 - nfo | IEPL | 倍率:1.6
       - 🇭🇰 Large 香港24 - nfo | IEPL | 倍率:1.6
+      - 🇷🇺 Lil 俄罗斯01 | IEPL | 倍率:1.3
+      - 🇨🇦 Lil 加拿大1 | IEPL | 倍率:1.3
+      - 🇮🇳 Lil 印度01 | IEPL | 倍率:1.3
+      - 🇮🇳 Lil 印度02 | IEPL | 倍率:1.3
+      - 🇨🇳 Lil 台湾01 | IEPL | 倍率:1.5
+      - 🇨🇳 Lil 台湾02 | IEPL| 倍率:1.3
+      - 🇨🇳 Lil 台湾03 | IEPL | 倍率:1.3
+      - 🇨🇳 Lil 台湾04 | IEPL | 倍率:1.3
+      - 🇨🇳 Lil 台湾05 | IEPL | 倍率:1.3
+      - 🇨🇳 Lil 台湾06 | IEPL | 倍率:1.3
+      - 🇧🇷 Lil 巴西1 | IEPL | 倍率:1.5
+      - 🇩🇪 Lil 德国1 | IEPL | 倍率:1.3
+      - 🇩🇪 Lil 德国2 | IEPL | 倍率:1.3
+      - 🇩🇪 Lil 德国3 | IEPL | 倍率:1.3
+      - 🇸🇬 Lil 新加坡01 | IEPL | 倍率:1.5
+      - 🇸🇬 Lil 新加坡02 | IEPL | 倍率:1.5
+      - 🇸🇬 Lil 新加坡03 | IEPL | 倍率:1.5
+      - 🇸🇬 Lil 新加坡04 | IEPL | 倍率:2
+      - 🇸🇬 Lil 新加坡05 | IEPL | 倍率:2
+      - 🇯🇵 Lil 日本01 | IEPL | 倍率:1.5
+      - 🇯🇵 Lil 日本02 | IEPL | 倍率:1.3
+      - 🇯🇵 Lil 日本03 | IEPL | 倍率:1.3
+      - 🇯🇵 Lil 日本04 | IEPL | 倍率:1.3
+      - 🇯🇵 Lil 日本05 | IEPL | 倍率:1.3
+      - 🇯🇵 Lil 日本06 | IEPL | 倍率:2
+      - 🇺🇸 Lil 美国01 | IEPL | 倍率:1.3
+      - 🇺🇸 Lil 美国02 | IEPL | 倍率:1.3
+      - 🇺🇸 Lil 美国03 | IEPL | 倍率:1.3
+      - 🇺🇸 Lil 美国04 | IEPL | 倍率:1.3
+      - 🇺🇸 Lil 美国05 | IEPL | 倍率:1.3
+      - 🇺🇸 Lil 美国06 | IEPL | 倍率:1.3
+      - 🇺🇸 Lil 美国07 | IEPL | 倍率:1.3
+      - 🇺🇸 Lil 美国08 | IEPL | 倍率:1.3
+      - 🇺🇸 Lil 美国09 | IEPL | 倍率:1.3
+      - 🇺🇸 Lil 美国10 | IEPL | 倍率:1.3
+      - 🇺🇸 Lil 美国11 | IEPL | 倍率:2
+      - 🇬🇧 Lil 英国1 | IEPL | 倍率:1.6
+      - 🇬🇧 Lil 英国2 | IEPL | 倍率:1.3
+      - 🇬🇧 Lil 英国3 | IEPL | 倍率:1.3
+      - 🇬🇧 Lil 英国4 | IEPL | 倍率:1.3
+      - 🇬🇧 Lil 英国5 | IEPL | 倍率:1.3
+      - 🇬🇧 Lil 英国6 | IEPL | 倍率:1.3
+      - 🇳🇱 Lil 荷兰1 | IEPL | 倍率:1.3
+      - 🇵🇭 Lil 菲律宾01 | IEPL | 倍率:1.3
+      - 🇰🇷 Lil 韩国01 | IEPL | 倍率:1.5
+      - 🇰🇷 Lil 韩国02 | IEPL | 倍率:1.5
+      - 🇰🇷 Lil 韩国03 | IEPL | 倍率:1.5
+      - 🇰🇷 Lil 韩国04 | IEPL | 倍率:2
+      - 🇰🇷 Lil 韩国05 | IEPL | 倍率:2
+      - 🇭🇰 Lil 香港01 | IEPL | 倍率:1.8
+      - 🇭🇰 Lil 香港02 | IEPL | 倍率:1.8
+      - 🇭🇰 Lil 香港03 | IEPL | 倍率:1.6
+      - 🇭🇰 Lil 香港04 | IEPL | 倍率:1.6
+      - 🇭🇰 Lil 香港05 | IEPL | 倍率:1.5
+      - 🇭🇰 Lil 香港06 | IEPL | 倍率:1.5
+      - 🇭🇰 Lil 香港07 | IEPL | 倍率:1.5
+      - 🇭🇰 Lil 香港08 | IEPL | 倍率:1.5
+      - 🇭🇰 Lil 香港09 | IEPL | 倍率:1.6
+      - 🇭🇰 Lil 香港10 | IEPL | 倍率:1.6
+      - 🇭🇰 Lil 香港11 | IEPL | 倍率:3
+      - 🇭🇰 Lil 香港12 | IEPL | 倍率:3
+      - 🇯🇵 Play1 日本 - 遊戲專用|視頻限速 | 倍率:20
+      - 🇭🇰 Play2 香港 - 遊戲專用|視頻限速 | 倍率:20
+      - 🇨🇳 Play3 台湾 - 遊戲專用|視頻限速 | 倍率:20
       - 官网：gyyun.top
       - l日本-1
       - l日本-2
@@ -456,6 +585,8 @@ proxy-groups:
   - name: 🌍 国外媒体
     type: select
     proxies:
+      - 🎯 全球直连
+      - 🚀 节点选择
       - 🇺🇸 凤凰城 免费节点01
       - 🇯🇵 日本 免费节点01
       - 🇯🇵 日本 免费节点02

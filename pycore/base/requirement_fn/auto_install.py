@@ -42,6 +42,7 @@ class AutoInstall():
         self.install_package()
 
     def get_pip_source(self):
+        return "https://pypi.org/simple/"
         if self.pip_source_name == "tencent":
             return "http://mirrors.cloud.tencent.com/pypi/simple/"
         elif self.pip_source_name == "aliyun":
@@ -167,6 +168,7 @@ class AutoInstall():
             return False
 
     def get_pip_source_url(self):
+        return ""
         iswindow =  self.is_windows()
         settings_dir = os.path.join(self.venv_dir, "settings")
         if not iswindow:

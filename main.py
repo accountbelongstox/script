@@ -33,6 +33,9 @@ if __name__ == "__main__":
     elif run_as == "release_tasks":
         from apps.tasks.release import release
         release.start()
+    elif run_as == "release_tasks_new":
+        from apps.tasks.release_new import release
+        release.start()
     else:
         ''
         # print("Requires basic parameter")

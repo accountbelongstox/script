@@ -23,24 +23,25 @@ class GitLogProcessor:
     def __init__(self, cwd=".", since=None, until=None,lv=1,role="developer",author=None,mode=2):
         self.rules = {
             "include": {
-                "folders": {"enabled": True, "values": [ "pycore", "csharp"]},
+                "folders": {"enabled": True, "values": []},
                 "filenames": {"enabled": True, "values": []},
                 "file_starts": {"enabled": True, "values": []},
                 "file_ends": {"enabled": True, "values": []},
-                "folder_starts": {"enabled": True, "values": ["apps/deploy/shells/debian_12","apps/deploy/py_script"]},
+                "folder_starts": {"enabled": True, "values": []},
                 "folder_ends": {"enabled": True, "values": []},
                 "any_subdir": {"enabled": True, "values": []}
             },
             "exclude": {
                 "folders": {"enabled": True, "values": ["public", "__rm__"]},
-                "filenames": {"enabled": True, "values": ["yarn.lock", "package-lock.json", "pnpm-lock.yaml"]},
+                "filenames": {"enabled": True, "values": ["yarn.lock", "package-lock.json", "pnpm-lock.yaml","release.py"]},
                 "file_starts": {"enabled": True, "values": ["temp", "test"]},
                 "file_ends": {"enabled": True, "values": ["_backup", "_old", ".txt", ".bin", ".po",
                                                           ".sln",
                                                           ".pot",
                                                           ".cache",
                                                           ".assets.json",
-                                                          ".csproj"
+                                                          ".csproj",
+                                                          "release.py"
                                                           ]},
                 "folder_starts": {"enabled": True, "values": ["tmp", "cache"]},
                 "folder_ends": {"enabled": True, "values": ["_data", "_archive"]},
@@ -48,8 +49,7 @@ class GitLogProcessor:
                                "values": ["node_modules", ".vs", "build", "bin", "stylesheet", "_misc", "webfonts",
                                           "static",
                                           "nginx_ui", "nvm_node", "pm2_node18", "nvm_node", "__rm__",
-                                          "openai_assistant", "pm2", "php", "nginx", "bt_template", "nut", "library",
-                                          "laravel", "prompt", "ncss", "momo", "dy_scratch",
+                                          "openai_assistant", "pm2", "php", "nginx", "bt_template", "nut", "library","prompt", "ncss", "momo", "dy_scratch",
                                           "prompt",
                                           "Debug",
                                           "Release",
@@ -64,9 +64,12 @@ class GitLogProcessor:
                 rule_data["matches"] = []
                 rule_data["non_matches"] = []
 
-        time_due = self.getDates("%Y-%m-%d", [since, until], 2)
-        self.since = time_due[0]
-        self.until = time_due[1]
+        # time_due = self.getDates("%Y-%m-%d", [since, until], 2)
+        # print(time_due)
+        # self.since = time_due[0]
+        # self.until = time_due[1]
+        self.since = since
+        self.until = until
         self.cwd = self.getPath(cwd)
         # Mode switch: 0 = include, 1 = exclude, 2 = both
         int_params = self.get_params(int)
@@ -133,7 +136,7 @@ class GitLogProcessor:
 
                         if add == '-' or remove == '-':
                             continue
-
+                        print(f"line {line}")
                         add = int(add)
                         remove = int(remove)
                         folder = re.split(r'[\\/]+', fpath)[0]
@@ -155,6 +158,7 @@ class GitLogProcessor:
                                                                       re.split(r'[\\/]+', fpath))
                             should_exclude = self.match_exclude_rules(fpath, folder, lines[2],
                                                                       re.split(r'[\\/]+', fpath))
+
                             if should_include and not should_exclude:
                                 self.apply_rule_logic(add, remove, fpath, folder)
 
@@ -256,20 +260,20 @@ class GitLogProcessor:
         include_file_ends_values = self.rules["include"]["file_ends"]["values"]
         include_rules_any_subdir_values = self.rules["include"]["any_subdir"]["values"]
 
-        # self.rules["include"]["folders"]["enabled"] = bool(self.rules["include"]["folders"]["enabled"]) and bool(
-        #     include_folders_values)
-        # self.rules["include"]["folder_starts"]["enabled"] = bool(
-        #     self.rules["include"]["folder_starts"]["enabled"]) and bool(include_folder_starts_values)
-        # self.rules["include"]["folder_ends"]["enabled"] = bool(
-        #     self.rules["include"]["folder_ends"]["enabled"]) and bool(include_folder_ends_values)
-        # self.rules["include"]["filenames"]["enabled"] = bool(self.rules["include"]["filenames"]["enabled"]) and bool(
-        #     include_filenames_values)
-        # self.rules["include"]["file_starts"]["enabled"] = bool(
-        #     self.rules["include"]["file_starts"]["enabled"]) and bool(include_file_starts_values)
-        # self.rules["include"]["file_ends"]["enabled"] = bool(self.rules["include"]["file_ends"]["enabled"]) and bool(
-        #     include_file_ends_values)
-        # self.rules["include"]["any_subdir"]["enabled"] = bool(self.rules["include"]["any_subdir"]["enabled"]) and bool(
-        #     include_rules_any_subdir_values)
+        self.rules["include"]["folders"]["enabled"] = bool(self.rules["include"]["folders"]["enabled"]) and bool(
+            include_folders_values)
+        self.rules["include"]["folder_starts"]["enabled"] = bool(
+            self.rules["include"]["folder_starts"]["enabled"]) and bool(include_folder_starts_values)
+        self.rules["include"]["folder_ends"]["enabled"] = bool(
+            self.rules["include"]["folder_ends"]["enabled"]) and bool(include_folder_ends_values)
+        self.rules["include"]["filenames"]["enabled"] = bool(self.rules["include"]["filenames"]["enabled"]) and bool(
+            include_filenames_values)
+        self.rules["include"]["file_starts"]["enabled"] = bool(
+            self.rules["include"]["file_starts"]["enabled"]) and bool(include_file_starts_values)
+        self.rules["include"]["file_ends"]["enabled"] = bool(self.rules["include"]["file_ends"]["enabled"]) and bool(
+            include_file_ends_values)
+        self.rules["include"]["any_subdir"]["enabled"] = bool(self.rules["include"]["any_subdir"]["enabled"]) and bool(
+            include_rules_any_subdir_values)
 
         exclude_folders_values = self.rules["exclude"]["folders"]["values"]
         exclude_folder_starts_values = self.rules["exclude"]["folder_starts"]["values"]
@@ -279,20 +283,20 @@ class GitLogProcessor:
         exclude_file_ends_values = self.rules["exclude"]["file_ends"]["values"]
         exclude_rules_any_subdir_values = self.rules["exclude"]["any_subdir"]["values"]
 
-        # self.rules["exclude"]["folders"]["enabled"] = bool(self.rules["exclude"]["folders"]["enabled"]) and bool(
-        #     exclude_folders_values)
-        # self.rules["exclude"]["folder_starts"]["enabled"] = bool(
-        #     self.rules["exclude"]["folder_starts"]["enabled"]) and bool(exclude_folder_starts_values)
-        # self.rules["exclude"]["folder_ends"]["enabled"] = bool(
-        #     self.rules["exclude"]["folder_ends"]["enabled"]) and bool(exclude_folder_ends_values)
-        # self.rules["exclude"]["filenames"]["enabled"] = bool(self.rules["exclude"]["filenames"]["enabled"]) and bool(
-        #     exclude_filenames_values)
-        # self.rules["exclude"]["file_starts"]["enabled"] = bool(
-        #     self.rules["exclude"]["file_starts"]["enabled"]) and bool(exclude_file_starts_values)
-        # self.rules["exclude"]["file_ends"]["enabled"] = bool(self.rules["exclude"]["file_ends"]["enabled"]) and bool(
-        #     exclude_file_ends_values)
-        # self.rules["exclude"]["any_subdir"]["enabled"] = bool(self.rules["exclude"]["any_subdir"]["enabled"]) and bool(
-        #     exclude_rules_any_subdir_values)
+        self.rules["exclude"]["folders"]["enabled"] = bool(self.rules["exclude"]["folders"]["enabled"]) and bool(
+            exclude_folders_values)
+        self.rules["exclude"]["folder_starts"]["enabled"] = bool(
+            self.rules["exclude"]["folder_starts"]["enabled"]) and bool(exclude_folder_starts_values)
+        self.rules["exclude"]["folder_ends"]["enabled"] = bool(
+            self.rules["exclude"]["folder_ends"]["enabled"]) and bool(exclude_folder_ends_values)
+        self.rules["exclude"]["filenames"]["enabled"] = bool(self.rules["exclude"]["filenames"]["enabled"]) and bool(
+            exclude_filenames_values)
+        self.rules["exclude"]["file_starts"]["enabled"] = bool(
+            self.rules["exclude"]["file_starts"]["enabled"]) and bool(exclude_file_starts_values)
+        self.rules["exclude"]["file_ends"]["enabled"] = bool(self.rules["exclude"]["file_ends"]["enabled"]) and bool(
+            exclude_file_ends_values)
+        self.rules["exclude"]["any_subdir"]["enabled"] = bool(self.rules["exclude"]["any_subdir"]["enabled"]) and bool(
+            exclude_rules_any_subdir_values)
 
     def match_include_rules(self, fpath, folder, filename, path_parts):
         should_include = False
@@ -581,7 +585,7 @@ class GitLogProcessor:
         print(f"{color}{msg}{self.Colors.END}")
 
     def print_modify_info(self, add, remove, fpath, folder, color):
-        self.print_info(f"New {add}\t remove {remove}\t {fpath}", color)
+        self.print_info(f"new-line {add}\t remove {remove}\t {fpath}", color)
 
     def append_to_group(self, add, remove, fpath, folder, color):
         if color == self.Colors.GREEN:
@@ -672,5 +676,7 @@ class GitLogProcessor:
         else:
             self.print_info(f"{rule_name}: Disabled", self.Colors.RED)
 
-processor = GitLogProcessor(since="2024-03-01", until="2024-06-02")
+cwd="D:/代码统计/task.local.12gm.com_20240609_042659/task.local.12gm.com_20240609_042659/task.local.12gm.com"
+processor = GitLogProcessor(since="2024-06-12", until="2024-06-19",cwd=cwd)
 processor.organize_logic()
+

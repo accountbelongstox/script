@@ -22,11 +22,12 @@ def scan_directory(dir, prefix='', include_files=False):
 
     return output
 
-project_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../out')
-if not os.path.exists(project_path):
-    os.makedirs(project_path)
-output_file_path = os.path.join(project_path, 'project_file_tree.txt')
-output_dir_path = os.path.join(project_path, 'project_dir_tree.txt')
+project_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), './')
+out_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), './')
+if not os.path.exists(out_path):
+    os.makedirs(out_path)
+output_file_path = os.path.join(out_path, 'project_file_tree.txt')
+output_dir_path = os.path.join(out_path, 'project_dir_tree.txt')
 
 with open(output_dir_path, 'w', encoding='utf-8') as output_dir_file:
     output_dir_file.write(scan_directory(project_path))
