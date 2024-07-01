@@ -9,7 +9,7 @@ from pycore.threads import ziptask
 import time
 JOB_REMOTE_DIR = "\\\\192.168.100.5\\web\\jobs"
 PUBLISH_REMOTE_DIR = f"{JOB_REMOTE_DIR}\\tasks"
-include_folders = ["script"]
+include_folders = ["reactnative-instance"]
 TASK_PRE="#"
 
 class Release(Base):
