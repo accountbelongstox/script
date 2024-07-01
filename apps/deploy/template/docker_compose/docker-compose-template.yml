@@ -181,31 +181,18 @@ services:
       PMA_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
     links:
       - mysql
-  mongo:
+  mongodb:
     image: mongo:latest
-    container_name: mongo
+    container_name: mongodb
     restart: unless-stopped
     ports:
       - "27019:27019"
     volumes:
-      - "${DOCKER_DATA}/mongo:/etc/mongo"
-      - "${DOCKER_DATA}/mongo/data:/data/db"
-#  mysql:
-#    image: mysql:latest
-#    container_name: mysql
-#    restart: unless-stopped
-#    ports:
-#      - "3306:3306"
-##    volumes:
-##      - "${DOCKER_DATA}/mysql8/conf.d:/etc/mysql/conf.d"
-##      - "${DOCKER_DATA}/mysql8/data:/var/lib/mysql"
-#    environment:
-#      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
-#      MYSQL_USER: "${MYSQL_USER}"
-#      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
-  mysql:
+#      - "${DOCKER_DATA}/mongodb:/etc/mongo"
+      - "${DOCKER_DATA}/mongodb/data:/data/db"
+  mariadb:
     image: mariadb:10.5.23-focal
-    container_name: mysql
+    container_name: mariadb
     restart: always
     environment:
       MARIADB_USER: "${MYSQL_USER}"
@@ -216,8 +203,24 @@ services:
       MARIADB_RANDOM_ROOT_PASSWORD: 'false'
     ports:
       - "3306:3306"
+  mysql:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQ_USER: "${MYSQL_USER}"
+      MYSQ_PASSWORD: "${MYSQL_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+    volumes:
+      - "${MYSQL_ROOT_PASSWORD}":/var/lib/mysql
+      - "${DOCKER_DATA}/mysql/data:/var/lib/mysql"
+    command:
+      - --default-authentication-plugin=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "3306:3306"
 #    volumes:
-#      - /my/own/datadir:/var/lib/mysql:Z  # Adjust the host data directory as needed
+#      - /my/own/datadir:/var/lib/mysql
   gogs:
     image: gogs/gogs:latest
     container_name: gogs

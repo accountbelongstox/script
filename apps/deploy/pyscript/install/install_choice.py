@@ -85,7 +85,6 @@ class installChoice(Base):
         ]
         choice.set_and_collection_envs(prompt_settings, "System-Info", True)
 
-
     def init_env(self,show=False):
         self.init_info()
         compose_list = docker_info.get_compose_list()
@@ -115,13 +114,18 @@ class installChoice(Base):
         ]
         choice.set_and_collection_envs(prompt_settings, set_name, True)
 
-        set_name = "SERVICE.Main-Info"
         prompt_settings = [
             ["MAIN_IP", main_ip],
             ["MAIN_DIR", MAIN_DIR],
             ["WEB_DIR", WWWROOT_DIR],
         ]
         set_name = "global-setting"
+        choice.set_and_collection_envs(prompt_settings, set_name, show)
+
+        set_name = "SERVICE.Share-Dir"
+        prompt_settings = [
+            ["SHARE_DIR", ""],
+        ]
         choice.set_and_collection_envs(prompt_settings, set_name, show)
 
     def compiler_docker(self):

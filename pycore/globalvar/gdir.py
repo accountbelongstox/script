@@ -11,12 +11,9 @@ class Gdir(Base):
     localStaticHttpApiUrl = "http://static.local.12gm.com:805/"
     testAccessibleApi = None
     tmp_dir = "/tmp/"
-    tmp_globle_settings = "/tmp/.globle_settings"
-    tmp_dd_settings_dir = "/tmp/.dd_settings"
 
     def __init__(self):
         super().__init__()
-        self._mkdir(self.tmp_dd_settings_dir)
 
     def _mkdir(self,dir):
         if os.path.exists(dir) and os.path.isdir(dir):
