@@ -1,4 +1,4 @@
-if! dpkg -l | grep -q "samba"; then
+if ! dpkg -l | grep -q "samba"; then
     echo "Samba not installed. Installing on Debian..."
     sudo apt-get update
     sudo apt-get install -y samba
