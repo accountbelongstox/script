@@ -29,7 +29,7 @@ P4: ata-ST4000NM0033-9ZM170_Z1Z93KP3
 qm importdisk 101 /var/lib/vz/template/iso/EzOpenWrt-Free-Plus-2024.01.01_by_Sirpdboy_6.1.69-x86-64-combined-efi.img local-lvm
 qm importdisk 104 /var/lib/vz/template/iso/nas-arpl-7.2.img local-lvm
 
-qm importdisk 100 /var/lib/vz/template/iso/EzOpenWrt-Free-Plus-2024.03.01_by_Sirpdboy_6.1.79-x86-64-combined-efi.img local-lvm
+qm importdisk 107 /var/lib/vz/template/iso/EzOpenWrt-Free-Plus-2024.07.01_by_Sirpdboy_6.1.95-x86_64-combined-efi.img local-lvm
 
 
 HGST_HUS726040ALE610_K7H3E4XL
