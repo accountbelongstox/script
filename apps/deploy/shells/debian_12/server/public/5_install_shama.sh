@@ -1,34 +1,10 @@
-install_samba() {
-  if ! dpkg -l | grep -q "samba"; then
-      local distro=$(awk -F= '/^NAME/{print $2}' /etc/os-release)
-      case "$distro" in
-          *"Debian"* | *"Ubuntu"*)
-              echo "Detected Debian/Ubuntu."
-              if ! dpkg -l | grep -q "samba"; then
-                  echo "Samba not installed. Installing on Debian/Ubuntu..."
-                  sudo apt-get update
-                  sudo apt-get install -y samba
-              else
-                  echo "Samba is already installed on Debian/Ubuntu."
-              fi
-              ;;
-          *"CentOS"*)
-              echo "Detected CentOS."
-              if ! rpm -q samba &> /dev/null; then
-                  echo "Samba not installed. Installing on CentOS..."
-                  sudo yum install -y samba
-              else
-                  echo "Samba is already installed on CentOS."
-              fi
-              ;;
-          *)
-              echo "Unsupported distribution: $distro"
-              ;;
-      esac
-  else
-      echo "Samba is already installed on Debian/Ubuntu."
-  fi
-}
+if! dpkg -l | grep -q "samba"; then
+    echo "Samba not installed. Installing on Debian..."
+    sudo apt-get update
+    sudo apt-get install -y samba
+else
+    echo "Samba is already installed on Debian."
+fi
 #setup_samba() {
 #    if [ "$SAMBA_ENABLE" = "yes" ]; then
 #        if ! grep -q "$MAIN_DIR" /etc/samba/smb.conf; then
@@ -51,6 +27,5 @@ install_samba() {
 #        fi
 #    fi
 #}
-install_samba
 #setup_samba
 
