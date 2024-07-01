@@ -213,13 +213,11 @@ services:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
     volumes:
       - "${DOCKER_DATA}/mysql/data:/var/lib/mysql"
-    command:
-      - --character-set-server=utf8mb4
-      - --collation-server=utf8mb4_unicode_ci
+#    command:
+#      - --character-set-server=utf8mb4
+#      - --collation-server=utf8mb4_unicode_ci
     ports:
       - "3306:3306"
-#    volumes:
-#      - /my/own/datadir:/var/lib/mysql
   gogs:
     image: gogs/gogs:latest
     container_name: gogs
