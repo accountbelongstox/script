@@ -188,7 +188,7 @@ services:
     ports:
       - "27019:27019"
     volumes:
-#      - "${DOCKER_DATA}/mongodb:/etc/mongo"
+      - "${DOCKER_DATA}/mongodb:/etc/mongo"
       - "${DOCKER_DATA}/mongodb/data:/data/db"
   mariadb:
     image: mariadb:10.5.23-focal
