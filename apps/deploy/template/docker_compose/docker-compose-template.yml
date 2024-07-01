@@ -201,6 +201,8 @@ services:
 #      MARIADB_DATABASE: wp
       MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'false'
       MARIADB_RANDOM_ROOT_PASSWORD: 'false'
+    volumes:
+      - "${DOCKER_DATA}/mariadb/data:/var/lib/mysql"
     ports:
       - "3306:3306"
   mysql:
@@ -212,7 +214,7 @@ services:
       MYSQ_PASSWORD: "${MYSQL_PASSWORD}"
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
     volumes:
-      - "${DOCKER_DATA}/mysql/datan:/var/lib/mysql"
+      - "${DOCKER_DATA}/mysql/data:/var/lib/mysql"
 #    command:
 #      - --character-set-server=utf8mb4
 #      - --collation-server=utf8mb4_unicode_ci
