@@ -214,14 +214,16 @@ https://cloudflare.mom/#/plan
 - DOMAIN-SUFFIX,browser-intake-datadoghq.com,🍎 苹果服务
 - DOMAIN-SUFFIX,oaistatic.com,🍎 苹果服务
 - DOMAIN-SUFFIX,chat.openai.com,🍎 苹果服务
+- DOMAIN-SUFFIX,chatgpt.com,🍎 苹果服务
 - DOMAIN-SUFFIX,chat.openai.com.cdn.cloudflare.net,🍎 苹果服务
 - DOMAIN-SUFFIX,nrt12s30-in-f4.1e100.net,🍎 苹果服务
 - DOMAIN-SUFFIX,static-ecst.licdn.com,🍎 苹果服务
 - DOMAIN-SUFFIX,cs1404.wpc.epsiloncdn.net,🍎 苹果服务
+- DOMAIN-SUFFIX,cloudflare.com,🍎 苹果服务
 - DOMAIN-SUFFIX,openai.com,🍎 苹果服务
 - DOMAIN-SUFFIX,heygen.com,📲 电报信息
 - DOMAIN-SUFFIX,aliyun.com,🎯 全球直连
-- DOMAIN-SUFFIX,12gm.com,🎯 全球直连t
+- DOMAIN-SUFFIX,12gm.com,🎯 全球直连
 - IP-CIDR,47.242.164.51/24,DIRECT
 
 爱快设置
